@@ -1,5 +1,7 @@
 package ml.utils;
 
+import java.awt.BasicStroke;
+
 import ml.model.function.Function;
 
 import org.jfree.chart.ChartFactory;
@@ -83,7 +85,9 @@ public class FunctionChart extends ApplicationFrame {
 			functionSeries.add(x, y);
 		}
 		final XYSeriesCollection functionDataSet = new XYSeriesCollection(functionSeries);
-		XYItemRenderer functionRenderer = new XYLineAndShapeRenderer();
+		XYLineAndShapeRenderer functionRenderer = new XYLineAndShapeRenderer();
+		//functionRenderer.setSeriesStroke(0, new BasicStroke(0.5f));
+		functionRenderer.setSeriesShapesVisible(0, false);
 		plot.setDataset(functionDataSet);
 		plot.setRenderer(functionRenderer);
 
@@ -94,6 +98,7 @@ public class FunctionChart extends ApplicationFrame {
 		}
 		final XYSeriesCollection observedDataSet = new XYSeriesCollection(observedSeries);
 		XYItemRenderer observedDataRenderer = new XYLineAndShapeRenderer();
+		observedDataRenderer.setSeriesStroke(0, new BasicStroke(0.0f));
 		plot.setDataset(2,observedDataSet);
 		plot.setRenderer(2,observedDataRenderer);
 		
