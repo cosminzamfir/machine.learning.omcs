@@ -8,6 +8,16 @@ import ml.model.Attribute;
 import ml.model.DataSet;
 import ml.model.Observation;
 
+/**
+ * Parse dataSets in csv format:
+ * <p>Attr1,Attr2,...,Attrn,TargetAttribute
+ * <p>val1,val2,...,valn,targetVal
+ * <p>val1,val2,...,valn,targetVal
+ * <p>....
+ * <p>val1,val2,...,valn,targetVal
+ * @author Cosmin Zamfir
+ *
+ */
 public class DataSetCsvParser {
 
 	public static DataSet parse(String resource) {

@@ -1,9 +1,7 @@
-package test;
-
 import ml.model.DataSet;
 import ml.model.Observation;
-import ml.slearning.id3.Id3;
-import ml.slearning.id3.Id3Node;
+import ml.slearning.classification.id3.Id3;
+import ml.slearning.classification.id3.Id3Node;
 import ml.utils.DataSetCsvParser;
 
 import org.junit.Assert;

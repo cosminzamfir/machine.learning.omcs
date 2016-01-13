@@ -1,4 +1,4 @@
-package ml.slearning.id3;
+package ml.slearning.classification.id3;
 
 import java.util.ArrayList;
 import java.util.List;

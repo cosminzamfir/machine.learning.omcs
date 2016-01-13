@@ -1,9 +1,7 @@
-package test;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import ml.model.kmeans.EuclideanPoint2D;
+import ml.model.ulearning.kmeans.model.EuclideanPoint2D;
 import ml.utils.Utils;
 
 /**

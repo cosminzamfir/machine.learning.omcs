@@ -1,12 +1,10 @@
-package test;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import ml.model.Attribute;
 import ml.model.DataSet;
 import ml.model.Observation;
-import ml.slearning.NaiveBayes;
+import ml.slearning.classification.bayes.NaiveBayes;
 
 import org.junit.Test;
 

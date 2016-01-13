@@ -1,4 +1,4 @@
-package ml.model.kmeans;
+package ml.model.ulearning.kmeans.model;
 
 import java.util.List;
 

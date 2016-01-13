@@ -1,9 +1,12 @@
-package ml.model.kmeans;
+package ml.model.ulearning.kmeans;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import ml.model.ulearning.kmeans.model.EuclideanPoint2D;
+import ml.model.ulearning.kmeans.model.Points2DSet;
 
 /**
  * Clustering k-means algo

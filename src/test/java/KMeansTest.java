@@ -1,12 +1,10 @@
-package test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import ml.model.kmeans.EuclideanPoint2D;
-import ml.model.kmeans.KMeans;
-import ml.model.kmeans.Points2DSet;
+import ml.model.ulearning.kmeans.KMeans;
+import ml.model.ulearning.kmeans.model.EuclideanPoint2D;
+import ml.model.ulearning.kmeans.model.Points2DSet;
 import ml.utils.PointsChart;
 import ml.utils.Utils;
 

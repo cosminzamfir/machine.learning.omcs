@@ -1,4 +1,4 @@
-package ml.slearning;
+package ml.slearning.classification.bayes;
 
 import java.util.Collection;
 
