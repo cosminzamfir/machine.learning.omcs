@@ -15,7 +15,6 @@ import ml.ulearning.kmeans.model.EuclideanPoint2D;
 import ml.ulearning.kmeans.model.Points2DSet;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.math3.distribution.HypergeometricDistribution;
 
 public class Utils {
 
