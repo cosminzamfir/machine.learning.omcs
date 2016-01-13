@@ -33,7 +33,10 @@ public class FunctionChart extends ApplicationFrame {
 		return function.evaluate(x);
 	}
 
-	public FunctionChart(Function function, double min, double max, final String title) {
+	/**
+	 * Plot the given function from with domain from min to max
+	 */
+	public FunctionChart(String title, Function function, double min, double max) {
 		super(title);
 		this.function = function;
 		final XYSeries series = new XYSeries("Function chart");
@@ -58,11 +61,10 @@ public class FunctionChart extends ApplicationFrame {
 
 	/**
 	 * Plot both the fuction and the observations on the same chart panel
-	 * @param function
-	 * @param title
-	 * @param observations
+	 * <p>
+	 * min(domain) and max(domain) are determined by the obsrvations
 	 */
-	public FunctionChart(Function function, final String title, Object[][] observations) {
+	public FunctionChart(String title, Function function, Object[][] observations) {
 		super(title);
 		this.function = function;
 		double min = getMin(observations);
