@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import ml.model.ulearning.kmeans.model.EuclideanPoint2D;
-import ml.model.ulearning.kmeans.model.Points2DSet;
+import ml.ulearning.kmeans.model.EuclideanPoint2D;
+import ml.ulearning.kmeans.model.Points2DSet;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.math3.distribution.HypergeometricDistribution;

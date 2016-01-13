@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import ml.model.ulearning.kmeans.KMeans;
-import ml.model.ulearning.kmeans.model.EuclideanPoint2D;
-import ml.model.ulearning.kmeans.model.Points2DSet;
+import ml.ulearning.kmeans.KMeans;
+import ml.ulearning.kmeans.model.EuclideanPoint2D;
+import ml.ulearning.kmeans.model.Points2DSet;
 import ml.utils.PointsChart;
 import ml.utils.Utils;
 
