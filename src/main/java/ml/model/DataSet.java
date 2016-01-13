@@ -186,5 +186,31 @@ public class DataSet {
 	public DataSet subSet(int start, int end) {
 		return new DataSet(attributes, Utils.clone(data, start, end), targetAttribute);
 	}
+
 	
+	/**
+	 * Get the j'th value of the i'th Observation
+	 */
+	public Object getValue(int i, int j) {
+		return data.get(i).getValues()[j];
+	}
+	
+	/**
+	 * Get the targetAttribute value of the i'th Observation
+	 */
+	public Object getTargetAttributeValue(int i) {
+		return data.get(i).getTargetAttributeValue();
+	}
+	
+	public Object[][] data() {
+		Object[][] res = new Object[size()][attributes.size() + 1];
+		for (int i = 0; i < data.size(); i++) {
+			for (int j = 0; j < attributes.size(); j++) {
+				res[i][j] = getValue(i, j);
+			}
+			res[i][attributes.size()] = getTargetAttributeValue(i);
+		}
+		return res;
+	}
+
 }

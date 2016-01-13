@@ -20,26 +20,46 @@ import ml.model.Observation;
  */
 public class DataSetCsvParser {
 
-	public static DataSet parse(String resource) {
+	public static DataSet parseTextDataSet(String resource, boolean shufle) {
+		return parse(resource, false, shufle);
+	}
+
+	public static DataSet parseNumericDataSet(String resource, boolean shufle) {
+		return parse(resource, true, shufle);
+	}
+
+	private static DataSet parse(String resource, boolean numeric, boolean shufle) {
 		List<String> lines = IOUtils.readLines(resource, true);
 		String[] header = lines.get(0).split(",");
 		List<Attribute> attributes = new ArrayList<>();
 		List<Observation> instances = new ArrayList<>();
-		for (int i = 0; i < header.length-1; i++) {
+		for (int i = 0; i < header.length - 1; i++) {
 			attributes.add(new Attribute(header[i], String.class, i));
 		}
 		Attribute targetAttribute = new Attribute(header[header.length - 1], String.class, 0);
 		lines.remove(0);
-		Collections.shuffle(lines);
+		if (shufle) {
+			Collections.shuffle(lines);
+		}
 		for (String line : lines) {
 			String[] tokens = line.split(",");
-			String[] values = new String[tokens.length -1];
-			for (int i = 0; i < values.length; i++) {
-				values[i] = tokens[i];
+			if (!numeric) {
+				String[] values = new String[tokens.length - 1];
+				for (int i = 0; i < values.length; i++) {
+					values[i] = tokens[i];
+				}
+				String targetAttributeValue = tokens[tokens.length - 1];
+				instances.add(new Observation(targetAttributeValue, values));
+			} else {
+				Double[] values = new Double[tokens.length - 1];
+				for (int i = 0; i < values.length; i++) {
+					values[i] = Double.valueOf(tokens[i]);
+				}
+				Double targetAttributeValue = Double.valueOf(tokens[tokens.length - 1]);
+				instances.add(new Observation(targetAttributeValue, values));
 			}
-			String classification = tokens[tokens.length - 1];
-			instances.add(new Observation(classification, values));
 		}
 		return new DataSet(attributes, instances, targetAttribute);
 	}
+
 }

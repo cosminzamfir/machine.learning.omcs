@@ -16,7 +16,7 @@ public class Id3Test {
 
 	@Test
 	public void test1() throws Exception {
-		DataSet dataSet = DataSetCsvParser.parse("play_tennis.txt");
+		DataSet dataSet = DataSetCsvParser.parseTextDataSet("play_tennis.txt", false);
 		Id3 id3 = new Id3();
 		Id3Node decisionTree = id3.createDecistionTree(dataSet);
 		System.out.println(decisionTree);
@@ -25,7 +25,7 @@ public class Id3Test {
 	
 	@Test
 	public void test2() throws Exception {
-		DataSet dataSet = DataSetCsvParser.parse("car_data.txt");
+		DataSet dataSet = DataSetCsvParser.parseTextDataSet("car_data.txt", true);
 		Id3 id3 = new Id3();
 		DataSet training = dataSet.subSet(0, 1400);
 		DataSet validation = dataSet.subSet(1401,1700);
