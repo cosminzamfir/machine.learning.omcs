@@ -28,9 +28,10 @@ public class UnivariateRegression {
 		Matrix X = getMatrix(dataSet, range);
 		Vector y = getYVector(dataSet);
 		double coefficients[] = X.transpose().multiplyBy(X).inverse().multiplyBy(X.transpose()).multiplyBy(Matrix.columnMatrix(y)).column(0);
-		for (int i = 0; i < coefficients.length; i++) {
-			coefficients[i] = (double)Math.round(coefficients[i] * 100d) / 100d;
-		}
+		
+		Vector v = new Vector(coefficients);
+		System.out.println(X.multiplyBy(Matrix.columnMatrix(v))); //this should be closed to y vector
+		
 		return new PolynomialFunction(coefficients);
 	}
 
@@ -54,10 +55,10 @@ public class UnivariateRegression {
 	}
 	
 	public static void main(String[] args) {
-		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("quadratic_like.txt", false);
-		PolynomialFunction f = new UnivariateRegression().compute(dataSet, 3);
+		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("house_prices.txt", false);
+		PolynomialFunction f = new UnivariateRegression().compute(dataSet, 8);
 		System.out.println(f);
-		new FunctionChart(f,"Title",dataSet.data());
+		new FunctionChart("Regression", f,dataSet.data());
 	}
 
 }

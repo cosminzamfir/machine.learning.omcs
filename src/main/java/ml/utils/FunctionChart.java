@@ -80,7 +80,7 @@ public class FunctionChart extends ApplicationFrame {
 
 		
 		//the function chart data
-		final XYSeries functionSeries = new XYSeries("Function chart");
+		final XYSeries functionSeries = new XYSeries("Function");
 		for (int i = 0; i < samples; i++) {
 			double x = min + i * (max - min) / (double) samples;
 			double y = f(x);

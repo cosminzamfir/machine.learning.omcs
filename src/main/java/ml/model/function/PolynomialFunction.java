@@ -19,7 +19,9 @@ public class PolynomialFunction extends Function {
 
 	@Override
 	public double evaluate(double x) {
-		double res = 0;
+		double res = 0; 
+		//test
+		double sss = 1;
 		for (int i = 0; i < a.length; i++) {
 			res += a[i] * Math.pow(x, i);
 		}

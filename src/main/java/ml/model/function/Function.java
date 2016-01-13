@@ -10,7 +10,7 @@ public abstract class Function {
 	public abstract double evaluate(double x);
 	
 	public void plot(double from ,double to) {
-		new FunctionChart(this, from, to, toString());
+		new FunctionChart(toString(), this, from, to);
 	}
 	
 	public double integral(double from, double to, double maxError) {
