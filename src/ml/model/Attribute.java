@@ -5,7 +5,7 @@ import java.util.Set;
 
 /**
  * Describe an attribute of the data set 
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public class Attribute {

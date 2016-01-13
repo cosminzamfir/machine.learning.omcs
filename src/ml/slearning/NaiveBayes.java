@@ -31,7 +31,7 @@ import ml.model.Observation;
  * <li> Choose the Response which maximized the expression above
  * <ol>
  * 
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public class NaiveBayes {

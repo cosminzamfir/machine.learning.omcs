@@ -3,7 +3,7 @@ package ml.model;
 
 /**
  * An example/row in the data set
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public class Observation {

@@ -12,6 +12,11 @@ import ml.utils.Utils;
 
 import org.junit.Test;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class KMeansTest {
 
 	@Test

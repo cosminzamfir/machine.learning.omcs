@@ -3,23 +3,22 @@ package ml.slearning.id3;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.jfree.util.Log;
-
 import ml.model.Attribute;
 import ml.model.Observation;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
 /**
  * A node in the decision tree
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public class Id3Node {
 
 	private static final Logger log = Logger.getLogger(Id3Node.class);
 	
-	/** A leaf node has a label - represent the output category for this node */
+	/** A leaf node has a label - represent the category for this node */
 	private Object label;
 
 	/** A non-leaf node, the Attribute it splits on */
@@ -73,15 +72,16 @@ public class Id3Node {
 		this.parent = parent;
 	}
 
-	public String toString(int level) {
-		String indent = StringUtils.repeat("  ", level);
-		StringBuilder sb = new StringBuilder();
+	public String toString(int indentLevel) {
 		if (label != null) {
 			return label.toString();
 		}
+		String indent = StringUtils.repeat("  ", indentLevel);
+		StringBuilder sb = new StringBuilder();
 		for (Object attributeValue : branches.keySet()) {
 			sb.append("\n").append(indent).
-					append("If " + attribute.getName() + " = " + attributeValue + " then ").append(branches.get(attributeValue).toString(level + 1));
+					append("If " + attribute.getName() + " = " + attributeValue + " then ").
+					append(branches.get(attributeValue).toString(indentLevel + 1));
 		}
 		return sb.toString();
 	}

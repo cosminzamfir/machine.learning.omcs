@@ -10,6 +10,11 @@ import ml.slearning.NaiveBayes;
 
 import org.junit.Test;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class NaiveBayesTest {
 
 	@Test

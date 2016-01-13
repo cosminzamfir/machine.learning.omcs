@@ -6,6 +6,11 @@ import java.util.List;
 import ml.model.kmeans.EuclideanPoint2D;
 import ml.utils.Utils;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class KMeansSimulator {
 
 	public static void main(String[] args) {

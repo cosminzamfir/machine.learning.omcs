@@ -7,6 +7,11 @@ import java.util.Map;
 import ml.utils.PointsChart;
 import ml.utils.Utils;
 
+/**
+ * A set of 2D points
+ * @author Cosmin Zamfir
+ *
+ */
 public class Points2DSet {
 
 	private List<EuclideanPoint2D> points;

@@ -2,6 +2,11 @@ package ml.model.kmeans;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class EuclideanPoint2D {
 
 	private double x;

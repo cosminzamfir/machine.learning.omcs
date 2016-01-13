@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Clustering k-means algo
+ * @author Cosmin Zamfir
+ *
+ */
 public class KMeans {
 
 	private Points2DSet points;

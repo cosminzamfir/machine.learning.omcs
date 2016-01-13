@@ -9,6 +9,11 @@ import ml.utils.DataSetCsvParser;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class Id3Test {
 
 	@Test
