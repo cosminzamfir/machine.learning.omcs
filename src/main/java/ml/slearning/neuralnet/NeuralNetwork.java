@@ -1,4 +1,6 @@
-package ml.slearning.classification.neuralnet;
+package ml.slearning.neuralnet;
+
+import java.util.List;
 
 import ml.model.DataSet;
 
@@ -10,5 +12,5 @@ import ml.model.DataSet;
 public class NeuralNetwork {
 
 	private DataSet dataSet;
-	private Sigmo
+	private List<NetworkLayer> layers;
 }

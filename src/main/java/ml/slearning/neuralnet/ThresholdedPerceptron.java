@@ -1,4 +1,4 @@
-package ml.slearning.classification.neuralnet;
+package ml.slearning.neuralnet;
 
 import linalg.Vector;
 import ml.model.DataSet;

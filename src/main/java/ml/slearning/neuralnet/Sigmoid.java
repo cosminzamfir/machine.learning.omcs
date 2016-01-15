@@ -1,4 +1,4 @@
-package ml.slearning.classification.neuralnet;
+package ml.slearning.neuralnet;
 
 import ml.model.DataSet;
 import ml.model.Observation;

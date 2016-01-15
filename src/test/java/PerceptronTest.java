@@ -1,8 +1,8 @@
 import ml.model.DataSet;
 import ml.model.Observation;
-import ml.slearning.classification.neuralnet.Perceptron;
-import ml.slearning.classification.neuralnet.ThresholdedPerceptron;
-import ml.slearning.classification.neuralnet.UnthresholdedPerceptron;
+import ml.slearning.neuralnet.Perceptron;
+import ml.slearning.neuralnet.ThresholdedPerceptron;
+import ml.slearning.neuralnet.UnthresholdedPerceptron;
 import ml.utils.DataSetCsvParser;
 
 import org.junit.Assert;
