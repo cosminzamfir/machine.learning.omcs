@@ -7,7 +7,7 @@ import ml.model.Observation;
 import org.apache.log4j.Logger;
 
 /**
- * A neural network unit which used gradient descend for linear regression
+ * A neural network unit which uses gradient descend for linear regression
  * @author Cosmin Zamfir
  *
  */
@@ -39,20 +39,24 @@ public class UnthresholdedPerceptron extends Perceptron {
 		int iteration = 0;
 		double error = evaluateErrorFunction(dataSet);
 		while (iteration < maxIterations) {
+			double[] deltaWs = new double[coefficients.length]; 
 			for (int i = 0; i < coefficients.length; i++) {
-				double delta = learningRate * (-1) * errFuncPartialDerivative(dataSet, i);
-				coefficients[i] = coefficients[i] + delta;
-				log.debug("Updated coefficient " + i + " with: " + delta);
+				deltaWs[i] = learningRate * (-1) * errFuncPartialDerivative(dataSet, i);
+				log.trace("Updated coefficient " + i + " with: " + deltaWs[i]);
+			}
+			for (int i = 0; i < deltaWs.length; i++) {
+				coefficients[i] += deltaWs[i];
 			}
 			double newError = evaluateErrorFunction(dataSet);
 			log.debug("Previous error: " + error + "; Current error: " + newError);
-			if(error - newError < precision) {
+			if(error - newError < precision || newError < precision) {
 				break;
 			}
 			error = newError;
 			iteration ++;
 		}
 		log.debug("Done in " + iteration + " iterations.");
+		log.debug(this);
 	}
 
 	private double evaluateErrorFunction(DataSet dataSet) {
@@ -72,12 +76,12 @@ public class UnthresholdedPerceptron extends Perceptron {
 	 */
 	private double errFuncPartialDerivative(DataSet dataSet, int i) {
 		double res = 0;
-		//if i = 0, it refers to sysntethic x0 with value 1
+		//if i = 0, it refers to the syntethic x0 with value 1
 		for (Observation observation : dataSet.getObservations()) {
 			double xi = (double) (i == 0 ? 1d : observation.getValues()[i-1]);
 			res = res + ((double)observation.getTargetAttributeValue() - evaluate(observation)*xi*(-1));
 		}
-		log.debug("Partial derivative of error function with respect to " + i + " variable: " + res);
+		log.trace("Partial derivative of error function with respect to " + i + " variable: " + res);
 		return res;
 	}
 

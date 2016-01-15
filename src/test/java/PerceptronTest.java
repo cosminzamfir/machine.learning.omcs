@@ -47,7 +47,7 @@ public class PerceptronTest {
 	public void testSixVariablesGradientDescend() throws Exception {
 		DataSet ds = DataSetCsvParser.parseNumericDataSet("perceptron_test_gradient_descend_six_variables.txt", false);
 		UnthresholdedPerceptron perc = new UnthresholdedPerceptron();
-		perc.train(ds, 0.0000001, 0.001, 1000);
+		perc.train(ds, 0.000001, 5, 1000);
 		for (Observation obs : ds.getObservations()) {
 			Assert.assertTrue(perc.evaluate(obs) - (double) obs.getTargetAttributeValue() < 1);
 		}
