@@ -254,4 +254,17 @@ public class Utils {
 
 	}
 	
+	public static <T> String toString(double[] d) {
+		StringBuilder res = new StringBuilder("[");
+		for (int i = 0; i < d.length; i++) {
+			res.append(d[i]);
+			if(i < d.length -1) {
+				res.append(",");
+			} else {
+				res.append("]");
+			}
+		}
+		return res.toString();
+	}
+	
 }

@@ -11,12 +11,12 @@ import ml.utils.FunctionChart;
 /**
  * Input: x's mapped to y's
  * Output: a {@link PolynomialFunction} which minimizes the squared error
- * In matrix form (ai are the grade n function coeficients for a {@link DataSet} with m {@link Observation}s)
+ * In matrix form (ai are the grade n PolynomialFunction coeficients for a {@link DataSet} with m {@link Observation}s)
  * <p>| 1  x1  x1^2   ...  x1^n | * |a1| = |y1|  		
  * <p>| 1  x2  x2^2   ...  x2^n |   |a2|   |y2|
  * <p> ...						     ...   ...
- * <p>| 1  xm  xm^2   ...  xm^n |   |an|   |yn|
- * As the above above has no exact solution, compute vector a' which solves X*a' = projection of y on column space of X
+ * <p>| 1  xm  xm^2   ...  xm^n |   |an|   |ym|
+ * As the above above has in general no exact solution, compute vector a' which solves X*a' = projection of y on column space of X
  * The vector is: a' = inverse(transpose(X) * X) * transpose(X) * y
  * @see http://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/least-squares-determinants-and-eigenvalues/projections-onto-subspaces/MIT18_06SCF11_Ses2.2sum.pdf
  * @author Cosmin Zamfir
@@ -27,7 +27,8 @@ public class UnivariateRegression {
 	public PolynomialFunction compute(DataSet dataSet, int range) {
 		Matrix X = getMatrix(dataSet, range);
 		Vector y = getYVector(dataSet);
-		double coefficients[] = X.transpose().multiplyBy(X).inverse().multiplyBy(X.transpose()).multiplyBy(Matrix.columnMatrix(y)).column(0);
+		Matrix Xt = X.transpose();
+		double coefficients[] = Xt.multiplyBy(X).inverse().multiplyBy(Xt).multiplyBy(Matrix.columnMatrix(y)).column(0);
 		
 		Vector v = new Vector(coefficients);
 		System.out.println(X.multiplyBy(Matrix.columnMatrix(v))); //this should be closed to y vector

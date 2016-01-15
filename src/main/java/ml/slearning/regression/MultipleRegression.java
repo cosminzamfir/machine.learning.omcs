@@ -65,7 +65,7 @@ public class MultipleRegression {
 	
 	public static void main(String[] args) {
 		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("forest_fires.csv", false);
-		PolynomialFunction f = new MultipleRegression().compute(dataSet, 1);
+		PolynomialFunction f = new MultipleRegression().compute(dataSet, 3);
 		System.out.println(f);
 		new FunctionChart("Regression", f,dataSet.data());
 	}
