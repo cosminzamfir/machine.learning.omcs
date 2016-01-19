@@ -267,4 +267,13 @@ public class Utils {
 		return res.toString();
 	}
 	
+	public static double[] concatenate(double d, double[] array) {
+		double[] res = new double[array.length + 1];
+		res[0] = d;
+		for (int i = 1; i < res.length; i++) {
+			res[i] = array[i-1];
+		}
+		return res;
+	}
+	
 }

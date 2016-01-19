@@ -7,6 +7,8 @@ package ml.model.function;
  */
 public abstract class MultivariableFunction {
 	
+	/** The number of variables */
+	protected int n;
 	public abstract double evaluate(double ... x);
-
+	
 }

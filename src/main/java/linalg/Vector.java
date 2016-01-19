@@ -93,6 +93,11 @@ public class Vector {
 		}
 	}
 	
+	public double[] getData() {
+		return data;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return Matrix.columnMatrix(this).toString();

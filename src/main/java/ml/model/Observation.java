@@ -1,5 +1,7 @@
 package ml.model;
 
+import linalg.Vector;
+
 
 /**
  * An example/row in the data set
@@ -28,6 +30,19 @@ public class Observation {
 	public Object getValue(Attribute attribute) {
 		return values[attribute.getIndex()];
 	}
+	
+	/**
+	 * The numeric values in this numeric observation, adding x0 = 1 
+	 */
+	public Vector getVectorValues() {
+		double[] res = new double[getValues().length + 1];
+		res[0] = 1;
+		for (int i = 0; i < getValues().length; i++) {
+			res[i + 1] = (double) getValues()[i];
+		}
+		return new Vector(res);
+	}
+
 	
 	@Override
 	public String toString() {

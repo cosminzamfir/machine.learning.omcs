@@ -23,7 +23,7 @@ public class NeuralNetwork {
 	private Map<Sigmoid,List<Sigmoid>> mappings = new LinkedHashMap<>();
 	private double learningRate;
 	
-	public static NeuralNetwork twoLayersNetwork(DataSet inputDataSet, int hiddenUnitsCounts, int outputUnitsCount) {
+	public static NeuralNetwork createTwoLayersNetwork(DataSet inputDataSet, int hiddenUnitsCounts, int outputUnitsCount) {
 		NeuralNetwork res = new NeuralNetwork();
 		res.dataSet = inputDataSet;
 		List<Sigmoid> hiddenUnits = new ArrayList<>();

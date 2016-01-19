@@ -2,6 +2,13 @@ package ml.model.function;
 
 import java.io.IOException;
 
+/**
+ * Standard normal(sigma=1; miu=0): F(x) = sqrt(1/2*PI) * e ^ (-x^2)
+ * <p>
+ * General normal: F(x) = 1 / sigma * sqrt(2*PI) * e ^ (-(x-miu)^2 / 2 * sigma ) 
+ * @author Cosmin Zamfir
+ *
+ */
 public class NormalFunction extends Function {
 
 	private double miu, sigma;
