@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="lib/jcommon-1.0.23.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.19.jar" sourcepath="c:/work/data/.m2/repository/org/jfree/jfreechart/1.0.19/jfreechart-1.0.19-sources.jar"/>
 	<classpathentry kind="lib" path="lib/stdlib.jar"/>
+	<classpathentry kind="lib" path="H:/My Documents/work/pers/ml.omcs/software/weka/weka-dev-3.7.6.jar" sourcepath="H:/My Documents/work/pers/ml.omcs/software/weka/weka-dev-3.7.6-sources.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
