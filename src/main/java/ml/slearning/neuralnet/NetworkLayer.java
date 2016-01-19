@@ -2,13 +2,12 @@ package ml.slearning.neuralnet;
 
 import java.util.List;
 
-import linalg.Vector;
 import ml.model.DataSet;
 import ml.model.Observation;
-import ml.utils.Utils;
 
 /**
- * A hidden layer in a {@link NeuralNetwork} that takes inputs from the layer before and forwards outputs to the layer after 
+ * A layer in a {@link NeuralNetwork} that takes inputs from the layer before (or from the dataSet if is the first hidden layer)
+ * and forwards outputs to the layer after (or to the outside world if it's the output layer) 
  * @author Cosmin Zamfir
  */
 public class NetworkLayer {
@@ -79,7 +78,7 @@ public class NetworkLayer {
 
 	public void generateCoefficients() {
 		for (Sigmoid unit : units) {
-			if(inputDataSet != null) {
+			if (inputDataSet != null) {
 				unit.generateRandomCoefficients(inputDataSet);
 			} else {
 				unit.generateRandomCoefficients(previousLayer.getUnits().size());
@@ -96,11 +95,11 @@ public class NetworkLayer {
 
 	private double[] getPreviousLayerValues(Observation observation) {
 		double[] res;
-		if(inputDataSet != null) {
+		if (inputDataSet != null) {
 			res = new double[observation.getValues().length + 1];
 			res[0] = 1;
 			for (int i = 0; i < observation.getValues().length; i++) {
-				res[i+1] = (double) observation.getValues()[i];
+				res[i + 1] = (double) observation.getValues()[i];
 			}
 		} else {
 			res = new double[previousLayer.getUnits().size()];
@@ -114,15 +113,15 @@ public class NetworkLayer {
 	public Sigmoid get(int i) {
 		return units.get(i);
 	}
-	
+
 	public double getCurrentValue(int i) {
 		return units.get(i).getCurrentValue();
 	}
-	
+
 	public double getCurrentErrorTerm(int i) {
 		return units.get(i).getCurrentErrorTerm();
 	}
-	
+
 	public double evaluate(int i, double[] input) {
 		return units.get(i).evaluate(input);
 	}

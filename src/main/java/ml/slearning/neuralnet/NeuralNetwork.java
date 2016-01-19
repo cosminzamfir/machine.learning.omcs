@@ -95,7 +95,6 @@ public class NeuralNetwork {
 	
 	public void updateWeights() {
 		NetworkLayer outputLayer = getOutputLayer();
-		NetworkLayer previousLayer
 		for (int i = 0; i < getOutputLayer().getUnits().size(); i++) {
 			Sigmoid unit = getOutputLayer().getUnits().get(i);
 			double delta = learningRate * unit.getCurrentErrorTerm() * unit.getCurrentValue();
