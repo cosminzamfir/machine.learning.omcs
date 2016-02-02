@@ -1,0 +1,14 @@
+@relation A_linear_relation_x=y
+@attribute x real 
+@attribute y real
+@data
+1,1
+2,2
+3,3
+4,4
+5,5
+6,6
+7,7
+20,21
+40,41
+60,61

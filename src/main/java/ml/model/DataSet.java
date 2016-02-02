@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import linalg.Vector;
 import ml.utils.Utils;
 
 import org.apache.log4j.Logger;
@@ -211,6 +212,14 @@ public class DataSet {
 			res[i][attributes.size()] = getTargetAttributeValue(i);
 		}
 		return res;
+	}
+
+	public Observation getObservation(int i) {
+		return this.getObservations().get(i);
+	}
+
+	public int getWidth() {
+		return attributes.size();
 	}
 
 }

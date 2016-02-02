@@ -33,7 +33,7 @@ public class SigmoidMultivariableFunction extends DifferentiableMultivariableFun
 		if(i == 0) {
 			return firstTerm * 1;
 		} 
-		return firstTerm * x[i+1];
+		return firstTerm * x[i];
 		
 	}
 }

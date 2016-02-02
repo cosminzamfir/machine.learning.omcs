@@ -31,7 +31,23 @@ public class PolynomialMultivariableFunction extends MultivariableFunction {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("f(x) = ....");
+		StringBuilder sb = new StringBuilder("f(x) = ");
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a[i].length; j++) {
+				if(a[i][j] != 0) {
+					if(j == 0) {
+						sb.append(" + " + a[i][j]);
+					}
+					if(j == 1) {
+						sb.append(" + " + a[i][j] + "*x" + i);
+					}
+					if(j > 1) {
+						sb.append(" + " + a[i][j] + "*x" + i + "^" + j);
+					}
+
+				}
+			}
+		}
 		return sb.toString();
 	}
 }

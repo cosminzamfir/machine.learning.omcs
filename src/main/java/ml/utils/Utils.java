@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -21,7 +22,7 @@ public class Utils {
 	public static NumberFormat nf;
 
 	static {
-		nf = NumberFormat.getInstance();
+		nf = NumberFormat.getInstance(Locale.US);
 		nf.setMaximumFractionDigits(2);
 		nf.setGroupingUsed(false);
 	}
@@ -257,7 +258,7 @@ public class Utils {
 	public static <T> String toString(double[] d) {
 		StringBuilder res = new StringBuilder("[");
 		for (int i = 0; i < d.length; i++) {
-			res.append(d[i]);
+			res.append(nf.format(d[i]));
 			if(i < d.length -1) {
 				res.append(",");
 			} else {

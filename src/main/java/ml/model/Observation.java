@@ -32,13 +32,12 @@ public class Observation {
 	}
 	
 	/**
-	 * The numeric values in this numeric observation, adding x0 = 1 
+	 * The numeric values in this numeric observation 
 	 */
 	public Vector getVectorValues() {
-		double[] res = new double[getValues().length + 1];
-		res[0] = 1;
+		double[] res = new double[getValues().length ];
 		for (int i = 0; i < getValues().length; i++) {
-			res[i + 1] = (double) getValues()[i];
+			res[i] = (double) getValues()[i];
 		}
 		return new Vector(res);
 	}

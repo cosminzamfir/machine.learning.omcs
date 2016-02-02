@@ -19,13 +19,13 @@ import ml.utils.Utils;
  * @author Cosmin Zamfir 
  *
  */
-public class GradientDescent {
+public class StochasticGradientDescent {
 
-	private static final Logger log = Logger.getLogger(GradientDescent.class);
+	private static final Logger log = Logger.getLogger(StochasticGradientDescent.class);
 	public DifferentiableMultivariableFunction targetFunction;
 	public DataSet dataSet;
 
-	public GradientDescent(DifferentiableMultivariableFunction targetFunction, DataSet dataSet) {
+	public StochasticGradientDescent(DifferentiableMultivariableFunction targetFunction, DataSet dataSet) {
 		super();
 		this.targetFunction = targetFunction;
 		this.dataSet = dataSet;
@@ -37,86 +37,89 @@ public class GradientDescent {
 	 * <p>variables: x1,...,xn - the attributes of the data set
 	 * <p>output: the real value target attribute
 	 * <p>The target function: some {@link DifferentiableMultivariableFunction}
-	 * <p>The error function: E(w0,...,wn) = 1/2 * sum[k in trainingSet] (y' - y)^2
+	 * <p>The error function: E(w0,...,wn) = 1/2 * (y' - y)^2
 	 * <p>
 	 * <p>compute the target function for all X in the training set
 	 * <p>compute the total error by evaluating the error function
 	 * <p>compute the gradient of the error function 
 	 * <p>tune the coefficients of the target function: move each coefficient in the (-) direction of the partial derivative
 	 * <p>
-	 * <p>dE/dwi = sum[k in training set] (y' - y) * d/dwi (y' - y) =
-	 * <p>sum[k in training set] (y' - y) * (-1) * d/dwi (y')
+	 * <p>dE/dwi = (y' - y) * d/dwi (y' - y) =
+	 * <p>(y' - y) * (-1) * d/dwi (y')
 	 * @param maxError
 	 * @param maxIterations
 	 */
 	public void train(double maxError, int maxIterations, double learningRate) {
 		targetFunction.generateRandomCoefficients(0, 0.1);
-		targetFunction.getCoefficients()[0] = 0;
-		targetFunction.getCoefficients()[1] = 2;
 		int iteration = 0;
 		double error = Double.POSITIVE_INFINITY;
 		while (iteration < maxIterations && error > maxError) {
 			log.debug("Iteration " + iteration);
 			double newError = runIteration(learningRate);
-			if(newError < error) {
-				learningRate *=2;
-			} else {
-				learningRate /= 2;
-			}
+			//			if (newError < error) {
+			//				learningRate *= 2;
+			//			} else {
+			//				learningRate /= 2;
+			//			}
 			error = newError;
-			iteration ++;
+			iteration++;
 		}
 	}
 
 	private double runIteration(double learningRate) {
-		double[] yPrime = new double[dataSet.size()];
-		double[] y = new double[dataSet.size()];
-		double[] partialDerivatives = new double[dataSet.getAttributes().size() + 1];
+		double yPrime = 0;
+		double y = 0;
+		double[] partialDerivatives;
 		int i = 0;
-		for (Observation observation : dataSet.getObservations()) {
-			Vector v = observation.getVectorValues();
-			yPrime[i] = targetFunction.evaluate(v.getData());
-			y[i] = (double) observation.getTargetAttributeValue();
-			i++;
-		}
+		Observation observation = Utils.randomElement(dataSet.getObservations());
+		Vector v = observation.getVectorValues();
+		yPrime = targetFunction.evaluate(v.getData());
+		y = (double) observation.getTargetAttributeValue();
 		log.debug("Learning rate:" + learningRate);
 		log.debug("Target function coeficients: " + Utils.toString(targetFunction.getCoefficients()));
-		log.debug("Computed values: " + Utils.toString(yPrime));
-		log.debug("Actual values: " + Utils.toString(y));
+		log.debug("Computed value: " + yPrime);
+		log.debug("Actual value: " + y);
 		log.debug("Error: " + evaluateErrorFunction(yPrime, y));
-		partialDerivatives = computePartialDerivatives(yPrime, y);
+		partialDerivatives = computePartialDerivatives(yPrime, y, observation);
 		log.debug("Partial derivatives: " + Utils.toString(partialDerivatives));
 		for (int j = 0; j < partialDerivatives.length; j++) {
 			targetFunction.getCoefficients()[j] = targetFunction.getCoefficients()[j] + (-1) * partialDerivatives[j] * learningRate;
 		}
 		double res = evaluateErrorFunction(yPrime, y);
 		log.debug("New coeficient values: " + Utils.toString(targetFunction.getCoefficients()));
+		printResults();
 		return res;
 	}
 
-	/** E = 1/2 * sum[k in trainingSet] (y' - y)^2*/
-	private double evaluateErrorFunction(double[] yPrime, double[] y) {
-		double res = 0;
-		for (int i = 0; i < y.length; i++) {
-			res += Math.pow((yPrime[i] - y[i]),2);
+		private void printResults() {
+			double[] yPrime = new double[dataSet.size()];
+			double[] y = new double[dataSet.size()];
+			for (int i = 0; i < y.length; i++) {
+				yPrime[i] = targetFunction.evaluate(dataSet.getObservation(i).getVectorValues().getData());
+				y[i] = (double) dataSet.getObservation(i).getTargetAttributeValue();
+			}
+			log.debug(Utils.toString(yPrime));
+			log.debug(Utils.toString(y));
 		}
-		return res/2;
+
+	/** E = 1/2 * sum[k in trainingSet] (y' - y)^2*/
+	private double evaluateErrorFunction(double yPrime, double y) {
+		return 0.5 * Math.pow((yPrime - y), 2);
 	}
 
 	/** dE/dwi = sum[k in training set] (y' - y) * d/dwi (targetOutput - targetFunction) =
 	*	<p>
 	*   sum[k in training set] (y' - y) * (-1) * d/dwi (targetFunction)
+	 * @param observation 
 	*/
-	private double[] computePartialDerivatives(double[] yPrime, double[] y) {
+	private double[] computePartialDerivatives(double yPrime, double y, Observation observation) {
 		double[] res = new double[dataSet.getAttributes().size() + 1];
 		for (int i = 0; i < res.length; i++) {
 			res[i] = 0;
 		}
-		for (int obsIndex = 0; obsIndex < dataSet.size(); obsIndex++) {
-			Vector x = dataSet.getObservation(obsIndex).getVectorValues();
-			for (int attrIndex = 0; attrIndex < res.length; attrIndex++) {
-				res[attrIndex] += (yPrime[obsIndex] - y[obsIndex]) * targetFunction.partialDerivativeAt(x.getData(), attrIndex);
-			}
+		Vector x = observation.getVectorValues();
+		for (int attrIndex = 0; attrIndex < res.length; attrIndex++) {
+			res[attrIndex] += (yPrime - y) * targetFunction.partialDerivativeAt(x.getData(), attrIndex);
 		}
 		return res;
 	}

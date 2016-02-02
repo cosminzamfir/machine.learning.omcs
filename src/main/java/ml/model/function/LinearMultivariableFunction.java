@@ -11,9 +11,6 @@ import ml.utils.Utils;
 public class LinearMultivariableFunction extends DifferentiableMultivariableFunction {
 
 	
-	/** The first coefficient refers to synthetic variable x0, always equal to 1 */
-	private double[] coefficients;
-	
 	public LinearMultivariableFunction(double[] coefficients) {
 		this.coefficients = coefficients;
 		this.n = coefficients.length;
@@ -31,6 +28,6 @@ public class LinearMultivariableFunction extends DifferentiableMultivariableFunc
 		if(i == 0) {
 			return 1;
 		}
-		return x[i+1];
+		return x[i-1];
 	}
 }
