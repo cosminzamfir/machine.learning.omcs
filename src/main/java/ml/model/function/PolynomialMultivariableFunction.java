@@ -42,7 +42,7 @@ public class PolynomialMultivariableFunction extends MultivariableFunction {
 						sb.append(" + " + a[i][j] + "*x" + i);
 					}
 					if(j > 1) {
-						sb.append(" + " + a[i][j] + "*x" + i + "^" + j);
+						sb.append(" + " + a[i][j] + "*x" + (i+1) + "^" + j);
 					}
 
 				}
