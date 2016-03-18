@@ -28,6 +28,7 @@ public class EM {
 	}
 
 	public void run() {
+		logStartConditions();
 		log.info("Computing most likely theta for observation: " + observation);
 		targetTheta = Utils.randomElement(thetaValues);
 		log.info("Choose random theta: " +targetTheta);
@@ -42,6 +43,14 @@ public class EM {
 		}
 	}
 
+
+	private void logStartConditions() {
+		log.info("Problem setup");
+		for (Object theta : conditionalProbabilitites.keySet()) {
+			log.info("Conditional probabilities for: " + theta + "\n" + conditionalProbabilitites.get(theta));
+		}
+		log.info("Observation (the sum of digits):" + observation);
+	}
 
 	/**
 	 * Compute for each theta: sum(P(x|theta(m+1)) * P(x|observation, theta(m)) and choose the argmax(theta)

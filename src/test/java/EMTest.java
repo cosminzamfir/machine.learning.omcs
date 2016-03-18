@@ -81,7 +81,7 @@ public class EMTest {
 			}
 		};
 		
-		EM em = new EM(thetaValues, map, checker, Integer.valueOf(2));
+		EM em = new EM(thetaValues, map, checker, Integer.valueOf(3));
 		em.run();
 
 	}
