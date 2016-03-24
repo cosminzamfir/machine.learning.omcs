@@ -1,5 +1,7 @@
 package linalg;
 
+import weka.experiment.AveragingResultProducer;
+
 public class Vector {
 
 	private double[] data;
@@ -28,6 +30,18 @@ public class Vector {
 			res[i] = data[i] + other.data[i];
 		}
 		return new Vector(res);
+	}
+	
+	public double sum() {
+		double res = 0;
+		for (double d : data) {
+			res +=d;
+		}
+		return res;
+	}
+	
+	public double mean() {
+		return sum() / data.length;
 	}
 	
 	public Vector substract(Vector other) {
@@ -98,8 +112,20 @@ public class Vector {
 	}
 	
 	
+	public Vector variationFromMean() {
+		double[] res = new double[data.length];
+		double mean = mean();
+		for (int i = 0; i < res.length; i++) {
+			res[i] = data[i] - mean;
+		}
+		return new Vector(res);
+	}
+	
+	
 	@Override
 	public String toString() {
 		return Matrix.columnMatrix(this).toString();
 	}
+	
+	
 }

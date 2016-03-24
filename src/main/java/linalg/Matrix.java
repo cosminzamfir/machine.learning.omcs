@@ -1,5 +1,6 @@
 package linalg;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ml.utils.Utils;
@@ -151,6 +152,14 @@ public class Matrix {
 		double[] res = new double[m];
 		for (int i = 0; i < res.length; i++) {
 			res[i] = data[i][j];
+		}
+		return res;
+	}
+	
+	public List<Vector> toColumnVectors() {
+		List<Vector> res = new ArrayList<>();
+		for (int i = 0; i < n; i++) {
+			res.add(new Vector(column(i)));
 		}
 		return res;
 	}
@@ -389,6 +398,20 @@ public class Matrix {
 		}
 		return new Matrix(copy);
 		
+	}
+	
+	/**
+	 * The variance/covariance matrix - this Matrix instance is interpreted as: rows = observations; columns = features
+	 * @return
+	 */
+	public Matrix varianceCovarianceMatrix() {
+		List<Vector> columns = toColumnVectors();
+		List<Vector> diffs = new ArrayList<>();
+		for (Vector column : columns) {
+			diffs.add(column.variationFromMean());
+		}
+		Matrix variationMatrix = Matrix.fromColumnVectors(diffs);
+		return variationMatrix.transpose().multiplyBy(variationMatrix).divide(variationMatrix.m);
 	}
 	
 }
