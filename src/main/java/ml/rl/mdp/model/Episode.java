@@ -1,11 +1,18 @@
 package ml.rl.mdp.model;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Episode {
+
+	private static NumberFormat nf = NumberFormat.getInstance();
+	static {
+		nf.setMaximumFractionDigits(2);
+		nf.setMinimumFractionDigits(2);
+	}
 
 	private List<Transition> transitions = new ArrayList<Transition>();
 	/**The count of this Episode instance in the learning process. Starts at 1, increment by one for each new episode*/
@@ -72,7 +79,7 @@ public class Episode {
 	}
 	
 	public void printStateValues() {
-		getAllStates().forEach((s) -> System.out.print("[" + s + ":" + s.getValue() + "]"));
+		getAllStates().forEach((s) -> System.out.print("[" + s + ":" + nf.format(s.getValue()) + "]"));
 		System.out.println();
 	}
 

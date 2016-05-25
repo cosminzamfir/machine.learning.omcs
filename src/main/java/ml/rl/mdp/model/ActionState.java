@@ -9,5 +9,4 @@ public class ActionState {
 	private State s;
 	private Action a;
 	private Map<Transition, Double> transitionProbabilites = new LinkedHashMap<>();
-	
 }

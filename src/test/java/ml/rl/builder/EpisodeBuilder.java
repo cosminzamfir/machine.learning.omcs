@@ -37,6 +37,15 @@ public class EpisodeBuilder {
 		}
 		return this;
 	}
+	
+	/**Shortcut method: values are: r1, r2. States are added by default ....*/
+	public EpisodeBuilder addRewards(double ... rewards) {
+		for (int i = 0; i < rewards.length; i++) {
+			addTransition(i, i+1, rewards[i]);
+		}
+		return this;
+	}
+
 
 	public Episode build() {
 		Episode res = new Episode();

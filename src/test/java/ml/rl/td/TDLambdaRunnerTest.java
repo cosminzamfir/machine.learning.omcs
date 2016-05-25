@@ -1,4 +1,4 @@
-package ml.rl.mdp.view;
+package ml.rl.td;
 
 import ml.rl.builder.EpisodeBuilder;
 import ml.rl.mdp.model.Episode;

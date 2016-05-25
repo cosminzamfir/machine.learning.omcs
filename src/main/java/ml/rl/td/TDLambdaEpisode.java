@@ -32,18 +32,17 @@ public class TDLambdaEpisode extends Observable {
 	}
 
 	public void run() {
-		log.info("Running episode: " + episode + ";lambda:" + lambda + ";gamma:" + gamma + ";alpha:" + alpha);
+		log.debug("Running episode: " + episode + ";lambda:" + lambda + ";gamma:" + gamma + ";alpha:" + alpha);
 		for (Transition transition : episode.getTransitions()) {
 			incrementEligibility(transition.getS());
 			double stepProfitability = computeProfitability(transition);
-			log.info("Profitability for " + transition + ":" + stepProfitability);
+			log.debug("Profitability for " + transition + ":" + stepProfitability);
 			
 			updateStateValues(stepProfitability);
 			updateEligibilities();
 			setChanged();
 			notifyObservers(transition);
 		}
-		episode.printStateValues();
 	}
 
 	private void updateEligibilities() {
