@@ -13,6 +13,7 @@ public class EpisodeBuilder {
 	private List<Transition> transitions = new ArrayList<>();
 
 	public static EpisodeBuilder instance() {
+		State.removeAll();
 		return new EpisodeBuilder();
 	}
 	

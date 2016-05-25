@@ -21,6 +21,8 @@ import ml.rl.td.TDLambdaRunner;
 
 import org.apache.log4j.Logger;
 
+import util.MLUtils;
+
 import com.mxgraph.layout.mxGraphLayout;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxCell;
@@ -206,11 +208,13 @@ public class EpisodeViewer {
 	}
 
 	public void waitForMouseClick(String message) {
-		try {
-			Thread.sleep(TDLambdaRunner.updateSpeed);
-		} catch (InterruptedException e) {
-			throw new RuntimeException("",e);
-		}
+		MLUtils.readFromConsole(message);
+		
+		//		try {
+		//			Thread.sleep(TDLambdaRunner.updateSpeed);
+		//		} catch (InterruptedException e) {
+		//			throw new RuntimeException("",e);
+		//		}
 		//		clicked.set(false);
 		//		frame.setTitle(title + ". " + message);
 		//		while (!clicked.get()) {

@@ -38,6 +38,10 @@ public class State {
 		return res;
 	}
 	
+	public static void removeAll() {
+		allStates.clear();
+	}
+	
 	private State(int index) {
 		this.id = index;
 	}
