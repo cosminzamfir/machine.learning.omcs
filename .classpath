@@ -6,12 +6,11 @@
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/m/lib/commons-lang-2.6.jar" sourcepath="/m/lib/commons-lang-2.6-sources.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.23.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.19.jar" sourcepath="c:/work/data/.m2/repository/org/jfree/jfreechart/1.0.19/jfreechart-1.0.19-sources.jar"/>
 	<classpathentry kind="lib" path="lib/stdlib.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jgraphx"/>
 	<classpathentry kind="lib" path="lib/jgraphx.jar" sourcepath="/jgraphx/src"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -10,7 +10,7 @@ import ml.rl.td.view.EpisodeViewer;
 
 public class TDLambdaRunner implements Observer {
 
-	public static int updateSpeed;
+	public static int updateSpeed = 5000;
 	public static void main(String[] args) {
 		System.out.println("Parameters: <lambda>,<gamma>,<alfa>,<updateSpeed>,<s1>,<r1>,<s2>,<r2>,<s3>,.....<sn>,<rn>,<sn+1>"
 				+ "\n   - updateSpeed - in ms, gui speed update"
@@ -56,7 +56,7 @@ public class TDLambdaRunner implements Observer {
 		viewer.update(transition);
 		viewer.waitForMouseClick("Click for next transition");
 		if (episode.isLast(transition)) {
-			viewer.waitForMouseClick("Finished. Click to see results:");
+			//viewer.waitForMouseClick("Finished. Click to see results:");
 			viewer.markCompleted();
 		}
 	}

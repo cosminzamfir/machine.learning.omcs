@@ -1,9 +1,18 @@
 package ml.rl.td.view;
 
-import static com.mxgraph.util.mxConstants.*;
+import static com.mxgraph.util.mxConstants.FONT_BOLD;
+import static com.mxgraph.util.mxConstants.SHAPE_DOUBLE_RECTANGLE;
+import static com.mxgraph.util.mxConstants.SHAPE_RECTANGLE;
+import static com.mxgraph.util.mxConstants.STYLE_FILLCOLOR;
+import static com.mxgraph.util.mxConstants.STYLE_FONTCOLOR;
+import static com.mxgraph.util.mxConstants.STYLE_FONTSIZE;
+import static com.mxgraph.util.mxConstants.STYLE_FONTSTYLE;
+import static com.mxgraph.util.mxConstants.STYLE_SHAPE;
+import static com.mxgraph.util.mxConstants.STYLE_STROKECOLOR;
+import static com.mxgraph.util.mxConstants.STYLE_STROKEWIDTH;
 
 import java.awt.Component;
-import java.awt.GridLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -11,23 +20,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import ml.rl.mdp.model.Episode;
-import ml.rl.mdp.model.State;
-import ml.rl.mdp.model.Transition;
-import ml.rl.td.TDLambdaRunner;
-
 import org.apache.log4j.Logger;
-
-import util.MLUtils;
 
 import com.mxgraph.layout.mxGraphLayout;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
+
+import ml.rl.mdp.model.Episode;
+import ml.rl.mdp.model.State;
+import ml.rl.mdp.model.Transition;
+import ml.rl.td.TDLambdaRunner;
 
 public class EpisodeViewer {
 
@@ -63,14 +71,14 @@ public class EpisodeViewer {
 		layout = new mxHierarchicalLayout(graph);
 		layout.setUseBoundingBox(true);
 		layout.execute(graph.getDefaultParent());
-		//frame.getContentPane().setLayout(new GridLayout());
+		frame.getContentPane().setLayout(new GridBagLayout());
 		//frame.getContentPane().add(graphComponent);
 		graphComponent.setOpaque(true);
-		frame.setContentPane(graphComponent);
+		graphComponent.setBorder(BorderFactory.createEmptyBorder(30, 100, 30, 100));
+		
+		frame.getContentPane().add(graphComponent);
 		addMouseListener();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //graphComponent.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-		//frame.setSize(400, 600);
 		frame.pack();
 		frame.setVisible(true);
 	}
@@ -81,7 +89,7 @@ public class EpisodeViewer {
 			component.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					System.out.println("lkj;lkj");
+					System.out.println("clicked");
 					clicked.set(true);
 				}
 			});
@@ -208,22 +216,22 @@ public class EpisodeViewer {
 	}
 
 	public void waitForMouseClick(String message) {
-		MLUtils.readFromConsole(message);
+		//MLUtils.readFromConsole(message);
 		
-		//		try {
-		//			Thread.sleep(TDLambdaRunner.updateSpeed);
-		//		} catch (InterruptedException e) {
-		//			throw new RuntimeException("",e);
-		//		}
-		//		clicked.set(false);
-		//		frame.setTitle(title + ". " + message);
-		//		while (!clicked.get()) {
-		//			try {
-		//				Thread.sleep(1000);
-		//			} catch (InterruptedException e) {
-		//				throw new RuntimeException("",e);
-		//			}
-		//		}
+		try {
+			Thread.sleep(TDLambdaRunner.updateSpeed);
+		} catch (InterruptedException e) {
+			throw new RuntimeException("", e);
+		}
+		// clicked.set(false);
+		// frame.setTitle(title + ". " + message);
+		// while (!clicked.get()) {
+		// try {
+		// Thread.sleep(1000);
+		// } catch (InterruptedException e) {
+		// throw new RuntimeException("", e);
+		// }
+		// }
 	}
 
 }
