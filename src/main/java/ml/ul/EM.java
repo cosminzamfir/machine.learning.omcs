@@ -13,7 +13,7 @@ public class EM {
 	private static final Logger log = Logger.getLogger(EM.class);
 	private int iterations = 5;
 	private List<?> thetaValues;
-	private Map<Object, DiscreteProbabilityDistribution> conditionalProbabilitites = new LinkedHashMap<Object, DiscreteProbabilityDistribution>();
+	private Map<Object, DiscreteProbabilityDistribution> probabilitityDistributions = new LinkedHashMap<Object, DiscreteProbabilityDistribution>();
 	private Object observation;
 	private Object targetTheta;
 	private CompatibilityChecker compatibilityChecker;
@@ -22,7 +22,7 @@ public class EM {
 	public EM(List<?> thetaValues, Map<Object, DiscreteProbabilityDistribution> conditionalProbabilitites, CompatibilityChecker compatibilityChecker, Object observation) {
 		super();
 		this.thetaValues = thetaValues;
-		this.conditionalProbabilitites = conditionalProbabilitites;
+		this.probabilitityDistributions = conditionalProbabilitites;
 		this.compatibilityChecker = compatibilityChecker;
 		this.observation = observation;
 	}
@@ -33,23 +33,22 @@ public class EM {
 		targetTheta = Utils.randomElement(thetaValues);
 		log.info("Choose random theta: " +targetTheta);
 		DiscreteProbabilityDistribution distribution = computeProbabilityDistribution(targetTheta, observation);
-		log.info("Probability distribution given initial theta: \n" + distribution);
+		//log.info("Probability distribution given initial theta and the observed event: \n" + distribution);
 		for (int i = 0; i < iterations; i++) {
 			targetTheta = maxLikelyhoodEstimation(distribution);
 			distribution = computeProbabilityDistribution(targetTheta, observation);
 			log.info("Iteration " + i);
-			log.info("New theta: " + targetTheta);
-			log.info("Probability distribution given current theta: \n" + distribution);
+			//log.info("Probability distribution given current theta and the observed event: \n" + distribution);
 		}
 	}
 
 
 	private void logStartConditions() {
 		log.info("Problem setup");
-		for (Object theta : conditionalProbabilitites.keySet()) {
-			log.info("Conditional probabilities for: " + theta + "\n" + conditionalProbabilitites.get(theta));
+		for (Object theta : probabilitityDistributions.keySet()) {
+			//log.info("ProbabilityDistribution for : " + theta + "\n" + probabilitityDistributions.get(theta));
 		}
-		log.info("Observation (the sum of digits):" + observation);
+		log.info("Observed event:" + observation);
 	}
 
 	/**
@@ -62,8 +61,8 @@ public class EM {
 		Object targetTheta = null;
 		for (Object candidateTheta : thetaValues) {
 			double p = 0;
-			DiscreteProbabilityDistribution candidateThetaDistribution = conditionalProbabilitites.get(candidateTheta);
-			for (Object instance : distribution.getData().keySet()) {
+			DiscreteProbabilityDistribution candidateThetaDistribution = probabilitityDistributions.get(candidateTheta);
+			for (Object instance : distribution.getProbabilities().keySet()) {
 				p += distribution.p(instance) * candidateThetaDistribution.p(instance);
 			}
 			if(p > maxLikelyhood)  {
@@ -71,15 +70,15 @@ public class EM {
 				targetTheta = candidateTheta;
 			}
 		}
-		log.info("Best theta found with likelyhood estimation = " + maxLikelyhood);
+		log.info("New best theta found: " + targetTheta + " with likelyhood estimation = " + maxLikelyhood);
 		return targetTheta;
 	}
 
 	private DiscreteProbabilityDistribution computeProbabilityDistribution(Object theta, Object observation) {
-		DiscreteProbabilityDistribution distribution = conditionalProbabilitites.get(theta);
+		DiscreteProbabilityDistribution distribution = probabilitityDistributions.get(theta);
 		DiscreteProbabilityDistribution res = new DiscreteProbabilityDistribution();
 		double normalizingFactor = summAllPossibleInstances(distribution, observation);
-		for (Object instance : distribution.getData().keySet()) {
+		for (Object instance : distribution.getProbabilities().keySet()) {
 			if(compatibilityChecker.isCompatible(instance, observation)) {
 				res.addInstance(instance, distribution.p(instance)/normalizingFactor);
 			} else {
@@ -91,7 +90,7 @@ public class EM {
 
 	private double summAllPossibleInstances(DiscreteProbabilityDistribution distribution, Object observation2) {
 		double res = 0;
-		for (Object instance : distribution.getData().keySet()) {
+		for (Object instance : distribution.getProbabilities().keySet()) {
 			if(compatibilityChecker.isCompatible(instance, observation)) {
 				res += distribution.p(instance);
 			}

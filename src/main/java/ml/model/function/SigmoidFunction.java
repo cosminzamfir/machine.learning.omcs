@@ -9,7 +9,7 @@ import ml.utils.FunctionChart;
  * @author Cosmin Zamfir
  *
  */
-public class SigmoidFunction extends Function {
+public class SigmoidFunction extends AbstractFunction {
 
 	public SigmoidFunction() {
 		super();

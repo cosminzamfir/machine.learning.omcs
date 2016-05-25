@@ -1,6 +1,8 @@
 package ml.ul;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,25 +12,46 @@ import java.util.Map;
  */
 public class DiscreteProbabilityDistribution {
 
-	private Map<Object, Double> data = new LinkedHashMap<Object, Double>();
+	private Map<Object, Double> probabilitites = new LinkedHashMap<Object, Double>();
+	private List<Object> observations = new ArrayList();
 	
 	public double p(Object instance) {
-		Double res = data.get(instance);
+		Double res = getProbabilities().get(instance);
 		return res == null ? 0 : res;
 	}
 	
 	public void addInstance(Object instance, double probability) {
-		data.put(instance, probability);
+		probabilitites.put(instance, probability);
 	}
 	
-	public Map<Object, Double> getData() {
-		return data;
+	public void addObservation(Object observation) {
+		this.observations.add(observation);
+	}
+	
+	public void computeProbabilities() {
+		for (Object observation : observations) {
+			if(probabilitites.containsKey(observation)) {
+				probabilitites.put(observation, probabilitites.get(observation) + 1);
+			} else {
+				probabilitites.put(observation, 1.0);
+			}
+		}
+		for (Object observation : probabilitites.keySet()) {
+			probabilitites.put(observation, probabilitites.get(observation)/observations.size());
+		}
+	}
+	
+	public Map<Object, Double> getProbabilities() {
+		if(probabilitites.isEmpty()) {
+			computeProbabilities();
+		}
+		return probabilitites;
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (Object  instance : data.keySet()) {
+		for (Object  instance : getProbabilities().keySet()) {
 			sb.append(instance + ":" + p(instance)).append("\n");
 		}
 		return sb.toString();

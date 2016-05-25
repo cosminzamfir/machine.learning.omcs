@@ -1,12 +1,10 @@
 package ml.slearning.neuralnet;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import weka.core.pmml.MappingInfo;
 import ml.model.DataSet;
 import ml.model.Observation;
 

@@ -1,6 +1,5 @@
 package linalg;
 
-import weka.experiment.AveragingResultProducer;
 
 public class Vector {
 

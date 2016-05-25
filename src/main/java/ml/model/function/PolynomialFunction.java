@@ -7,7 +7,7 @@ import java.io.IOException;
  * @author Cosmin Zamfir
  *
  */
-public class PolynomialFunction extends Function {
+public class PolynomialFunction extends AbstractFunction {
 
 	/** The coefficients */
 	private double[] a;
@@ -52,7 +52,7 @@ public class PolynomialFunction extends Function {
 		PolynomialFunction qf = new PolynomialFunction(1, 1, 1);
 		qf.plot(0, 10);
 		System.in.read();
-		double d = qf.integral(0, 20, 0.01);
+		double d = qf.definiteIntegral(0, 20, 0.01);
 	}
 
 }

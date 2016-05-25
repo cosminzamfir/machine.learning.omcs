@@ -2,7 +2,7 @@ package ml.model.function;
 
 import java.io.IOException;
 
-public class QuadraticFunction extends Function {
+public class QuadraticFunction extends AbstractFunction {
 
 	private double a, b, c;
 
@@ -27,7 +27,7 @@ public class QuadraticFunction extends Function {
 		QuadraticFunction qf = new QuadraticFunction(1, 1, 1);
 		qf.plot(0, 10);
 		System.in.read();
-		double d = qf.integral(0, 20, 0.01);
+		double d = qf.definiteIntegral(0, 20, 0.001);
 	}
 
 }

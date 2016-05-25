@@ -9,7 +9,7 @@ import java.io.IOException;
  * @author Cosmin Zamfir
  *
  */
-public class NormalFunction extends Function {
+public class NormalFunction extends AbstractFunction {
 
 	private double miu, sigma;
 
@@ -31,7 +31,7 @@ public class NormalFunction extends Function {
 
 	public static void main(String[] args) throws IOException {
 		NormalFunction qf = new NormalFunction(0,1);
-		double d = qf.integral(-2, 2, 0.00001);
+		double d = qf.definiteIntegral(-2, 2, 0.00001);
 		System.out.println("Integral is: " + d);
 	}
 

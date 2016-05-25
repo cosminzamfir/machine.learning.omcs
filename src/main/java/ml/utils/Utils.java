@@ -1,5 +1,6 @@
 package ml.utils;
 
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
@@ -276,5 +277,17 @@ public class Utils {
 		}
 		return res;
 	}
+	
+	public static List<Gender> genders() {
+		List<Gender> res = new ArrayList<>();
+		res.add(Gender.F);
+		res.add(Gender.M);
+		return res;
+	}
+	
+	public enum Gender {
+		M,F;
+	}
+
 	
 }
