@@ -31,10 +31,10 @@ public class State {
 		if(res == null) {
 			res = new State(index);
 			allStates.put(index, res);
-			log.debug("Created new state:" + res);
+			log.trace("Created new state:" + res);
 			return res;
 		}
-		log.debug("Served existing state:" + res);
+		log.trace("Served existing state:" + res);
 		return res;
 	}
 	

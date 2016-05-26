@@ -12,7 +12,6 @@ import static com.mxgraph.util.mxConstants.STYLE_STROKECOLOR;
 import static com.mxgraph.util.mxConstants.STYLE_STROKEWIDTH;
 
 import java.awt.Component;
-import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -71,12 +70,11 @@ public class EpisodeViewer {
 		layout = new mxHierarchicalLayout(graph);
 		layout.setUseBoundingBox(true);
 		layout.execute(graph.getDefaultParent());
-		frame.getContentPane().setLayout(new GridBagLayout());
-		//frame.getContentPane().add(graphComponent);
+		//frame.getContentPane().setLayout(new GridBagLayout());
 		graphComponent.setOpaque(true);
 		graphComponent.setBorder(BorderFactory.createEmptyBorder(30, 100, 30, 100));
 		
-		frame.getContentPane().add(graphComponent);
+		frame.setContentPane(graphComponent);
 		addMouseListener();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();

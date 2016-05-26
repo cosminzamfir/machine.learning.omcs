@@ -38,6 +38,16 @@ public class Episode {
 	public List<Transition> getTransitions() {
 		return transitions;
 	}
+	
+	/** zero-index based*/
+	public Transition getTransition(int i) {
+		return transitions.get(i);
+	}
+	
+	/** zero-index based*/
+	public double getStateValueAt(int i) {
+		return getAllStates().get(i).getValue();
+	}
 
 	public int getCount() {
 		return count;
@@ -95,6 +105,14 @@ public class Episode {
 		transitions.forEach((t) -> res.append("[" + nf.format(t.getReward()) + "]"));
 		res.append("  Sum:" + transitions.parallelStream().mapToDouble(Transition::getReward).sum());
 		return res.toString();
+	}
+
+	public void setStateValueAt(int i, double value) {
+		getAllStates().get(i).setValue(value);
+	}
+	
+	public double getTotalReward() {
+		return transitions.parallelStream().mapToDouble(Transition::getReward).sum();
 	}
 
 

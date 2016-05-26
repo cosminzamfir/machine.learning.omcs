@@ -48,7 +48,7 @@ public class HW2 {
 		double[] valueEstimates = new double[] {0.0,12.4,0.0,18.8,4.3,0.4,8.1};
 		double[] rewards = new double[] {-4.5,-2.8,8.1,7.8,3.0,0.0,0.3};
 		double probToState1 = 0.11;
-		double lambda = run(probToState1, valueEstimates, rewards);
+		run(probToState1, valueEstimates, rewards);
 	}
 	
 	@Test
@@ -56,7 +56,7 @@ public class HW2 {
 		double[] valueEstimates = new double[] {0.0,4.2,-3.9,0.0,18.1,20.3,13.0};
 		double[] rewards = new double[] {7.7,-4.3,4.4,-2.7,-0.5,0.2,7.0} ;
 		double probToState1 = 0.79;
-		double lambda = run(probToState1, valueEstimates, rewards);
+		run(probToState1, valueEstimates, rewards);
 	}
 	
 	@Test
@@ -64,7 +64,7 @@ public class HW2 {
 		double[] valueEstimates = new double[] {0.0,9.3,0.0,12.8,0.0,22.4,3.6};
 		double[] rewards = new double[] {9.0,0.0,0.4,8.9,6.7,0.6,1.9} ;
 		double probToState1 = 0.76;
-		double lambda = run(probToState1, valueEstimates, rewards);
+		run(probToState1, valueEstimates, rewards);
 	}
 	
 	@Test
@@ -72,7 +72,7 @@ public class HW2 {
 		double[] valueEstimates = new double[] {0.0,0.0,0.0,18.8,0.0,21.1,-2.7};
 		double[] rewards = new double[] {-1.8,5.1,0.6,8.5,1.4,0.6,3.4} ;
 		double probToState1 = 0.77;
-		double lambda = run(probToState1, valueEstimates, rewards);
+		run(probToState1, valueEstimates, rewards);
 	}
 	
 	
@@ -81,7 +81,7 @@ public class HW2 {
 		double[] valueEstimates = new double[] {0.0,-3.4,6.3,10.7,0.0,5.0,11.2};
 		double[] rewards = new double[] {-2.1,7.9,-4.4,4.8,-1.9,0.0,5.4} ;
 		double probToState1 = 0.2;
-		double lambda = run(probToState1, valueEstimates, rewards);
+		run(probToState1, valueEstimates, rewards);
 	}
 	
 
@@ -91,7 +91,7 @@ public class HW2 {
 		double lambda = 0;
 		while (lambda < 1) {
 			double[] values = runTDLammbda(probToState1, valueEstimates, rewards, lambda);
-			MLUtils.printDoubleArray(values);
+			//MLUtils.printDoubleArray(values);
 			if (MLUtils.equals(referenceValues[0], values[0], epsilon)) {
 				System.out.println("Found lambda: " + lambda);
 				return lambda;
