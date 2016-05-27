@@ -27,7 +27,7 @@ public class EpisodeBuilder {
 
 	
 	public EpisodeBuilder addTransition(int sId, int sPrimeId, double reward) {
-		transitions.add(new Transition(Action.defaultAction(), State.instance(sId), State.instance(sPrimeId), reward));
+		transitions.add(Transition.instance(Action.defaultAction(), State.instance(sId), State.instance(sPrimeId), reward));
 		return this;
 	}
 	

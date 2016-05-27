@@ -1,11 +1,2 @@
-/car_data.txt
-/events/
-/forest_fires.csv
-/house_prices.txt
-/linalg/
-/linear_like.arff
-/linear_like.txt
-/log4j.properties
-/ml/
-/prob/
-/util/
+/ml
+/util

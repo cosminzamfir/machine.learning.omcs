@@ -21,6 +21,11 @@ public class Episode {
 	 */
 	private int count;
 	private List<State> allStates = new ArrayList<>();
+	
+	public static Episode instance() {
+		return new Episode();
+	}
+
 
 	public void addTransition(Transition transition) {
 		if (!transitions.isEmpty() && !transition.getS().equals(transitions.get(transitions.size() - 1).getsPrime())) {
@@ -114,6 +119,5 @@ public class Episode {
 	public double getTotalReward() {
 		return transitions.parallelStream().mapToDouble(Transition::getReward).sum();
 	}
-
 
 }

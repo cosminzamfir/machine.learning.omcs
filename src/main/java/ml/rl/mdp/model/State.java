@@ -12,7 +12,9 @@ import org.apache.log4j.Logger;
 public class State {
 
 	private static final Logger log = Logger.getLogger(State.class);
-	private static Map<Integer, State> allStates = new LinkedHashMap<Integer, State>();
+	/**States identified by their Id. To support MDPs with predefined states e.g. S1,S2,...,Sn
+	 * , as oposded to problems where States are idenditified by their data*/
+	private static Map<Integer, State> identifiableStates = new LinkedHashMap<Integer, State>();
 	private static NumberFormat nf = NumberFormat.getInstance();
 	static {
 		nf.setMaximumFractionDigits(2);
@@ -26,11 +28,11 @@ public class State {
 	private Map<String, Object> data = new LinkedHashMap<>();
 	
 	
-	public static State instance(int index) {
-		State res = allStates.get(index);
+	public static State instance(int id) {
+		State res = identifiableStates.get(id);
 		if(res == null) {
-			res = new State(index);
-			allStates.put(index, res);
+			res = new State(id);
+			identifiableStates.put(id, res);
 			log.trace("Created new state:" + res);
 			return res;
 		}
@@ -38,13 +40,19 @@ public class State {
 		return res;
 	}
 	
+	public static State newInstance() {
+		return new State();
+	}
+	
 	public static void removeAll() {
-		allStates.clear();
+		identifiableStates.clear();
 	}
 	
 	private State(int index) {
 		this.id = index;
 	}
+	
+	public State(){}
 
 	public void setValue(double value) {
 		this.value = value;
