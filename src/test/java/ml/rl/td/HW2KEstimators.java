@@ -88,7 +88,6 @@ public class HW2KEstimators {
 	public double run(double probToState1, double[] valueEstimates, double[] rewards) {
 		double tdOneValue = computeTdOneValue(probToState1, null, rewards);
 		double[] ks = computeKEstimatorsValues(probToState1, valueEstimates, rewards);
-		//Function f = ((x) -> (1-x) * ks[0] + x*(1-x) * ks[1] + x*x*(1-x) * ks[2] + x*x*x*(1-x) * ks[3] + (1- (1-x) - x*(1-x) - x*x*(1-x) - x*x*x*(1-x)) * ks[4]);
 		double ret = computeReturn(probToState1, valueEstimates, rewards);
 		Function f = ((x) -> (1-x) * ks[0] + 
 						x*(1-x) * ks[1] + 
@@ -96,7 +95,6 @@ public class HW2KEstimators {
 						x*x*x*(1-x) * ks[3] + 
 						x*x*x*x*(1-x) * ks[4] +
 						Math.pow(x, 5) * ret);
-						//(1- (1-x) - x*(1-x) - x*x*(1-x) - x*x*x*(1-x) - x*x*x*x*(1-x)*ret));
 		double lambda = new Solver().solve(f, tdOneValue, 0.00001);
 		System.out.println("Found lambda: " + lambda);
 		Assert.assertTrue(Math.abs(tdOneValue) - f.evaluate(lambda) < 0.0001);

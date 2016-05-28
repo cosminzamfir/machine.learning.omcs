@@ -1,3 +1,4 @@
+package ml.rl.mdp;
 import ml.rl.mdp.ValueIterationRunner;
 import ml.rl.mdp.model.Action;
 import ml.rl.mdp.model.MDP;
@@ -37,7 +38,7 @@ public class ValueIterationRunnerTest {
 		mdp.addSingleOutcomStateAction(State.instance(9), State.instance(10), 1.6, Action.defaultName);
 
 		ValueIterationRunner vir = new ValueIterationRunner(mdp);
-		vir.setGamma(0.5);
+		vir.setGamma(0.9);
 		vir.run();
 		System.in.read();
 	}

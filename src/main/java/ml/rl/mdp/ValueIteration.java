@@ -50,7 +50,7 @@ public class ValueIteration extends Observable {
 			for (State s : mdp.getStates()) {
 				double v = s.getValue();
 				s.setValue(getValue(s));
-				log.info("Iteration " + iteration + ". Setting value for " + s + " to " + s.getValue());
+				log.debug("Iteration " + iteration + ". Setting value for " + s + " to " + s.getValue());
 				delta = Math.max(delta, Math.abs(v - s.getValue()));
 				iteration++;
 				setChanged();

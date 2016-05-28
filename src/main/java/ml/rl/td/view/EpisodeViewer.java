@@ -15,7 +15,9 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -40,13 +42,16 @@ public class EpisodeViewer {
 
 	private static final Logger log = Logger.getLogger(EpisodeViewer.class);
 	private static final String title = "TDLambda solver";
+	
+	private static int vertexHeighth = 70;
+	private static int vertexWidth = 150;
 	private Episode episode;
 	private mxGraph graph;
 	private JFrame frame;
 	private mxGraphComponent graphComponent;
 	private mxGraphLayout layout;
-	private List<mxCell> vertices = new ArrayList<mxCell>();
-	private List<mxCell> edges = new ArrayList<mxCell>();
+	private Map<State, mxCell> vertices = new HashMap<>();
+	private Map<Transition, mxCell> edges = new HashMap<>();
 	private AtomicBoolean clicked = new AtomicBoolean(false);
 
 	public EpisodeViewer(Episode episode) {
@@ -105,23 +110,21 @@ public class EpisodeViewer {
 	}
 
 	private mxCell getEdge(Transition t) {
-		Optional<mxCell> o = edges.stream().filter((cell) -> (cell.getId().equals(t.toString()))).findAny();
-		
-		if(o.isPresent()) {
-			return o.get();
+		mxCell res = edges.get(t);
+		if(res != null) {
+			return res;
 		}
 		mxCell vertexFrom = getVertex(t.getS());
 		mxCell vertexTo = getVertex(t.getsPrime());
-		mxCell edge = (mxCell) graph.insertEdge(graph.getDefaultParent(), t.toString(), (int) t.getReward(), vertexFrom, vertexTo);
-		setDefaultEdgeStyle(edge);
-		edges.add(edge);
-		return edge;
+		res = (mxCell) graph.insertEdge(graph.getDefaultParent(), t.toString(), (int) t.getReward(), vertexFrom, vertexTo);
+		setDefaultEdgeStyle(res);
+		edges.put(t,res);
+		return res;
 	}
 	
 	public void setDefaultStyle() {
-		vertices.forEach((v)-> setDefaultVertexStyle(v));
-		
-		edges.forEach((e) -> setDefaultEdgeStyle(e));
+		vertices.values().forEach((v)-> setDefaultVertexStyle(v));
+		edges.values().forEach((e) -> setDefaultEdgeStyle(e));
 	}
 
 	private void setDefaultVertexStyle(mxCell vertex) {
@@ -166,12 +169,12 @@ public class EpisodeViewer {
 	}
 	
 	private mxCell getVertex(State s) {
-		Optional<mxCell> o = vertices.stream().filter((cell) -> (cell.getId().equals(s.toString()))).findAny();
-		if(o.isPresent()) {
-			return o.get();
+		mxCell res = vertices.get(s);
+		if(res != null) {
+			return res;
 		}
-		mxCell res = (mxCell) graph.insertVertex(graph.getDefaultParent(), s.toString(), getLabel(s), 20, 20, 120, 70);
-		vertices.add(res);
+		res = (mxCell) graph.insertVertex(graph.getDefaultParent(), s.toString(), getLabel(s), 20, 20, vertexWidth, vertexHeighth);
+		vertices.put(s, res);
 		setDefaultVertexStyle(res);
 		return res;
 	}
@@ -184,34 +187,25 @@ public class EpisodeViewer {
 		return s.toExtendedString();
 	}
 
-	public void markTransition(Transition transition) {
+	public void update(Transition transition) {
 		graph.getModel().beginUpdate();
+		
+		//vertices.values().forEach((v) -> setDefaultVertexStyle(v));
 		setSelectedEdgeStyle(getEdge(transition));
 		setSelectedVertexStyle(getVertex(transition.getS()));
 		setSelectedVertexStyle(getVertex(transition.getsPrime()));
-		graph.getModel().endUpdate();
-		layout.execute(graph.getDefaultParent());
-		graph.refresh();
-	}
-	
-	public void update(Transition transition) {
-		graph.getModel().beginUpdate();
-		episode.getAllStates().forEach((s) -> refresh(s));
+		episode.getAllStates().forEach((s) -> getVertex(s).setValue(s.toExtendedString()));
+		
 		graph.getModel().endUpdate();
 		layout.execute(graph.getDefaultParent());
 		graph.refresh();
 	}
 	
 	public void markCompleted() {
-		vertices.forEach((v) -> setCompletedVertexStyle(v));
+		vertices.values().forEach((v) -> setCompletedVertexStyle(v));
 		graph.refresh();
 	}
 
-	private void refresh(State s) {
-		mxCell vertex = getVertex(s);
-		vertex.setValue(s.toExtendedString());
-		setDefaultVertexStyle(vertex);
-	}
 
 	public void waitForMouseClick(String message) {
 		//MLUtils.readFromConsole(message);

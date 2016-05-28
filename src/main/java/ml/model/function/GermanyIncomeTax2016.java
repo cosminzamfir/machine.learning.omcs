@@ -8,7 +8,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 /**
- * The percentage of the income tax in Germany as of 2016 in the taxable income, for married couples
+ * The percentage of the income tax in Germany as of 2016 in the taxable income,
+ * for married couples
+ * 
  * @author eh2zamf
  *
  */
@@ -16,12 +18,12 @@ public class GermanyIncomeTax2016 extends AbstractFunction {
 
 	private static final Logger log = Logger.getLogger(GermanyIncomeTax2016.class);
 	private boolean usePercent = false;
-	
+
 	public GermanyIncomeTax2016 usePercent(boolean usePercent) {
 		this.usePercent = usePercent;
 		return this;
 	}
-	
+
 	public static class TaxLevel {
 		private double lowerAmount;
 		private double upperAmount;
@@ -38,11 +40,14 @@ public class GermanyIncomeTax2016 extends AbstractFunction {
 		}
 
 		public double computeTax(double d) {
-			double res = new DefiniteIntegral().compute(((x) -> (lowerTax + (upperTax - lowerTax) * x / (upperAmount - lowerAmount))), 0, d, 0.1); 
-			log.info(MessageFormat.format("{0}. Tax for {1} is {2}",TaxLevel.this,d,res));
+			double res = new DefiniteIntegral()
+					.compute(((x) -> (lowerTax + (upperTax - lowerTax) * x /
+							(upperAmount - lowerAmount))), 0, d, 0.1);
+			//double res = d * (lowerTax + (upperTax - lowerTax) * d / (upperAmount - lowerAmount));
+			log.info(MessageFormat.format("{0}. Tax for {1} is {2}", TaxLevel.this, d, res));
 			return res;
 		}
-		
+
 		@Override
 		public String toString() {
 			return MessageFormat.format("TaxLevel[{0}:{1} -> {2}:{3}]", lowerAmount, lowerTax, upperAmount, upperTax);
@@ -63,18 +68,19 @@ public class GermanyIncomeTax2016 extends AbstractFunction {
 		double res = 0;
 		for (TaxLevel taxLevel : taxLevels) {
 			if (x < taxLevel.lowerAmount) {
-				return usePercent ? res/x : res;
+				return usePercent ? res / x : res;
 			}
 			res += taxLevel.computeTax(Math.min(taxLevel.upperAmount, x) - taxLevel.lowerAmount);
 		}
-		return usePercent ? res/x : res;
+		return usePercent ? res / x : res;
 	}
 
 	public static void main(String[] args) {
-		//System.out.println(new GermanyIncomeTax2016().usePercent(true).evaluate(999999999));
-		new GermanyIncomeTax2016().usePercent(true).plot(0, 75000);
+		// System.out.println(new
+		// GermanyIncomeTax2016().usePercent(true).evaluate(999999999));
+		new GermanyIncomeTax2016().usePercent(false).plot(0, 150000);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "taxableIncome -> incomeTax " + (usePercent ? "(percentage)" : "");

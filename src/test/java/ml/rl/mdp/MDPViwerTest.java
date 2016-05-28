@@ -1,4 +1,4 @@
-package ml.rl.td;
+package ml.rl.mdp;
 
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.State;

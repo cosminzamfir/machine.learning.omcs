@@ -51,13 +51,16 @@ public class TDLambdaRunner implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		Transition transition = (Transition) arg;
-		viewer.markTransition(transition);
-		viewer.waitForMouseClick("Click to see the state value updates");
 		viewer.update(transition);
-		viewer.waitForMouseClick("Click for next transition");
 		if (episode.isLast(transition)) {
 			//viewer.waitForMouseClick("Finished. Click to see results:");
 			viewer.markCompleted();
+		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
