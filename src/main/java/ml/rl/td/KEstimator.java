@@ -8,7 +8,7 @@ public class KEstimator {
 	
 	/** K-Estimate the value of the first state of the episode */
 	public double estimate(Episode episode, int k,double gamma) {
-		double res = 0;
+		double res = 0;`
 		for (int i = 0; i < k; i++) {
 			if(i > episode.getTransitions().size() -1) {
 				return res;

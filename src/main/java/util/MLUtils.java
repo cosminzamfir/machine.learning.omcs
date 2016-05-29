@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -62,7 +64,8 @@ public class MLUtils {
 				attributeName = attributeName.replace("\n", "");
 				res.append("\n");
 			}
-			res.append("[").append(attributeName).append(":").append(output(ReflectionHelper.getFieldValue(attributeName, o))).append("]");
+			res.append("[").append(attributeName).append(":")
+					.append(output(ReflectionHelper.getFieldValue(attributeName, o))).append("]");
 		}
 		return res.toString();
 	}
@@ -96,5 +99,18 @@ public class MLUtils {
 		}
 		return StringUtils.removeEnd(sb.toString(), ",") + ")";
 	}
+
+	public static int random(int max) {
+		return new Random().nextInt(max) + 1;
+	}
+
+	public static double randomDouble(double min, double max) {
+		return min + Math.random() * (max - min);
+	}
+
+	public static <T> T randomElement(List<T> l) {
+		return l.get(random(l.size()) - 1);
+	}
+
 
 }

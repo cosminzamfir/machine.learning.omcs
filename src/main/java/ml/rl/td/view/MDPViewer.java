@@ -39,7 +39,8 @@ public class MDPViewer {
 	private mxGraphComponent graphComponent;
 	private mxHierarchicalLayout layout;
 
-	public MDPViewer(MDP mdp) {
+
+	private MDPViewer(MDP mdp) {
 		super();
 		this.mdp = mdp;
 		init();

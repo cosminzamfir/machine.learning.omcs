@@ -30,7 +30,7 @@ public class ValueIterationTest {
 		mdp.addSingleOutcomStateAction(State.instance(4), State.instance(5), 0, Action.defaultName);
 		mdp.addSingleOutcomStateAction(State.instance(5), State.instance(6), 1.6, Action.defaultName);
 
-		new MDPViewer(mdp).display();
+		MDPViewer.instance(mdp).display();
 
 		ValueIteration vi = new ValueIteration(mdp);
 		vi.run();

@@ -40,9 +40,13 @@ public class MDP {
 		stateActions.get(stateAction.getState()).add(stateAction);
 	}
 
-	/** Generate initial policy - equal probabilities for all decisitions */
+	/** Generate initial policy - equal probabilities for all decisions */
 	public MDPPolicy initialPolicy() {
 		return MDPPolicy.initialPolicy(this);
+	}
+	
+	public MDPPolicy initialDeterministicPolicy() {
+		return MDPPolicy.initialDeterministicPolicy(this);
 	}
 
 	/** Generate an Episode by sampling actions according to the given mdppolicy */

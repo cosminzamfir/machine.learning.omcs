@@ -18,6 +18,11 @@ public class StatePolicy {
 		policy.put(stateAction, p);
 	}
 	
+	/**Shortcut for {@link #setActionProbability(StateAction, 1)}*/
+	public void setStateAction(StateAction stateAction) {
+		policy.put(stateAction, 1.0);
+	}
+	
 	public Map<StateAction, Double> getPolicy() {
 		return policy;
 	}
@@ -36,5 +41,9 @@ public class StatePolicy {
 			}
 		}
 		throw new RuntimeException("Assertion error in generating ActionState from StatePolicy");
+	}
+
+	public double getProbability(StateAction stateAction) {
+		return policy.get(stateAction) == null ? 0 : policy.get(stateAction);
 	}
 }

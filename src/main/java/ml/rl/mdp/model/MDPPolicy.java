@@ -3,6 +3,8 @@ package ml.rl.mdp.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import util.MLUtils;
+
 /**
  * Maintains a probabilistic mapping of State -> StateAction, ie for each State, give the probabilities to following each StateAction available for this state
  * @author eh2zamf
@@ -35,6 +37,10 @@ public class MDPPolicy {
 		}
 		statePolicy.setActionProbability(stateAction, p);
 	}
+	
+	public double getProbability(State state, StateAction stateAction) {
+		return statePolicies.get(state).getProbability(stateAction);
+	}
 
 	public static MDPPolicy initialPolicy(MDP mdp) {
 		MDPPolicy res = instance(mdp);
@@ -45,5 +51,24 @@ public class MDPPolicy {
 			res.statePolicies.put(state, statePolicy);
 		}
 		return res;
+	}
+
+	public static MDPPolicy initialDeterministicPolicy(MDP mdp) {
+		MDPPolicy res = instance(mdp);
+		for (State state : mdp.getStates()) {
+			StatePolicy statePolicy = StatePolicy.instace(state);
+			StateAction stateAction = MLUtils.randomElement(mdp.getStateActions(state));
+			statePolicy.setStateAction(stateAction);
+			res.statePolicies.put(state, statePolicy);
+		}
+		return res;
+	}
+	
+	public StatePolicy getStatePolicy(State state) {
+		return statePolicies.get(state);
+	}
+	
+	public void setStatePolicy(State state, StatePolicy statePolicy) {
+		statePolicies.put(state, statePolicy);
 	}
 }

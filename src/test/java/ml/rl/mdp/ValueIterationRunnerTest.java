@@ -38,7 +38,7 @@ public class ValueIterationRunnerTest {
 		mdp.addSingleOutcomStateAction(State.instance(9), State.instance(10), 1.6, Action.defaultName);
 
 		ValueIterationRunner vir = new ValueIterationRunner(mdp);
-		vir.setGamma(0.9);
+		vir.setGamma(1);
 		vir.run();
 		System.in.read();
 	}
