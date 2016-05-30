@@ -73,15 +73,16 @@ public class PolicyIteration {
 	 * 
 	 */
 	private boolean improvePolicy(MDPPolicy policy) {
+		boolean policyImproved = false;
 		for (State state : mdp.getNonTerminalStates()) {
 			StatePolicy bestPolicy = getBestPolicy(state);
 			if (!bestPolicy.equals(policy.getStatePolicy(state))) {
-				log.info("Policy improved for state " + state + ". previousPolicy: " + policy.getStatePolicy(state) + ". newPolicy:" + bestPolicy);
+				log.debug("Policy improved for state " + state + ". previousPolicy: " + policy.getStatePolicy(state) + ". newPolicy:" + bestPolicy);
 				policy.setStatePolicy(state, bestPolicy);
-				return true;
+				policyImproved = true;
 			}
 		}
-		return false;
+		return policyImproved;
 	}
 
 	/**

@@ -27,6 +27,9 @@ public class State {
 	private List<Double> valueHistory = new ArrayList<Double>();
 	private Map<String, Object> data = new LinkedHashMap<>();
 	
+	public static List<State> allIdentifiableStates() {
+		return new ArrayList<>(identifiableStates.values());
+	}
 	
 	public static State instance(int id) {
 		State res = identifiableStates.get(id);
@@ -56,7 +59,7 @@ public class State {
 
 	public void setValue(double value) {
 		this.value = value;
-		valueHistory.add(value);
+		//valueHistory.add(value);
 	}
 
 	public double getValue() {

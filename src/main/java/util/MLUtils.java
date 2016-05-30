@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -114,6 +115,15 @@ public class MLUtils {
 	
 	public static String format(double d) {
 		return nf.format(d);
+	}
+	
+	public static <T> List<T> minus(List<T> source, T... obj) {
+		List<T> res = new ArrayList<T>(source);
+		for (T t : obj) {
+			res.remove(t);
+			
+		}
+		return res;
 	}
 
 

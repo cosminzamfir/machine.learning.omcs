@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import util.JsonEncoder;
+
 public class MDP {
 
 	private Set<State> states = new LinkedHashSet<>();
@@ -134,6 +136,21 @@ public class MDP {
 			file = new File(url.toURI().getPath().replace("bin/log4j.properties", "src/main/resources/" + resourceName));
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 			writer.write(toString());
+			writer.flush();
+			writer.close();
+			
+		} catch (Exception e) {
+			throw new RuntimeException("",e);
+		}
+	}
+
+	public void saveAsJson(String resourceName, double gamma) {
+		URL url = Thread.currentThread().getContextClassLoader().getResource("log4j.properties");
+		File file;
+		try {
+			file = new File(url.toURI().getPath().replace("bin/log4j.properties", "src/main/resources/" + resourceName));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			writer.write(new JsonEncoder(this).encode(gamma));
 			writer.flush();
 			writer.close();
 			
