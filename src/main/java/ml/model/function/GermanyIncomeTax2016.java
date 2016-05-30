@@ -8,8 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 /**
- * The percentage of the income tax in Germany as of 2016 in the taxable income,
- * for married couples
+ * The relative/absolute income tax in Germany as of 2016 for married couples
  * 
  * @author eh2zamf
  *
@@ -19,7 +18,11 @@ public class GermanyIncomeTax2016 extends AbstractFunction {
 	private static final Logger log = Logger.getLogger(GermanyIncomeTax2016.class);
 	private boolean usePercent = false;
 
-	public GermanyIncomeTax2016 usePercent(boolean usePercent) {
+	
+	/**
+	 * if <code>true</code> return the percentage of the tax in the taxable income; otherwise the absolute tax value
+	 */
+	public GermanyIncomeTax2016 asPercentage(boolean usePercent) {
 		this.usePercent = usePercent;
 		return this;
 	}
@@ -77,13 +80,12 @@ public class GermanyIncomeTax2016 extends AbstractFunction {
 
 	public static void main(String[] args) {
 		// System.out.println(new
-		// GermanyIncomeTax2016().usePercent(true).evaluate(999999999));
-		new GermanyIncomeTax2016().usePercent(false).plot(0, 150000);
+		new GermanyIncomeTax2016().asPercentage(true).plot(0, 500000);
 	}
 
 	@Override
 	public String toString() {
-		return "taxableIncome -> incomeTax " + (usePercent ? "(percentage)" : "");
+		return "taxableIncome -> incomeTax " + (usePercent ? "(%)" : "(Eur");
 	}
 
 }
