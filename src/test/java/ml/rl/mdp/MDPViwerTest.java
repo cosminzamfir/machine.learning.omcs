@@ -2,7 +2,7 @@ package ml.rl.mdp;
 
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.State;
-import ml.rl.td.view.MDPViewer;
+import ml.rl.mdp.view.MDPViewer;
 
 import org.junit.Test;
 

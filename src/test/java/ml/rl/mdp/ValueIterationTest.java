@@ -3,7 +3,7 @@ import ml.rl.mdp.ValueIteration;
 import ml.rl.mdp.model.Action;
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.State;
-import ml.rl.td.view.MDPViewer;
+import ml.rl.mdp.view.MDPViewer;
 import util.MLUtils;
 
 import org.junit.Assert;

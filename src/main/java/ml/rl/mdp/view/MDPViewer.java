@@ -1,4 +1,4 @@
-package ml.rl.td.view;
+package ml.rl.mdp.view;
 
 import static com.mxgraph.util.mxConstants.*;
 
