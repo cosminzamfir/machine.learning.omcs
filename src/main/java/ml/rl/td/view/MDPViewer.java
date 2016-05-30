@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import util.MLUtils;
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
@@ -118,7 +119,7 @@ public class MDPViewer {
 	}
 
 	private Object getTransitionLabel(StateAction stateAction, Transition transition) {
-		return transition.getReward() + ";p=" + stateAction.getProbability(transition);
+		return transition.getReward() + ";p=" + MLUtils.format(stateAction.getProbability(transition));
 	}
 
 	private mxCell getStateToActionEdge(StateAction stateAction) {

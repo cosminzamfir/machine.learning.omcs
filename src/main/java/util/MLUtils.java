@@ -111,6 +111,10 @@ public class MLUtils {
 	public static <T> T randomElement(List<T> l) {
 		return l.get(random(l.size()) - 1);
 	}
+	
+	public static String format(double d) {
+		return nf.format(d);
+	}
 
 
 }

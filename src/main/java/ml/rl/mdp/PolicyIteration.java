@@ -5,14 +5,16 @@ import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
 import ml.rl.mdp.model.StateAction;
 import ml.rl.mdp.model.StatePolicy;
-import ml.rl.mdp.model.Transition;
-import util.DoubleHolder;
+
+import org.apache.log4j.Logger;
 
 public class PolicyIteration {
 
+	private static final Logger log = Logger.getLogger(PolicyIteration.class);
 	private MDP mdp;
 	private double gamma;
 	private MDPPolicy policy;
+	private int iterationCount;
 	
 	public PolicyIteration(MDP mdp, double gamma) {
 		super();
@@ -22,14 +24,20 @@ public class PolicyIteration {
 
 	public void run() {
 		mdp.resetStateValues();
+		iterationCount=0;
 		policy = mdp.initialDeterministicPolicy();
 		do {
 			evaluatePolicy(policy);
+			iterationCount ++;
 		} while (improvePolicy(policy));
 	}
 	
 	public MDPPolicy getPolicy() {
 		return policy;
+	}
+	
+	public int getIterationCount() {
+		return iterationCount;
 	}
 	
 
@@ -38,23 +46,21 @@ public class PolicyIteration {
 	 * @param policy
 	 */
 	private void evaluatePolicy(MDPPolicy policy) {
+		log.debug("Evaluating policy: " + policy + "Iteration: " + iterationCount);
 		double epsilon = 0.001;
 		double delta;
-		do {
+		do { //value iteration given policy pi
 			delta = 0;
 			for (State state : mdp.getNonTerminalStates()) {
 				double value = 0;
 				for (StateAction stateAction : mdp.getStateActions(state)) {
-					double stateActionValue = 0;
-					for (Transition transition : stateAction.getTransitions().keySet()) {
-						stateActionValue += stateAction.getProbability(transition)
-								* (transition.getReward() + transition.getsPrime().getValue());
-					}
-					value += stateActionValue * policy.getProbability(state, stateAction);
+					value += stateAction.evaluate(gamma)* policy.getProbability(state, stateAction); //a single StateAction will have probability > 0
 				}
 				delta = Math.max(delta, Math.abs(value - state.getValue()));
 				state.setValue(value);
 			}
+			log.debug("Delta: " + delta);
+			
 		} while (delta > epsilon);
 
 	}
@@ -70,6 +76,7 @@ public class PolicyIteration {
 		for (State state : mdp.getNonTerminalStates()) {
 			StatePolicy bestPolicy = getBestPolicy(state);
 			if (!bestPolicy.equals(policy.getStatePolicy(state))) {
+				log.info("Policy improved for state " + state + ". previousPolicy: " + policy.getStatePolicy(state) + ". newPolicy:" + bestPolicy);
 				policy.setStatePolicy(state, bestPolicy);
 				return true;
 			}
@@ -88,11 +95,9 @@ public class PolicyIteration {
 		double max = Double.NEGATIVE_INFINITY;
 		StateAction bestStateAction = null;
 		for (StateAction stateAction : mdp.getStateActions(state)) {
-			DoubleHolder val = new DoubleHolder(0);
-			stateAction.getTransitions().keySet().forEach(
-					(t) -> val.add(stateAction.getProbability(t) * (t.getReward() + gamma * t.getsPrime().getValue())));
-			if (val.get() > max) {
-				max = val.get();
+			double val = stateAction.evaluate(gamma);
+			if (val > max) {
+				max = val;
 				bestStateAction = stateAction;
 			}
 		}

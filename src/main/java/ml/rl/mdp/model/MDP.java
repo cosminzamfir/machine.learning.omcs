@@ -1,5 +1,11 @@
 package ml.rl.mdp.model;
 
+import java.beans.XMLEncoder;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -10,10 +16,10 @@ import java.util.stream.Collectors;
 
 public class MDP {
 
-	public Set<State> states = new LinkedHashSet<>();
-	public Map<State, List<StateAction>> stateActions = new LinkedHashMap<State, List<StateAction>>();
+	private Set<State> states = new LinkedHashSet<>();
+	private Map<State, List<StateAction>> stateActions = new LinkedHashMap<State, List<StateAction>>();
 
-	private MDP() {
+	public MDP() {
 	}
 
 	public static MDP instance() {
@@ -83,7 +89,7 @@ public class MDP {
 			if (index++ > 0) {
 				sb.append("\n");
 			}
-			sb.append(state);
+			sb.append(state.toExtendedString());
 			stateActions.get(state).forEach((stateAction) -> sb.append("\n").append(stateAction));
 		}
 		return sb.toString();
@@ -104,6 +110,36 @@ public class MDP {
 		stateAction.addTransition(sprime1, reward1, prob1);
 		stateAction.addTransition(sprime2, reward2, prob2);
 		addStateAction(stateAction);
+	}
+	
+	public void save(String resourceName) {
+		URL url = Thread.currentThread().getContextClassLoader().getResource("log4j.properties");
+		File file;
+		try {
+			file = new File(url.toURI().getPath().replace("bin/log4j.properties", "src/main/resources/" + resourceName));
+			FileOutputStream fos = new FileOutputStream(file);
+			new XMLEncoder(fos).writeObject(this);
+			fos.flush();
+			fos.close();
+			
+		} catch (Exception e) {
+			throw new RuntimeException("",e);
+		}
+	}
+
+	public void saveAsString(String resourceName) {
+		URL url = Thread.currentThread().getContextClassLoader().getResource("log4j.properties");
+		File file;
+		try {
+			file = new File(url.toURI().getPath().replace("bin/log4j.properties", "src/main/resources/" + resourceName));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			writer.write(toString());
+			writer.flush();
+			writer.close();
+			
+		} catch (Exception e) {
+			throw new RuntimeException("",e);
+		}
 	}
 
 }

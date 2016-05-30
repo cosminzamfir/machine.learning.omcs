@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import util.DoubleHolder;
+import util.MLUtils;
 
 /** An action performed in a state, stochastic outcome*/
 public class StateAction {
@@ -18,7 +19,7 @@ public class StateAction {
 		return new StateAction(state, action);
 	}
 
-	private StateAction(State state, Action action) {
+	public StateAction(State state, Action action) {
 		this.state = state;
 		this.action = action;
 	}
@@ -79,7 +80,7 @@ public class StateAction {
 	public String toString() {
 		StringBuilder res = new StringBuilder();
 		res.append("StateAction:[State:" + state).append(";").append("Action:" + action + "]");
-		transitions.keySet().forEach((t) -> res.append("\n").append(t).append(" - probability:" + transitions.get(t)));
+		transitions.keySet().forEach((t) -> res.append("\n").append(t).append(" - probability:" + MLUtils.format(transitions.get(t))));
 		return res.toString();
 	}
 

@@ -1,0 +1,240 @@
+S0
+ val=0.00
+StateAction:[State:S0;Action:north]
+Transition[s:S0][sPrime:S21][reward:7.0] - probability:0.70
+Transition[s:S0][sPrime:S7][reward:83.0] - probability:0.30
+StateAction:[State:S0;Action:south]
+Transition[s:S0][sPrime:S7][reward:16.0] - probability:0.80
+Transition[s:S0][sPrime:S6][reward:56.0] - probability:0.20
+S1
+ val=0.00
+StateAction:[State:S1;Action:north]
+Transition[s:S1][sPrime:S11][reward:70.0] - probability:0.80
+Transition[s:S1][sPrime:S8][reward:92.0] - probability:0.20
+StateAction:[State:S1;Action:south]
+Transition[s:S1][sPrime:S29][reward:75.0] - probability:0.40
+Transition[s:S1][sPrime:S2][reward:72.0] - probability:0.60
+S2
+ val=0.00
+StateAction:[State:S2;Action:north]
+Transition[s:S2][sPrime:S9][reward:41.0] - probability:0.70
+Transition[s:S2][sPrime:S1][reward:85.0] - probability:0.30
+StateAction:[State:S2;Action:south]
+Transition[s:S2][sPrime:S16][reward:26.0] - probability:0.70
+Transition[s:S2][sPrime:S17][reward:44.0] - probability:0.30
+S3
+ val=0.00
+StateAction:[State:S3;Action:north]
+Transition[s:S3][sPrime:S8][reward:39.0] - probability:0.90
+Transition[s:S3][sPrime:S27][reward:13.0] - probability:0.10
+StateAction:[State:S3;Action:south]
+Transition[s:S3][sPrime:S21][reward:74.0] - probability:0.60
+Transition[s:S3][sPrime:S26][reward:55.0] - probability:0.40
+S4
+ val=0.00
+StateAction:[State:S4;Action:north]
+Transition[s:S4][sPrime:S11][reward:38.0] - probability:0.40
+Transition[s:S4][sPrime:S14][reward:2.0] - probability:0.60
+StateAction:[State:S4;Action:south]
+Transition[s:S4][sPrime:S22][reward:94.0] - probability:0.70
+Transition[s:S4][sPrime:S7][reward:76.0] - probability:0.30
+S5
+ val=0.00
+StateAction:[State:S5;Action:north]
+Transition[s:S5][sPrime:S20][reward:87.0] - probability:0.10
+Transition[s:S5][sPrime:S22][reward:36.0] - probability:0.90
+StateAction:[State:S5;Action:south]
+Transition[s:S5][sPrime:S9][reward:40.0] - probability:0.00
+Transition[s:S5][sPrime:S15][reward:76.0] - probability:1.00
+S6
+ val=0.00
+StateAction:[State:S6;Action:north]
+Transition[s:S6][sPrime:S26][reward:30.0] - probability:0.40
+Transition[s:S6][sPrime:S20][reward:43.0] - probability:0.60
+StateAction:[State:S6;Action:south]
+Transition[s:S6][sPrime:S26][reward:90.0] - probability:0.30
+Transition[s:S6][sPrime:S20][reward:40.0] - probability:0.70
+S7
+ val=0.00
+StateAction:[State:S7;Action:north]
+Transition[s:S7][sPrime:S2][reward:91.0] - probability:0.40
+Transition[s:S7][sPrime:S18][reward:51.0] - probability:0.60
+StateAction:[State:S7;Action:south]
+Transition[s:S7][sPrime:S18][reward:35.0] - probability:1.00
+Transition[s:S7][sPrime:S26][reward:47.0] - probability:0.00
+S8
+ val=0.00
+StateAction:[State:S8;Action:north]
+Transition[s:S8][sPrime:S25][reward:27.0] - probability:0.20
+Transition[s:S8][sPrime:S8][reward:2.0] - probability:0.80
+StateAction:[State:S8;Action:south]
+Transition[s:S8][sPrime:S29][reward:83.0] - probability:0.50
+Transition[s:S8][sPrime:S5][reward:30.0] - probability:0.50
+S9
+ val=0.00
+StateAction:[State:S9;Action:north]
+Transition[s:S9][sPrime:S23][reward:85.0] - probability:0.90
+Transition[s:S9][sPrime:S26][reward:37.0] - probability:0.10
+StateAction:[State:S9;Action:south]
+Transition[s:S9][sPrime:S20][reward:64.0] - probability:0.60
+Transition[s:S9][sPrime:S4][reward:94.0] - probability:0.40
+S10
+ val=0.00
+StateAction:[State:S10;Action:north]
+Transition[s:S10][sPrime:S5][reward:58.0] - probability:0.70
+Transition[s:S10][sPrime:S4][reward:80.0] - probability:0.30
+StateAction:[State:S10;Action:south]
+Transition[s:S10][sPrime:S1][reward:39.0] - probability:0.90
+Transition[s:S10][sPrime:S29][reward:12.0] - probability:0.10
+S11
+ val=0.00
+StateAction:[State:S11;Action:north]
+Transition[s:S11][sPrime:S14][reward:35.0] - probability:0.10
+Transition[s:S11][sPrime:S22][reward:79.0] - probability:0.90
+StateAction:[State:S11;Action:south]
+Transition[s:S11][sPrime:S23][reward:42.0] - probability:0.50
+Transition[s:S11][sPrime:S27][reward:54.0] - probability:0.50
+S12
+ val=0.00
+StateAction:[State:S12;Action:north]
+Transition[s:S12][sPrime:S29][reward:91.0] - probability:0.70
+Transition[s:S12][sPrime:S6][reward:14.0] - probability:0.30
+StateAction:[State:S12;Action:south]
+Transition[s:S12][sPrime:S9][reward:54.0] - probability:0.10
+Transition[s:S12][sPrime:S12][reward:30.0] - probability:0.90
+S13
+ val=0.00
+StateAction:[State:S13;Action:north]
+Transition[s:S13][sPrime:S11][reward:28.0] - probability:0.50
+Transition[s:S13][sPrime:S29][reward:98.0] - probability:0.50
+StateAction:[State:S13;Action:south]
+Transition[s:S13][sPrime:S19][reward:57.0] - probability:0.80
+Transition[s:S13][sPrime:S7][reward:56.0] - probability:0.20
+S14
+ val=0.00
+StateAction:[State:S14;Action:north]
+Transition[s:S14][sPrime:S30][reward:31.0] - probability:0.20
+Transition[s:S14][sPrime:S4][reward:49.0] - probability:0.80
+StateAction:[State:S14;Action:south]
+Transition[s:S14][sPrime:S14][reward:9.0] - probability:0.00
+Transition[s:S14][sPrime:S22][reward:67.0] - probability:1.00
+S15
+ val=0.00
+StateAction:[State:S15;Action:north]
+Transition[s:S15][sPrime:S7][reward:41.0] - probability:0.60
+Transition[s:S15][sPrime:S16][reward:3.0] - probability:0.40
+StateAction:[State:S15;Action:south]
+Transition[s:S15][sPrime:S1][reward:92.0] - probability:0.10
+Transition[s:S15][sPrime:S17][reward:18.0] - probability:0.90
+S16
+ val=0.00
+StateAction:[State:S16;Action:north]
+Transition[s:S16][sPrime:S17][reward:25.0] - probability:0.80
+Transition[s:S16][sPrime:S29][reward:14.0] - probability:0.20
+StateAction:[State:S16;Action:south]
+Transition[s:S16][sPrime:S29][reward:95.0] - probability:0.00
+Transition[s:S16][sPrime:S29][reward:59.0] - probability:1.00
+S17
+ val=0.00
+StateAction:[State:S17;Action:north]
+Transition[s:S17][sPrime:S10][reward:31.0] - probability:0.30
+Transition[s:S17][sPrime:S23][reward:37.0] - probability:0.70
+StateAction:[State:S17;Action:south]
+Transition[s:S17][sPrime:S10][reward:56.0] - probability:0.20
+Transition[s:S17][sPrime:S30][reward:56.0] - probability:0.80
+S18
+ val=0.00
+StateAction:[State:S18;Action:north]
+Transition[s:S18][sPrime:S12][reward:45.0] - probability:0.10
+Transition[s:S18][sPrime:S6][reward:84.0] - probability:0.90
+StateAction:[State:S18;Action:south]
+Transition[s:S18][sPrime:S9][reward:22.0] - probability:0.30
+Transition[s:S18][sPrime:S2][reward:76.0] - probability:0.70
+S19
+ val=0.00
+StateAction:[State:S19;Action:north]
+Transition[s:S19][sPrime:S1][reward:86.0] - probability:0.80
+Transition[s:S19][sPrime:S14][reward:21.0] - probability:0.20
+StateAction:[State:S19;Action:south]
+Transition[s:S19][sPrime:S4][reward:94.0] - probability:0.30
+Transition[s:S19][sPrime:S26][reward:5.0] - probability:0.70
+S20
+ val=0.00
+StateAction:[State:S20;Action:north]
+Transition[s:S20][sPrime:S16][reward:42.0] - probability:0.90
+Transition[s:S20][sPrime:S17][reward:63.0] - probability:0.10
+StateAction:[State:S20;Action:south]
+Transition[s:S20][sPrime:S4][reward:30.0] - probability:0.50
+Transition[s:S20][sPrime:S12][reward:18.0] - probability:0.50
+S21
+ val=0.00
+StateAction:[State:S21;Action:north]
+Transition[s:S21][sPrime:S21][reward:72.0] - probability:0.60
+Transition[s:S21][sPrime:S23][reward:8.0] - probability:0.40
+StateAction:[State:S21;Action:south]
+Transition[s:S21][sPrime:S18][reward:62.0] - probability:0.60
+Transition[s:S21][sPrime:S15][reward:84.0] - probability:0.40
+S22
+ val=0.00
+StateAction:[State:S22;Action:north]
+Transition[s:S22][sPrime:S30][reward:45.0] - probability:0.30
+Transition[s:S22][sPrime:S2][reward:72.0] - probability:0.70
+StateAction:[State:S22;Action:south]
+Transition[s:S22][sPrime:S8][reward:71.0] - probability:0.00
+Transition[s:S22][sPrime:S29][reward:34.0] - probability:1.00
+S23
+ val=0.00
+StateAction:[State:S23;Action:north]
+Transition[s:S23][sPrime:S25][reward:60.0] - probability:0.40
+Transition[s:S23][sPrime:S6][reward:29.0] - probability:0.60
+StateAction:[State:S23;Action:south]
+Transition[s:S23][sPrime:S16][reward:23.0] - probability:0.50
+Transition[s:S23][sPrime:S19][reward:85.0] - probability:0.50
+S24
+ val=0.00
+StateAction:[State:S24;Action:north]
+Transition[s:S24][sPrime:S29][reward:65.0] - probability:0.30
+Transition[s:S24][sPrime:S23][reward:100.0] - probability:0.70
+StateAction:[State:S24;Action:south]
+Transition[s:S24][sPrime:S29][reward:9.0] - probability:0.50
+Transition[s:S24][sPrime:S17][reward:95.0] - probability:0.50
+S25
+ val=0.00
+StateAction:[State:S25;Action:north]
+Transition[s:S25][sPrime:S11][reward:5.0] - probability:0.40
+Transition[s:S25][sPrime:S23][reward:78.0] - probability:0.60
+StateAction:[State:S25;Action:south]
+Transition[s:S25][sPrime:S23][reward:57.0] - probability:0.20
+Transition[s:S25][sPrime:S28][reward:99.0] - probability:0.80
+S26
+ val=0.00
+StateAction:[State:S26;Action:north]
+Transition[s:S26][sPrime:S6][reward:62.0] - probability:0.20
+Transition[s:S26][sPrime:S21][reward:88.0] - probability:0.80
+StateAction:[State:S26;Action:south]
+Transition[s:S26][sPrime:S7][reward:3.0] - probability:0.80
+Transition[s:S26][sPrime:S4][reward:10.0] - probability:0.20
+S27
+ val=0.00
+StateAction:[State:S27;Action:north]
+Transition[s:S27][sPrime:S8][reward:20.0] - probability:0.30
+Transition[s:S27][sPrime:S21][reward:44.0] - probability:0.70
+StateAction:[State:S27;Action:south]
+Transition[s:S27][sPrime:S30][reward:57.0] - probability:0.20
+Transition[s:S27][sPrime:S23][reward:18.0] - probability:0.80
+S28
+ val=0.00
+StateAction:[State:S28;Action:north]
+Transition[s:S28][sPrime:S7][reward:3.0] - probability:0.50
+Transition[s:S28][sPrime:S14][reward:17.0] - probability:0.50
+StateAction:[State:S28;Action:south]
+Transition[s:S28][sPrime:S19][reward:96.0] - probability:0.40
+Transition[s:S28][sPrime:S3][reward:80.0] - probability:0.60
+S29
+ val=0.00
+StateAction:[State:S29;Action:north]
+Transition[s:S29][sPrime:S11][reward:49.0] - probability:0.30
+Transition[s:S29][sPrime:S15][reward:70.0] - probability:0.70
+StateAction:[State:S29;Action:south]
+Transition[s:S29][sPrime:S10][reward:56.0] - probability:0.40
+Transition[s:S29][sPrime:S22][reward:33.0] - probability:0.60
