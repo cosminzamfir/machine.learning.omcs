@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import ml.rl.mdp.model.MDP;
+import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
 import ml.rl.mdp.model.StateAction;
 import ml.rl.mdp.model.Transition;
@@ -170,7 +171,14 @@ public class MDPViewer {
 		addStyle(edge, STYLE_FONTCOLOR, "black");
 		addStyle(edge, STYLE_STROKECOLOR, "black");
 		addStyle(edge, STYLE_STROKEWIDTH, 1);
-		
+	}
+	
+	private void setSelectedEdgeStyle(mxCell edge) {
+		addStyle(edge, STYLE_FONTSTYLE, FONT_BOLD);
+		addStyle(edge, STYLE_FONTSIZE, 15);
+		addStyle(edge, STYLE_FONTCOLOR, "black");
+		addStyle(edge, STYLE_STROKECOLOR, "red");
+		addStyle(edge, STYLE_STROKEWIDTH, 2);
 	}
 
 	private void setDefaultStateVertexStyle(mxCell vertex) {
@@ -242,6 +250,18 @@ public class MDPViewer {
 	public void setCompleted() {
 		graph.getModel().beginUpdate();
 		stateVertices.values().forEach((cell) -> setCompletedStateVertexStyle(cell));
+		graph.getModel().endUpdate();
+		graph.refresh();
+	}
+	
+	public void markPolicy(MDPPolicy policy) {
+		graph.getModel().beginUpdate();
+		for (State s : mdp.getStates()) {
+			StateAction sa = policy.getStatePolicy(s).getStateAction();
+			if(mdp.getStateActions(s).size() > 1) {
+				setSelectedEdgeStyle(getStateToActionEdge(sa));
+			}
+		}
 		graph.getModel().endUpdate();
 		graph.refresh();
 	}

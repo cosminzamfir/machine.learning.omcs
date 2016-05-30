@@ -12,19 +12,37 @@ public class PolicyIteration {
 
 	private MDP mdp;
 	private double gamma;
+	private MDPPolicy policy;
+	
+	public PolicyIteration(MDP mdp, double gamma) {
+		super();
+		this.mdp = mdp;
+		this.gamma = gamma;
+	}
 
 	public void run() {
 		mdp.resetStateValues();
-		MDPPolicy policy = mdp.initialDeterministicPolicy();
+		policy = mdp.initialDeterministicPolicy();
+		do {
+			evaluatePolicy(policy);
+		} while (improvePolicy(policy));
 	}
+	
+	public MDPPolicy getPolicy() {
+		return policy;
+	}
+	
 
-	private void policyEvaluation(MDPPolicy policy) {
+	/**
+	 * Compute and set the MDP state values according to the given policy
+	 * @param policy
+	 */
+	private void evaluatePolicy(MDPPolicy policy) {
 		double epsilon = 0.001;
 		double delta;
 		do {
 			delta = 0;
-			for (State state : mdp.getStates()) {
-				double v = state.getValue();
+			for (State state : mdp.getNonTerminalStates()) {
 				double value = 0;
 				for (StateAction stateAction : mdp.getStateActions(state)) {
 					double stateActionValue = 0;
@@ -33,10 +51,11 @@ public class PolicyIteration {
 								* (transition.getReward() + transition.getsPrime().getValue());
 					}
 					value += stateActionValue * policy.getProbability(state, stateAction);
-					delta = Math.max(delta, Math.abs(value - state.getValue()));
 				}
+				delta = Math.max(delta, Math.abs(value - state.getValue()));
+				state.setValue(value);
 			}
-		} while (delta < epsilon);
+		} while (delta > epsilon);
 
 	}
 
@@ -47,8 +66,8 @@ public class PolicyIteration {
 	 *         otherwise <code>false</code>
 	 * 
 	 */
-	private boolean policyImprovement(MDPPolicy policy) {
-		for (State state : mdp.getStates()) {
+	private boolean improvePolicy(MDPPolicy policy) {
+		for (State state : mdp.getNonTerminalStates()) {
 			StatePolicy bestPolicy = getBestPolicy(state);
 			if (!bestPolicy.equals(policy.getStatePolicy(state))) {
 				policy.setStatePolicy(state, bestPolicy);
@@ -72,7 +91,7 @@ public class PolicyIteration {
 			DoubleHolder val = new DoubleHolder(0);
 			stateAction.getTransitions().keySet().forEach(
 					(t) -> val.add(stateAction.getProbability(t) * (t.getReward() + gamma * t.getsPrime().getValue())));
-			if(val.get() > max) {
+			if (val.get() > max) {
 				max = val.get();
 				bestStateAction = stateAction;
 			}

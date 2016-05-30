@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MDP {
 
@@ -21,6 +22,10 @@ public class MDP {
 
 	public Set<State> getStates() {
 		return states;
+	}
+	
+	public List<State> getNonTerminalStates() {
+		return states.stream().filter((s) -> (!isTerminal(s))).collect(Collectors.toList());
 	}
 
 	public List<StateAction> getStateActions(State state) {
@@ -45,6 +50,10 @@ public class MDP {
 		return MDPPolicy.initialPolicy(this);
 	}
 	
+	/**
+	 * Generate an initial Policy - choose randomly for each state a single StateAction with probability 1
+	 * @return
+	 */
 	public MDPPolicy initialDeterministicPolicy() {
 		return MDPPolicy.initialDeterministicPolicy(this);
 	}

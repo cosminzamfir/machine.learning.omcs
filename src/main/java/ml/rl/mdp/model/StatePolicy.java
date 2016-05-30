@@ -3,10 +3,18 @@ package ml.rl.mdp.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import util.IntHolder;
+import util.MLUtils;
+
+/**
+ * The policy for a given State, i.e. the {@link StateAction} -> probability mapping for a given State
+ * @author eh2zamf
+ *
+ */
 public class StatePolicy {
 
 	private State state;
-	private Map<StateAction, Double> policy = new LinkedHashMap<StateAction, Double>();
+	private Map<StateAction, Double> stateActionsProbabilities = new LinkedHashMap<StateAction, Double>();
 	
 	public static StatePolicy instace(State state) {
 		StatePolicy res = new StatePolicy();
@@ -14,17 +22,24 @@ public class StatePolicy {
 		return res;
 	}
 	
+	public static StatePolicy instance(State state, StateAction stateAction) {
+		StatePolicy res = instace(state);
+		res.setStateAction(stateAction);
+		return res; 
+	}
+
+	
 	public void setActionProbability(StateAction stateAction, double p) {
-		policy.put(stateAction, p);
+		stateActionsProbabilities.put(stateAction, p);
 	}
 	
 	/**Shortcut for {@link #setActionProbability(StateAction, 1)}*/
 	public void setStateAction(StateAction stateAction) {
-		policy.put(stateAction, 1.0);
+		stateActionsProbabilities.put(stateAction, 1.0);
 	}
 	
 	public Map<StateAction, Double> getPolicy() {
-		return policy;
+		return stateActionsProbabilities;
 	}
 	
 	public State getState() {
@@ -34,8 +49,8 @@ public class StatePolicy {
 	public StateAction generate() {
 		double p = Math.random();
 		double d = 0;
-		for (StateAction stateAction : policy.keySet()) {
-			d += policy.get(stateAction);
+		for (StateAction stateAction : stateActionsProbabilities.keySet()) {
+			d += stateActionsProbabilities.get(stateAction);
 			if(p <= d) {
 				return stateAction;
 			}
@@ -44,6 +59,48 @@ public class StatePolicy {
 	}
 
 	public double getProbability(StateAction stateAction) {
-		return policy.get(stateAction) == null ? 0 : policy.get(stateAction);
+		return stateActionsProbabilities.get(stateAction) == null ? 0 : stateActionsProbabilities.get(stateAction);
 	}
+	
+	/**
+	 * @param state
+	 * @return the single StateAction for this deterministic instance
+	 * @throws RuntimeException if this is not a deterministic policy
+	 */
+	public StateAction getStateAction() {
+		if(stateActionsProbabilities.size() > 1) {
+			throw new RuntimeException("Cannot get the single StateAction for this non-deterministic instance");
+		}
+		return stateActionsProbabilities.keySet().iterator().next();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(! (obj instanceof StatePolicy)) {
+			return false;
+		}
+		StatePolicy other = (StatePolicy) obj;
+		for (StateAction stateAction : stateActionsProbabilities.keySet()) {
+			if(!MLUtils.equals(other.getProbability(stateAction), getProbability(stateAction), 0.0001)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		IntHolder res = new IntHolder(0);
+		stateActionsProbabilities.keySet().forEach((sa) -> res.add(sa.hashCode() + Double.valueOf(getProbability(sa)).hashCode()));
+		return res.get();
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("StatePolicy[state="+state + "][");
+		stateActionsProbabilities.keySet().forEach((sa) -> sb.append(sa.getAction().toString() + "=" + getProbability(sa) + " "));
+		sb.append("]");
+		return sb.toString();
+	}
+
 }

@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import util.DoubleHolder;
+
 /** An action performed in a state, stochastic outcome*/
 public class StateAction {
 
@@ -20,7 +22,7 @@ public class StateAction {
 		this.state = state;
 		this.action = action;
 	}
-	
+
 	public Map<Transition, Double> getTransitions() {
 		return transitions;
 	}
@@ -32,7 +34,7 @@ public class StateAction {
 	public void addTransition(Transition transition, double p) {
 		transitions.put(transition, p);
 	}
-	
+
 	public void addTransition(State sprime, double reward, double probability) {
 		Transition t = Transition.instance(action, state, sprime, reward);
 		addTransition(t, probability);
@@ -64,11 +66,34 @@ public class StateAction {
 		throw new RuntimeException("Assertion error in generating Transition from ActionState");
 	}
 
+	/**
+	 * @return the expected value of [reward + discounted value of sprime]
+	 */
+	public double evaluate(double gamma) {
+		DoubleHolder res = new DoubleHolder(0);
+		getTransitions().keySet().forEach((t) -> res.add(getProbability(t) * (t.getReward() + gamma * t.getsPrime().getValue())));
+		return res.get();
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder res = new StringBuilder();
 		res.append("StateAction:[State:" + state).append(";").append("Action:" + action + "]");
 		transitions.keySet().forEach((t) -> res.append("\n").append(t).append(" - probability:" + transitions.get(t)));
 		return res.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof StateAction)) {
+			return false;
+		}
+		StateAction other = (StateAction) obj;
+		return state.equals(other.getState()) && action.equals(other.getAction());
+	}
+
+	@Override
+	public int hashCode() {
+		return state.hashCode() + action.hashCode();
 	}
 }
