@@ -1,7 +1,5 @@
 package ml.rl.mdp.model;
 
-import java.text.MessageFormat;
-
 import util.MLUtils;
 
 public class Transition {
