@@ -114,6 +114,13 @@ public class MDP {
 		addStateAction(stateAction);
 	}
 	
+	public void addMultipleOutcomStateAction(State s, State sprime1, State sprime2, double reward1, double reward2, double prob1, double prob2, String actionName) {
+		StateAction stateAction = StateAction.instance(s, Action.instance(actionName));
+		stateAction.addTransition(sprime1, reward1, prob1);
+		stateAction.addTransition(sprime2, reward2, prob2);
+		addStateAction(stateAction);
+	}
+	
 	public void save(String resourceName) {
 		URL url = Thread.currentThread().getContextClassLoader().getResource("log4j.properties");
 		File file;

@@ -13,9 +13,9 @@ import ml.rl.mdp.model.State;
 import ml.rl.mdp.model.StateAction;
 import util.MLUtils;
 
-public class HW4Test {
+public class HW4Test2_4 {
 
-	private static final Logger log = Logger.getLogger(HW4Test.class);
+	private static final Logger log = Logger.getLogger(HW4Test2_4.class);
 	int numStates = 30;
 	int maxReward = 1000000;
 
@@ -79,38 +79,16 @@ public class HW4Test {
 			int id1 = state1.getId();
 			List<StateAction> sas1 = new ArrayList<>(mdp.getStateActions(state1));
 			
-			State state2 = State.instance(MLUtils.random(numStates - 1));
-			int id2 = state2.getId();
-			List<StateAction> sas2 = new ArrayList<>(mdp.getStateActions(state2));
-
-			State state3 = State.instance(MLUtils.random(numStates - 1));
-			int id3 = state3.getId();
-			List<StateAction> sas3 = new ArrayList<>(mdp.getStateActions(state3));
-
 			List<StateAction> stateActions1 = mdp.getStateActions(state1);
 			stateActions1.clear();
 			addRandomStateActions(state1, id1, mdp);
 			
-			List<StateAction> stateActions2 = mdp.getStateActions(state2);
-			stateActions2.clear();
-			addRandomStateActions(state2, id2, mdp);
-
-			List<StateAction> stateActions3 = mdp.getStateActions(state3);
-			stateActions3.clear();
-			addRandomStateActions(state3, id3, mdp);
-
 			pi = new PolicyIteration(mdp, 0.75);
 			
 			pi.run();
 			if(pi.getIterationCount() <= iterations) {
 				mdp.getStateActions(state1).clear();
 				mdp.getStateActions(state1).addAll(sas1);
-
-				mdp.getStateActions(state2).clear();
-				mdp.getStateActions(state2).addAll(sas2);
-
-				mdp.getStateActions(state3).clear();
-				mdp.getStateActions(state3).addAll(sas3);
 
 			}
 		} while (pi.getIterationCount() <= iterations);
