@@ -73,14 +73,17 @@ public class PolicyIterationBurlap {
 		do { //value iteration given policy pi
 			delta = 0;
 			for (State state : mdp.getNonTerminalStates()) {
-				double value = 0;
+				double prevValue = state.getValue();
+				double newValue = 0;
 				for (StateAction stateAction : mdp.getStateActions(state)) {
-					value += stateAction.evaluate(gamma) * policy.getProbability(state, stateAction); //a single StateAction will have probability > 0
+					newValue += stateAction.evaluate(gamma) * policy.getProbability(state, stateAction); //a single StateAction will have probability > 0
 				}
-				delta = Math.max(delta, Math.abs(value - state.getValue()));
+				delta = Math.max(delta, Math.abs(newValue - prevValue));
 				maxDelta = Math.max(delta, maxDelta);
-				state.setValue(value);
+				state.setValue(newValue);
+				log.info(state + ":" + prevValue + "->" + newValue);
 			}
+			log.info("");
 		} while (delta > epsilon);
 		if (log.isDebugEnabled()) {
 			log.debug("Evaluation done." + mdp.printStateValues());

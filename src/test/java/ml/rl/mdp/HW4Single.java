@@ -49,19 +49,19 @@ public class HW4Single {
 
 	private void addSingleOutcomeAction(int i, int j, double reward) {
 		if (i < 0)
-			i = 1;
-		if (i > numStates - 1)
 			i = numStates - 1;
+		if (i > numStates - 1)
+			i = 0;
 		if (j < 0)
-			j = 1;
-		if (j > numStates - 1)
 			j = numStates - 1;
+		if (j > numStates - 1)
+			j = 0;
 		mdp.addSingleOutcomStateAction(State.instance(i), State.instance(j), reward, "Action_" + i + "_" + j);
 	}
 
 	private void addDoubleOutcomeAction(int i, int j1, int j2) {
 		if (i < 0)
-			i = 1;
+			i = numStates - 1;
 		if (i > numStates - 1)
 			i = numStates - 1;
 		if (j1 < 0)
