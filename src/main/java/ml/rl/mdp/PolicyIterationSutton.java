@@ -6,62 +6,83 @@ import ml.rl.mdp.model.State;
 import ml.rl.mdp.model.StateAction;
 import ml.rl.mdp.model.StatePolicy;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public class PolicyIteration {
 
-	private static final Logger log = Logger.getLogger(PolicyIteration.class);
+/**
+ * Implementation of PolicyIteration as described at http://webdocs.cs.ualberta.ca/~sutton/book/ebook/node43.html#fig:policy-iteration
+ * <p>
+ * Whether a policy improvement took place for any state is determined by comparing the previous StateAction with the current StateAction for the State 
+ * <p>
+ * This implementation seem to converge slower (in some cases it may go back-and-forth between 2 StateActions for a given State when values are very close, ie 0.00...1)
+ * @author eh2zamf
+ *
+ */
+public class PolicyIterationSutton {
+
+	private static final Logger log = Logger.getLogger(PolicyIterationSutton.class);
+	private static final double epsilon = 0.0000001;
 	private MDP mdp;
 	private double gamma;
 	private MDPPolicy policy;
 	private int iterationCount;
-	
-	public PolicyIteration(MDP mdp, double gamma) {
+
+	public PolicyIterationSutton(MDP mdp, double gamma) {
 		super();
 		this.mdp = mdp;
 		this.gamma = gamma;
 	}
 
 	public void run() {
+		LogManager.getRootLogger().setLevel(Level.INFO);
 		mdp.resetStateValues();
-		iterationCount=0;
+		iterationCount = 0;
 		policy = mdp.initialDeterministicPolicy();
 		do {
 			evaluatePolicy(policy);
-			iterationCount ++;
+			if(iterationCount > 20) {
+				LogManager.getRootLogger().setLevel(Level.DEBUG);
+			}
+			iterationCount++;
 		} while (improvePolicy(policy));
+		if (log.isDebugEnabled()) {
+			log.debug("Done." + mdp.printStateValues());
+		}
 	}
-	
+
 	public MDPPolicy getPolicy() {
 		return policy;
 	}
-	
+
 	public int getIterationCount() {
 		return iterationCount;
 	}
-	
 
 	/**
 	 * Compute and set the MDP state values according to the given policy
 	 * @param policy
 	 */
 	private void evaluatePolicy(MDPPolicy policy) {
-		log.debug("Evaluating policy: " + policy + "Iteration: " + iterationCount);
-		double epsilon = 0.001;
+		if (log.isDebugEnabled()) {
+			log.debug("Iteration " + iterationCount + ". Evaluating policy: " + policy + "Iteration: " + iterationCount);
+		}
 		double delta;
 		do { //value iteration given policy pi
 			delta = 0;
 			for (State state : mdp.getNonTerminalStates()) {
 				double value = 0;
 				for (StateAction stateAction : mdp.getStateActions(state)) {
-					value += stateAction.evaluate(gamma)* policy.getProbability(state, stateAction); //a single StateAction will have probability > 0
+					value += stateAction.evaluate(gamma) * policy.getProbability(state, stateAction); //a single StateAction will have probability > 0
 				}
 				delta = Math.max(delta, Math.abs(value - state.getValue()));
 				state.setValue(value);
 			}
-			log.debug("Delta: " + delta);
-			
 		} while (delta > epsilon);
+		if (log.isDebugEnabled()) {
+			log.debug("Evaluation done." + mdp.printStateValues());
+		}
 
 	}
 
@@ -77,7 +98,11 @@ public class PolicyIteration {
 		for (State state : mdp.getNonTerminalStates()) {
 			StatePolicy bestPolicy = getBestPolicy(state);
 			if (!bestPolicy.equals(policy.getStatePolicy(state))) {
-				log.debug("Policy improved for state " + state + ". previousPolicy: " + policy.getStatePolicy(state) + ". newPolicy:" + bestPolicy);
+				if (log.isDebugEnabled()) {
+					log.debug(state + 
+							". PreviousPolicy: " + policy.getStatePolicy(state) + "=" + policy.getStatePolicy(state).evaluate(gamma) + 
+							". NewPolicy:" + bestPolicy + "=" + bestPolicy.evaluate(gamma));
+				}
 				policy.setStatePolicy(state, bestPolicy);
 				policyImproved = true;
 			}
@@ -104,6 +129,9 @@ public class PolicyIteration {
 		}
 		StatePolicy res = StatePolicy.instace(state);
 		res.setStateAction(bestStateAction);
+		if (log.isDebugEnabled()) {
+			log.trace("Best policy for " + state + " is " + bestStateAction + " with value = " + max);
+		}
 		return res;
 
 	}

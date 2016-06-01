@@ -8,17 +8,17 @@ import java.io.FileWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import util.JsonEncoder;
+import util.MLUtils;
 
 public class MDP {
 
-	private Set<State> states = new LinkedHashSet<>();
+	private List<State> states = new ArrayList<>();
+	private List<State> nonTerminalStates = new ArrayList<>();
 	private Map<State, List<StateAction>> stateActions = new LinkedHashMap<State, List<StateAction>>();
 
 	public MDP() {
@@ -28,12 +28,22 @@ public class MDP {
 		return new MDP();
 	}
 
-	public Set<State> getStates() {
+	public List<State> getStates() {
 		return states;
 	}
-	
+
 	public List<State> getNonTerminalStates() {
-		return states.stream().filter((s) -> (!isTerminal(s))).collect(Collectors.toList());
+		return nonTerminalStates;
+	}
+
+	private void setNonTerminalStates() {
+		//nonTerminalStates = states.stream().filter((s) -> (!isTerminal(s))).collect(Collectors.toList());
+		nonTerminalStates.clear();
+		for (State state : states) {
+			if (!isTerminal(state)) {
+				nonTerminalStates.add(state);
+			}
+		}
 	}
 
 	public List<StateAction> getStateActions(State state) {
@@ -45,19 +55,26 @@ public class MDP {
 	}
 
 	public void addStateAction(StateAction stateAction) {
-		this.states.add(stateAction.getState());
-		this.states.addAll(stateAction.getAllSprimes());
+		if(!states.contains(stateAction.getState())) {
+			this.states.add(stateAction.getState());
+		}
+		for (State sprime : stateAction.getAllSprimes()) {
+			if(!states.contains(sprime)) {
+				this.states.add(sprime);
+			}
+		}
 		if (!stateActions.containsKey(stateAction.getState())) {
 			stateActions.put(stateAction.getState(), new ArrayList<>());
 		}
 		stateActions.get(stateAction.getState()).add(stateAction);
+		setNonTerminalStates();
 	}
 
 	/** Generate initial policy - equal probabilities for all decisions */
 	public MDPPolicy initialPolicy() {
 		return MDPPolicy.initialPolicy(this);
 	}
-	
+
 	/**
 	 * Generate an initial Policy - choose randomly for each state a single StateAction with probability 1
 	 * @return
@@ -100,7 +117,7 @@ public class MDP {
 	public Map<State, List<StateAction>> getStateActions() {
 		return stateActions;
 	}
-	
+
 	public void addSingleOutcomStateAction(State s, State sprime, double reward, String actionName) {
 		StateAction stateAction = StateAction.instance(s, Action.instance(actionName));
 		stateAction.addTransition(sprime, reward, 1);
@@ -113,15 +130,24 @@ public class MDP {
 		stateAction.addTransition(sprime2, reward2, prob2);
 		addStateAction(stateAction);
 	}
-	
-	public void addMultipleOutcomStateAction(State s, State sprime1, State sprime2, double reward1, double reward2, double prob1, double prob2, String actionName) {
+
+	/**
+	 * Add an {@link StateAction} with multiple stochastic outcomes 
+	 * @param s the initial state
+	 * @param sPrimes the List of arriving state
+	 * @param rewards the List of rewards for each sPrime
+	 * @param probabilities the probability to arrive to each of sPrime
+	 * @param actionNamePrefix the name of the Action
+	 */
+	public void addMultipleOutcomStateAction(State s, List<State> sPrimes, List<Double> rewards, List<Double> probabilities, String actionName) {
 		StateAction stateAction = StateAction.instance(s, Action.instance(actionName));
-		stateAction.addTransition(sprime1, reward1, prob1);
-		stateAction.addTransition(sprime2, reward2, prob2);
+		for (int i = 0; i < sPrimes.size(); i++) {
+			stateAction.addTransition(sPrimes.get(i), rewards.get(i), probabilities.get(i));
+		}
 		addStateAction(stateAction);
 	}
-	
-	public void save(String resourceName) {
+
+	public void saveAsXML(String resourceName) {
 		URL url = Thread.currentThread().getContextClassLoader().getResource("log4j.properties");
 		File file;
 		try {
@@ -130,9 +156,9 @@ public class MDP {
 			new XMLEncoder(fos).writeObject(this);
 			fos.flush();
 			fos.close();
-			
+
 		} catch (Exception e) {
-			throw new RuntimeException("",e);
+			throw new RuntimeException("", e);
 		}
 	}
 
@@ -145,9 +171,9 @@ public class MDP {
 			writer.write(toString());
 			writer.flush();
 			writer.close();
-			
+
 		} catch (Exception e) {
-			throw new RuntimeException("",e);
+			throw new RuntimeException("", e);
 		}
 	}
 
@@ -160,10 +186,16 @@ public class MDP {
 			writer.write(new JsonEncoder(this).encode(gamma));
 			writer.flush();
 			writer.close();
-			
+
 		} catch (Exception e) {
-			throw new RuntimeException("",e);
+			throw new RuntimeException("", e);
 		}
+	}
+
+	public Object printStateValues() {
+		StringBuilder res = new StringBuilder();
+		states.forEach((s) -> res.append(s + "=" + MLUtils.format6(s.getValue())).append(" "));
+		return res.toString();
 	}
 
 }

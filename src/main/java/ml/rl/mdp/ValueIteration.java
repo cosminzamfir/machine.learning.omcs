@@ -56,7 +56,9 @@ public class ValueIteration extends Observable {
 			for (State s : mdp.getStates()) {
 				double v = s.getValue();
 				s.setValue(getMaxValue(s));
-				log.debug("Iteration " + iteration + ". Setting value for " + s + " to " + s.getValue());
+				if (log.isDebugEnabled()) {
+					log.debug("Iteration " + iteration + ". Setting value for " + s + " to " + s.getValue());
+				}
 				delta = Math.max(delta, Math.abs(v - s.getValue()));
 				iteration++;
 				setChanged();
@@ -87,7 +89,7 @@ public class ValueIteration extends Observable {
 		StateAction bestStateAction = null;
 		for (StateAction stateAction : mdp.getStateActions(state)) {
 			double value = stateAction.evaluate(gamma);
-			if(value > MAX_VALUE) {
+			if (value > MAX_VALUE) {
 				MAX_VALUE = value;
 				bestStateAction = stateAction;
 			}
@@ -113,6 +115,5 @@ public class ValueIteration extends Observable {
 		}
 		return res;
 	}
-
 
 }

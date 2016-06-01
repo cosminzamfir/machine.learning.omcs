@@ -1,8 +1,10 @@
 package ml.rl.mdp.model;
 
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import util.DoubleHolder;
 import util.IntHolder;
 import util.MLUtils;
 
@@ -81,11 +83,17 @@ public class StatePolicy {
 		}
 		StatePolicy other = (StatePolicy) obj;
 		for (StateAction stateAction : stateActionsProbabilities.keySet()) {
-			if(!MLUtils.equals(other.getProbability(stateAction), getProbability(stateAction), 0.0001)) {
+			if(!MLUtils.equals(other.getProbability(stateAction), getProbability(stateAction), 0.001)) {
 				return false;
 			}
 		}
 		return true;
+	}
+	
+	public double evaluate(double gamma) {
+		DoubleHolder res = new DoubleHolder(0);
+		stateActionsProbabilities.keySet().forEach((sa) -> res.add(getProbability(sa) * sa.evaluate(gamma)));
+		return res.get();
 	}
 	
 	@Override
@@ -97,6 +105,9 @@ public class StatePolicy {
 	
 	@Override
 	public String toString() {
+		if(stateActionsProbabilities.size() == 1) {
+			return "[" + state + ":" + stateActionsProbabilities.keySet().iterator().next().getAction() + "]";
+		}
 		StringBuilder sb = new StringBuilder("StatePolicy[state="+state + "][");
 		stateActionsProbabilities.keySet().forEach((sa) -> sb.append(sa.getAction().toString() + "=" + getProbability(sa) + " "));
 		sb.append("]");

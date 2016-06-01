@@ -14,7 +14,9 @@ public class DefiniteIntegral {
 		do {
 			newRes = computeIntegral(function, from, to, ++intervals);
 			prevRes = res;
-			log.debug("Intervals:" + intervals + ":Current result: " + newRes + ";Previous result: " + res + ";Error: " + (newRes - res));
+			if (log.isDebugEnabled()) {
+				log.debug("Intervals:" + intervals + ":Current result: " + newRes + ";Previous result: " + res + ";Error: " + (newRes - res));
+			}
 			res = newRes;
 		} while (Math.abs(newRes - prevRes) > maxError);
 		return newRes;

@@ -72,7 +72,10 @@ public class StateAction {
 	 */
 	public double evaluate(double gamma) {
 		DoubleHolder res = new DoubleHolder(0);
-		getTransitions().keySet().forEach((t) -> res.add(getProbability(t) * (t.getReward() + gamma * t.getsPrime().getValue())));
+		//getTransitions().keySet().forEach((t) -> res.add(getProbability(t) * (t.getReward() + gamma * t.getsPrime().getValue())));
+		for (Transition t : getTransitions().keySet()) {
+			res.add(getProbability(t) * (t.getReward() + gamma * t.getsPrime().getValue()));
+		}
 		return res.get();
 	}
 

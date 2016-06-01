@@ -14,11 +14,21 @@ import java.util.Random;
 import org.apache.commons.lang.StringUtils;
 
 public class MLUtils {
-
 	private static NumberFormat nf = NumberFormat.getInstance();
+	private static NumberFormat nf6 = NumberFormat.getInstance();
 	static {
 		nf.setMaximumFractionDigits(2);
 		nf.setMinimumFractionDigits(2);
+
+		nf6.setMaximumFractionDigits(5);
+		nf6.setMinimumFractionDigits(5);
+	}
+
+	private static NumberFormat integerf = NumberFormat.getInstance();
+	static {
+		integerf.setMaximumFractionDigits(0);
+		integerf.setMinimumFractionDigits(0);
+		integerf.setGroupingUsed(true);
 	}
 
 	public static String readFromConsole(String message) {
@@ -105,6 +115,17 @@ public class MLUtils {
 		return new Random().nextInt(max) + 1;
 	}
 
+	/** min and max - inclusive */
+	public static int random(int min, int max) {
+		if (min > max) {
+			throw new RuntimeException("min > max");
+		}
+		if (min == max) {
+			return min;
+		}
+		return min + random(max - min);
+	}
+
 	public static double randomDouble(double min, double max) {
 		return min + Math.random() * (max - min);
 	}
@@ -112,19 +133,26 @@ public class MLUtils {
 	public static <T> T randomElement(List<T> l) {
 		return l.get(random(l.size()) - 1);
 	}
-	
+
 	public static String format(double d) {
 		return nf.format(d);
 	}
-	
+
+	public static String format6(double d) {
+		return nf6.format(d);
+	}
+
+	public static String format(int n) {
+		return integerf.format(n);
+	}
+
 	public static <T> List<T> minus(List<T> source, T... obj) {
 		List<T> res = new ArrayList<T>(source);
 		for (T t : obj) {
 			res.remove(t);
-			
+
 		}
 		return res;
 	}
-
 
 }

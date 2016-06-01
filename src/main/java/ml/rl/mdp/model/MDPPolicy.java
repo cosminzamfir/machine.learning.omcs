@@ -82,7 +82,7 @@ public class MDPPolicy {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("MDPPolicy");
-		statePolicies.values().forEach((sp) -> sb.append("\n   -").append(sp.toString()));
+		statePolicies.values().forEach((sp) -> sb.append(sp));
 		return sb.toString();
 	}
 }

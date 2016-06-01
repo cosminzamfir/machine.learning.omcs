@@ -14,14 +14,14 @@ import org.apache.log4j.Logger;
 public class TDLambdaEpisode extends Observable {
 
 	private static final Logger log = Logger.getLogger(TDLambdaEpisode.class);
-	
+
 	private static final String ELIGIBILITY = "elig";
-	
+
 	private Episode episode;
 	private double lambda;
 	private double gamma;
 	private double alpha;
-	
+
 	public TDLambdaEpisode(Episode episode, double lambda, double gamma, double alpha) {
 		super();
 		this.episode = episode;
@@ -32,24 +32,29 @@ public class TDLambdaEpisode extends Observable {
 	}
 
 	public void run() {
-		log.debug("Running episode: " + episode + ";lambda:" + lambda + ";gamma:" + gamma + ";alpha:" + alpha);
-		log.debug(episode.printStateValues());
-		log.debug(episode.printRewards());
+		if (log.isDebugEnabled()) {
+			log.debug("Running episode: " + episode + ";lambda:" + lambda + ";gamma:" + gamma + ";alpha:" + alpha);
+			log.debug(episode.printStateValues());
+			log.debug(episode.printRewards());
+		}
 		for (Transition transition : episode.getTransitions()) {
 			incrementEligibility(transition.getS());
 			double stepProfitability = computeProfitability(transition);
-			log.debug("Profitability for " + transition + ":" + stepProfitability);
-			
+			if (log.isDebugEnabled()) {
+				log.debug("Profitability for " + transition + ":" + stepProfitability);
+			}
 			updateStateValues(stepProfitability);
 			updateEligibilities();
 			setChanged();
 			notifyObservers(transition);
 		}
-		log.debug(episode.printStateValues());
+		if (log.isDebugEnabled()) {
+			log.debug(episode.printStateValues());
+		}
 	}
 
 	private void updateEligibilities() {
-		episode.getAllStates().forEach((s) -> s.put(ELIGIBILITY,(double)s.get(ELIGIBILITY)*lambda*gamma));
+		episode.getAllStates().forEach((s) -> s.put(ELIGIBILITY, (double) s.get(ELIGIBILITY) * lambda * gamma));
 	}
 
 	private void updateStateValues(double stepProfitability) {
@@ -57,14 +62,14 @@ public class TDLambdaEpisode extends Observable {
 	}
 
 	private double computeProfitability(Transition transition) {
-		return alpha * (transition.getReward() + gamma*transition.getsPrime().getValue() - transition.getS().getValue());
+		return alpha * (transition.getReward() + gamma * transition.getsPrime().getValue() - transition.getS().getValue());
 	}
 
 	private void incrementEligibility(State s) {
-		s.put(ELIGIBILITY, (double)s.get(ELIGIBILITY) + 1);
+		s.put(ELIGIBILITY, (double) s.get(ELIGIBILITY) + 1);
 	}
 
 	private void initEligibilities() {
-		episode.getAllStates().forEach((s) -> s.put(ELIGIBILITY,0.0));
+		episode.getAllStates().forEach((s) -> s.put(ELIGIBILITY, 0.0));
 	}
 }

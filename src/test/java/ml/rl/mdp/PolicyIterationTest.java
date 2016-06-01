@@ -16,7 +16,7 @@ public class PolicyIterationTest {
 		mdp.addSingleOutcomStateAction(State.instance(1), State.instance(2), 10, Action.EAST);
 		mdp.addSingleOutcomStateAction(State.instance(1), State.instance(3), 20, Action.WEST);
 		
-		PolicyIteration pi = new PolicyIteration(mdp,1);
+		PolicyIterationSutton pi = new PolicyIterationSutton(mdp,1);
 		pi.run();
 		MDPPolicy policy = pi.getPolicy();
 		Assert.assertEquals(policy.getStatePolicy(State.instance(1)).getStateAction().getAction().getName(), Action.WEST);
@@ -38,7 +38,7 @@ public class PolicyIterationTest {
 		mdp.addSingleOutcomStateAction(State.instance(5), State.instance(4), 10, Action.NORTH);
 
 		
-		PolicyIteration pi = new PolicyIteration(mdp,1);
+		PolicyIterationSutton pi = new PolicyIterationSutton(mdp,1);
 		pi.run();
 		MDPPolicy policy = pi.getPolicy();
 		System.out.println(policy);
