@@ -28,13 +28,13 @@ public class MDPViewer {
 	private static int stateVertexWidth = 150;
 
 	private static int stateActionVertexHeight = 30;
-	private static int stateActionVertexWidth = 70;
+	private static int stateActionVertexWidth = 100;
 
 	private MDP mdp;
 	private Map<State, mxCell> stateVertices = new HashMap<State, mxCell>();
 	private Map<StateAction, mxCell> stateActionVertices = new HashMap<StateAction, mxCell>();
 
-	private Map<Integer, mxCell> edges = new HashMap<>();
+	private Map<Object, mxCell> edges = new HashMap<>();
 
 	private mxGraph graph;
 	private JFrame frame;
@@ -90,7 +90,7 @@ public class MDPViewer {
 	 * Get/Create Edge from s to sprime (case when single action available in state)
 	 */
 	private mxCell getStateToStateTransitionEdge(StateAction stateAction, Transition transition) {
-		mxCell res = edges.get(transition.hashCode());
+		mxCell res = edges.get(transition);
 		if (res != null) {
 			return res;
 		}
@@ -98,7 +98,7 @@ public class MDPViewer {
 		mxCell sprime = getStateVertex(transition.getsPrime());
 		res = (mxCell) graph.insertEdge(graph.getDefaultParent(), String.valueOf(transition.hashCode()), getTransitionLabel(stateAction, transition), s, sprime);
 		setDefaultEdgeStyle(res);
-		edges.put(transition.hashCode(), res);
+		edges.put(transition, res);
 		return res;
 	}
 
@@ -106,7 +106,7 @@ public class MDPViewer {
 	 * Get/Create Edge from ActionState to sprime (case when more than one action available in state)
 	 */
 	private mxCell getActionToStateTransitionEdge(StateAction stateAction, Transition transition) {
-		mxCell res = edges.get(transition.hashCode());
+		mxCell res = edges.get(transition);
 		if (res != null) {
 			return res;
 		}
@@ -114,24 +114,24 @@ public class MDPViewer {
 		mxCell s = getStateVertex(transition.getsPrime());
 		res = (mxCell) graph.insertEdge(graph.getDefaultParent(), String.valueOf(transition.hashCode()), getTransitionLabel(stateAction, transition), sa, s);
 		setDefaultEdgeStyle(res);
-		edges.put(transition.hashCode(), res);
+		edges.put(transition, res);
 		return res;
 	}
 
 	private Object getTransitionLabel(StateAction stateAction, Transition transition) {
-		return transition.getReward() + ";p=" + MLUtils.format(stateAction.getProbability(transition));
+		return MLUtils.format(transition.getReward()) + ";p=" + MLUtils.format(stateAction.getProbability(transition));
 	}
 
 	private mxCell getStateToActionEdge(StateAction stateAction) {
-		mxCell res = edges.get(stateAction.hashCode());
+		mxCell res = edges.get(stateAction);
 		if (res != null) {
 			return res;
 		}
 		mxCell s = getStateVertex(stateAction.getState());
 		mxCell sa = getStateActionVertex(stateAction);
-		mxCell edge = (mxCell) graph.insertEdge(graph.getDefaultParent(), String.valueOf(stateAction.hashCode()), null, s, sa);
-		setDefaultEdgeStyle(edge);
-		edges.put(stateAction.hashCode(), res);
+		res = (mxCell) graph.insertEdge(graph.getDefaultParent(), String.valueOf(stateAction.hashCode()), null, s, sa);
+		setDefaultEdgeStyle(res);
+		edges.put(stateAction, res);
 		return res;
 	}
 
@@ -257,10 +257,13 @@ public class MDPViewer {
 	
 	public void markPolicy(MDPPolicy policy) {
 		graph.getModel().beginUpdate();
-		for (State s : mdp.getStates()) {
-			StateAction sa = policy.getStatePolicy(s).getStateAction();
-			if(mdp.getStateActions(s).size() > 1) {
-				setSelectedEdgeStyle(getStateToActionEdge(sa));
+		for (State state : mdp.getStates()) {
+			StateAction stateAction = policy.getStatePolicy(state).getStateAction();
+			if(mdp.getStateActions(state).size() > 1) {  //if more than one action in state, we have the intermediate StateAction node
+				setSelectedEdgeStyle(getStateToActionEdge(stateAction));
+				stateAction.getTransitions().keySet().forEach((transition) -> setSelectedEdgeStyle(getActionToStateTransitionEdge(stateAction, transition)));
+			} else { //a single action available in state, direct edge State->State
+				stateAction.getTransitions().keySet().forEach((transition) -> setSelectedEdgeStyle(getStateToStateTransitionEdge(stateAction, transition)));
 			}
 		}
 		graph.getModel().endUpdate();

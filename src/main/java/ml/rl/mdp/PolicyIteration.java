@@ -4,12 +4,8 @@ import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
 import ml.rl.mdp.model.StateAction;
-import ml.rl.mdp.model.StatePolicy;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
 
 /**
  * Implementation of PolicyIteration Burlap like
@@ -21,16 +17,16 @@ import org.apache.log4j.Logger;
  * @author eh2zamf
  *
  */
-public class PolicyIterationBurlap {
+public class PolicyIteration {
 
-	private static final Logger log = Logger.getLogger(PolicyIterationBurlap.class);
+	private static final Logger log = Logger.getLogger(PolicyIteration.class);
 	private static final double epsilon = 0.00001;
 	private MDP mdp;
 	private double gamma;
 	private MDPPolicy policy;
 	private int iterationCount;
 
-	public PolicyIterationBurlap(MDP mdp, double gamma) {
+	public PolicyIteration(MDP mdp, double gamma) {
 		super();
 		this.mdp = mdp;
 		this.gamma = gamma;
@@ -39,12 +35,13 @@ public class PolicyIterationBurlap {
 	public void run() {
 		mdp.resetStateValues();
 		iterationCount = 0;
-		policy = mdp.initialDeterministicPolicy();
+		policy = MDPPolicy.greedyPolicy(mdp, gamma);
 		double maxDelta = Double.MAX_VALUE;
 		do {
+			log.info("Policy:                " + policy);
 			maxDelta = evaluatePolicy(policy);
 			iterationCount++;
-			improvePolicy(policy);
+			policy  = MDPPolicy.greedyPolicy(mdp, gamma);  //rebuild the policy
 		} while (maxDelta > epsilon);
 		if (log.isDebugEnabled()) {
 			log.debug("Done." + mdp.printStateValues());
@@ -65,12 +62,11 @@ public class PolicyIterationBurlap {
 	 * @return the maximum change in value over all MDP states 
 	 */
 	private double evaluatePolicy(MDPPolicy policy) {
-		log.info(policy);
 		double maxDelta = 0; //the max change in state value for all iterations
 		if (log.isDebugEnabled()) {
 			log.debug("Iteration " + iterationCount + ". Evaluating policy: " + policy + "Iteration: " + iterationCount);
 		}
-		double delta;  //the max change in state value for one iteration
+		double delta; //the max change in state value for one iteration
 		do { //value iteration given policy pi
 			delta = 0;
 			for (State state : mdp.getNonTerminalStates()) {
@@ -82,60 +78,16 @@ public class PolicyIterationBurlap {
 				delta = Math.max(delta, Math.abs(newValue - prevValue));
 				maxDelta = Math.max(delta, maxDelta);
 				state.setValue(newValue);
-				//log.info(state + ":" + prevValue + "->" + newValue);
+				if (log.isDebugEnabled()) {
+					log.info(state + ":" + prevValue + "->" + newValue);
+				}
 			}
-			//log.info("");
 		} while (delta > epsilon);
 		if (log.isDebugEnabled()) {
 			log.debug("Evaluation done." + mdp.printStateValues());
 		}
-		log.info("Evaluation done." + mdp.printStateValues());
+		log.info("Policy evaluation:     " + mdp.printStateValues());
 		return maxDelta;
-
-	}
-
-	/**
-	 * 
-	 * For each State, choose the StateAction which maximizes the {@link StateAction#evaluate(double)} function
-	 * 
-	 */
-	private void improvePolicy(MDPPolicy policy) {
-		for (State state : mdp.getNonTerminalStates()) {
-			StatePolicy bestPolicy = getBestPolicy(state);
-			if (!bestPolicy.equals(policy.getStatePolicy(state))) {
-				if (log.isDebugEnabled()) {
-					log.debug(state + 
-							". PreviousPolicy: " + policy.getStatePolicy(state) + "=" + policy.getStatePolicy(state).evaluate(gamma) + 
-							". NewPolicy:" + bestPolicy + "=" + bestPolicy.evaluate(gamma));
-				}
-				policy.setStatePolicy(state, bestPolicy);
-			}
-		}
-	}
-
-	/**
-	 * 
-	 * @param state
-	 * @return the best (deterministic) policy for the given state, i.e.
-	 *         the StateAction having the max value for stateAction.reward +
-	 *         stateAction.sPrime.value
-	 */
-	private StatePolicy getBestPolicy(State state) {
-		double max = Double.NEGATIVE_INFINITY;
-		StateAction bestStateAction = null;
-		for (StateAction stateAction : mdp.getStateActions(state)) {
-			double val = stateAction.evaluate(gamma);
-			if (val > max) {
-				max = val;
-				bestStateAction = stateAction;
-			}
-		}
-		StatePolicy res = StatePolicy.instace(state);
-		res.setStateAction(bestStateAction);
-		if (log.isDebugEnabled()) {
-			log.trace("Best policy for " + state + " is " + bestStateAction + " with value = " + max);
-		}
-		return res;
 
 	}
 }

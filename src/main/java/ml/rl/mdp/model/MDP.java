@@ -37,13 +37,7 @@ public class MDP {
 	}
 
 	private void setNonTerminalStates() {
-		//nonTerminalStates = states.stream().filter((s) -> (!isTerminal(s))).collect(Collectors.toList());
-		nonTerminalStates.clear();
-		for (State state : states) {
-			if (!isTerminal(state)) {
-				nonTerminalStates.add(state);
-			}
-		}
+		nonTerminalStates = states.stream().filter((s) -> (!isTerminal(s))).collect(Collectors.toList());
 	}
 
 	public List<StateAction> getStateActions(State state) {
@@ -72,7 +66,7 @@ public class MDP {
 
 	/** Generate initial policy - equal probabilities for all decisions */
 	public MDPPolicy initialPolicy() {
-		return MDPPolicy.initialPolicy(this);
+		return MDPPolicy.initialNonDeterministicPolicy(this);
 	}
 
 	/**
@@ -95,7 +89,7 @@ public class MDP {
 		}
 		return res;
 	}
-
+	
 	public void resetStateValues() {
 		states.forEach((s) -> s.setValue(0));
 	}

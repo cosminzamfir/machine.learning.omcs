@@ -40,7 +40,7 @@ public class StateAction {
 		Transition t = Transition.instance(action, state, sprime, reward);
 		addTransition(t, probability);
 	}
-
+	
 	public State getState() {
 		return state;
 	}
@@ -55,6 +55,10 @@ public class StateAction {
 		return res;
 	}
 
+	/**
+	 * Generate a {@link Transition} based on the assigned probabilities
+	 * @return
+	 */
 	public Transition generateTransition() {
 		double p = Math.random();
 		double d = 0;
@@ -72,10 +76,7 @@ public class StateAction {
 	 */
 	public double evaluate(double gamma) {
 		DoubleHolder res = new DoubleHolder(0);
-		//getTransitions().keySet().forEach((t) -> res.add(getProbability(t) * (t.getReward() + gamma * t.getsPrime().getValue())));
-		for (Transition t : getTransitions().keySet()) {
-			res.add(getProbability(t) * (t.getReward() + gamma * t.getsPrime().getValue()));
-		}
+		getTransitions().keySet().forEach((t) -> res.add(getProbability(t) * (t.getReward() + gamma * t.getsPrime().getValue())));
 		return res.get();
 	}
 

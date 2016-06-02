@@ -33,7 +33,7 @@ public class HW4HillClimbing {
 	public void test() throws Exception {
 		while (true) {
 			MDP mdp = createRadomMDP();
-			PolicyIterationBurlap pi = new PolicyIterationBurlap(mdp, 0.75);
+			PolicyIteration pi = new PolicyIteration(mdp, 0.75);
 			pi.run();
 			int iterations = pi.getIterationCount();
 			while (true) {
@@ -104,7 +104,7 @@ public class HW4HillClimbing {
 
 	private int hillClimb(MDP mdp, int currentIterations) {
 		log.info("Searching MDP better than " + currentIterations);
-		PolicyIterationBurlap pi = null;
+		PolicyIteration pi = null;
 		do {
 			List<State> statesToModify = new ArrayList<>();
 			Map<State, List<StateAction>> backup = new HashMap<State, List<StateAction>>();
@@ -121,7 +121,7 @@ public class HW4HillClimbing {
 			}
 
 			//compute
-			pi = new PolicyIterationBurlap(mdp, 0.75);
+			pi = new PolicyIteration(mdp, 0.75);
 			pi.run();
 			if(++numMDPTried  % 100000 == 0) {
 				System.out.println("Tried " + MLUtils.format(numMDPTried) + " MDPs. Best result:" + currentIterations);

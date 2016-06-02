@@ -1,8 +1,12 @@
 package ml.rl.mdp.model;
 
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import util.DoubleHolder;
 import util.IntHolder;
@@ -112,6 +116,13 @@ public class StatePolicy {
 		stateActionsProbabilities.keySet().forEach((sa) -> sb.append(sa.getAction().toString() + "=" + getProbability(sa) + " "));
 		sb.append("]");
 		return sb.toString();
+	}
+
+	public static StatePolicy greedyInstance(State state, MDP mdp, double gamma) {
+		StatePolicy res = instace(state);
+		StateAction bestStateAction = mdp.getStateActions(state).stream().max(Comparator.comparing(stateAction-> stateAction.evaluate(gamma))).get();
+		res.setStateAction(bestStateAction);
+		return res;
 	}
 
 }

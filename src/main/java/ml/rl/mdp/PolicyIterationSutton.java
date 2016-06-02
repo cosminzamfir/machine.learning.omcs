@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 public class PolicyIterationSutton {
 
 	private static final Logger log = Logger.getLogger(PolicyIterationSutton.class);
-	private static final double epsilon = 0.0000001;
+	private static final double epsilon = 1E-7;
 	private MDP mdp;
 	private double gamma;
 	private MDPPolicy policy;

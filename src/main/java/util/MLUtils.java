@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -153,6 +154,20 @@ public class MLUtils {
 
 		}
 		return res;
+	}
+	
+	public static int randomSelectionFromDistribution(List<Double> probs) {
+		List<Double> clone = new ArrayList<>(probs);
+		Collections.sort(clone);
+		Double p = Math.random();
+		double sum = 0;
+		for (int i = 0; i < clone.size(); i++) {
+			sum += probs.get(i);
+			if(p < sum) {
+				return i;
+			}
+		}
+		throw new RuntimeException("Assertion error. List does not sum to 1? " + probs);
 	}
 
 }

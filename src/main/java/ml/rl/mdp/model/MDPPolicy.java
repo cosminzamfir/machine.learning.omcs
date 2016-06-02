@@ -41,7 +41,7 @@ public class MDPPolicy {
 	}
 
 	/** Generate initial policy - equal probabilities for all decisions */
-	public static MDPPolicy initialPolicy(MDP mdp) {
+	public static MDPPolicy initialNonDeterministicPolicy(MDP mdp) {
 		MDPPolicy res = instance(mdp);
 		for (State state : mdp.getStates()) {
 			StatePolicy statePolicy = StatePolicy.instace(state);
@@ -58,14 +58,22 @@ public class MDPPolicy {
 	 */
 	public static MDPPolicy initialDeterministicPolicy(MDP mdp) {
 		MDPPolicy res = instance(mdp);
-		for (State state : mdp.getStates()) {
-			if (!mdp.isTerminal(state)) {
-				StatePolicy statePolicy = StatePolicy.instace(state);
-				StateAction stateAction = mdp.getStateActions(state).get(0);
-				statePolicy.setStateAction(stateAction);
-				res.statePolicies.put(state, statePolicy);
-			}
+		for (State state : mdp.getNonTerminalStates()) {
+			StatePolicy statePolicy = StatePolicy.instace(state);
+			StateAction stateAction = mdp.getStateActions(state).get(0);
+			statePolicy.setStateAction(stateAction);
+			res.statePolicies.put(state, statePolicy);
 		}
+		return res;
+	}
+
+	/**
+	 * Generate a greedy deterministic policy - for each {@link State} choose the singe {@link StateAction} with the highest value
+	 * @return
+	 */
+	public static MDPPolicy greedyPolicy(MDP mdp, double gamma) {
+		MDPPolicy res = instance(mdp);
+		mdp.getNonTerminalStates().forEach((state) -> res.setStatePolicy(state, StatePolicy.greedyInstance(state,mdp,gamma)));
 		return res;
 	}
 

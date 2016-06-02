@@ -1,41 +1,62 @@
 package ml.rl.mdp;
 
-import org.apache.log4j.Logger;
-import org.junit.Test;
-
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.State;
 import ml.rl.mdp.view.MDPViewer;
 
+import org.junit.Test;
+
 public class HW4Single {
 
-	private static final Logger log = Logger.getLogger(HW4Single.class);
-	int numStates =30;
-	int numMDPTried = 0;
+	int numStates = 6000;
 	MDP mdp;
+	boolean showView = true;
+	double gamma = 0.75;
 
 	@Test
 	public void test() throws Exception {
 		createMDP();
-		PolicyIterationBurlap pi = new PolicyIterationBurlap(mdp, 0.75);
+		PolicyIteration pi = new PolicyIteration(mdp, 0.75);
 		pi.run();
 		System.out.println("Iterations:" + pi.getIterationCount());
 		mdp.saveAsJson("mymdp.json", 0.75);
-		MDPViewer v = MDPViewer.instance(mdp);
-		v.display();
-		v.setCompleted();
-		System.in.read();
+		if (showView) {
+			MDPViewer v = MDPViewer.instance(mdp);
+			v.display();
+			v.setCompleted();
+			v.markPolicy(pi.getPolicy());
+			System.in.read();
+		}
 
 	}
 
 	private void createMDP() {
-		double multiplier = 1000000;
+		double rnn = 10;
+		double rs = 1;
+		double multiplier = 1 / (1-gamma); 
+		State first = State.instance(0);
+		State last = State.instance(numStates -1);
+		double v0s0 = multiplier * rs;
+		double v0sn = multiplier * rnn;
+		double vs0 = discountFrom(first, last)*multiplier*rnn;
+		double rn0 = between(v0sn - gamma*vs0, v0sn - v0s0);
+		
 		mdp = MDP.instance();
-		for (int i = 0; i < numStates-1; i++) {
+		for (int i = 0; i < numStates - 1; i++) {
+			//... guess what
 		}
 	}
 	
+	private double between(double d1, double d2) {
+		return (d1 + d2)/2;
+	}
 
+	private double discountFrom(State s1, State s2) {
+		return Math.pow(gamma, s2.getId() - s1.getId());
+	}
+	
+
+	/** From State i to State j */
 	private void addSingleOutcomeAction(int i, int j, double reward) {
 		if (i < 0)
 			i = numStates - 1;
@@ -48,6 +69,7 @@ public class HW4Single {
 		mdp.addSingleOutcomStateAction(State.instance(i), State.instance(j), reward, "Action_" + i + "_" + j);
 	}
 
+	/** Stochastic outcome action from State i to States j1 and j2 with given rewards and probabilities*/
 	private void addDoubleOutcomeAction(int i, int j1, int j2, double reward1, double reward2, double p1, double p2) {
 		if (i < 0)
 			i = numStates - 1;
