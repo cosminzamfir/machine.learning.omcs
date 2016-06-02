@@ -65,6 +65,7 @@ public class PolicyIterationBurlap {
 	 * @return the maximum change in value over all MDP states 
 	 */
 	private double evaluatePolicy(MDPPolicy policy) {
+		log.info(policy);
 		double maxDelta = 0; //the max change in state value for all iterations
 		if (log.isDebugEnabled()) {
 			log.debug("Iteration " + iterationCount + ". Evaluating policy: " + policy + "Iteration: " + iterationCount);
@@ -81,13 +82,14 @@ public class PolicyIterationBurlap {
 				delta = Math.max(delta, Math.abs(newValue - prevValue));
 				maxDelta = Math.max(delta, maxDelta);
 				state.setValue(newValue);
-				log.info(state + ":" + prevValue + "->" + newValue);
+				//log.info(state + ":" + prevValue + "->" + newValue);
 			}
-			log.info("");
+			//log.info("");
 		} while (delta > epsilon);
 		if (log.isDebugEnabled()) {
 			log.debug("Evaluation done." + mdp.printStateValues());
 		}
+		log.info("Evaluation done." + mdp.printStateValues());
 		return maxDelta;
 
 	}
