@@ -14,8 +14,8 @@ public class JsonEncoderTest {
 	@Test
 	public void test1() throws Exception {
 		MDP mdp = MDP.instance();
-		mdp.addSingleOutcomStateAction(State.instance(0), State.instance(1), 1, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(1), State.instance(2), 1, Action.defaultName);
+		mdp.addSingleOutcomAction(State.instance(0), State.instance(1), 1, Action.defaultName);
+		mdp.addSingleOutcomAction(State.instance(1), State.instance(2), 1, Action.defaultName);
 		System.out.println(new JsonEncoder(mdp).encode(0.75));
 	}
 }

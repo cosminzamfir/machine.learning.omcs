@@ -72,7 +72,7 @@ public class HW4SingleSecondTry {
 			j = numStates - 1;
 		if (j > numStates - 1)
 			j = 0;
-		mdp.addSingleOutcomStateAction(State.instance(i), State.instance(j), reward, "Action_" + i + "_" + j);
+		mdp.addSingleOutcomAction(State.instance(i), State.instance(j), reward, "Action_" + i + "_" + j);
 	}
 
 	/** Stochastic outcome action from State i to States j1 and j2 with given rewards and probabilities*/
@@ -89,7 +89,7 @@ public class HW4SingleSecondTry {
 			j2 = 1;
 		if (j2 > numStates - 1)
 			j2 = numStates - 1;
-		mdp.addDoubleOutcomStateAction(State.instance(i), State.instance(j1), State.instance(j1), reward1, reward2, p1, p2,
+		mdp.addDoubleOutcomAction(State.instance(i), State.instance(j1), State.instance(j1), reward1, reward2, p1, p2,
 				"Action_" + i + "_" + j1 + "_" + j2);
 	}
 

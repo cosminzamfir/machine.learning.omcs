@@ -61,7 +61,7 @@ public class HW4HillClimbing {
 			List<State> sPrimes = getRandomSprimes();
 			List<Double> rewards = getRandomRewards();
 			List<Double> probabilities = getRandomProbabilities();
-			mdp.addMultipleOutcomStateAction(s, sPrimes, rewards, probabilities, "Action_" + i);
+			mdp.addMultipleOutcomeAction(s, sPrimes, rewards, probabilities, "Action_" + i);
 			
 		}
 

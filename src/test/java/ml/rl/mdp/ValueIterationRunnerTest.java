@@ -43,11 +43,11 @@ public class ValueIterationRunnerTest {
 	}
 
 	private void addSingleOutcomeAction(int s, int sprime, double reward) {
-		mdp.addSingleOutcomStateAction(State.instance(s), State.instance(sprime), reward, "S" + s + " => S" + sprime);
+		mdp.addSingleOutcomAction(State.instance(s), State.instance(sprime), reward, "S" + s + " => S" + sprime);
 	}
 
 	private void addDoubleOutcomeAction(int i, int j1, int j2, double reward1, double reward2, double p1, double p2) {
-		mdp.addDoubleOutcomStateAction(State.instance(i), State.instance(j1), State.instance(j2), reward1, reward2, p1,
+		mdp.addDoubleOutcomAction(State.instance(i), State.instance(j1), State.instance(j2), reward1, reward2, p1,
 				p2,
 				"S" + i + " => [S" + j1 + ",S" + j2 + "]");
 	}

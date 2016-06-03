@@ -57,7 +57,7 @@ public class HW4Single {
 
 	/** From State i to State j */
 	private void addSingleOutcomeAction(int i, int j, double reward) {
-		mdp.addSingleOutcomStateAction(State.instance(i), State.instance(j), reward, "S" + i + " => S" + j);
+		mdp.addSingleOutcomAction(State.instance(i), State.instance(j), reward, "S" + i + " => S" + j);
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class HW4Single {
 	 * rewards and probabilities
 	 */
 	private void addDoubleOutcomeAction(int i, int j1, int j2, double reward1, double reward2, double p1, double p2) {
-		mdp.addDoubleOutcomStateAction(State.instance(i), State.instance(j1), State.instance(j2), reward1, reward2, p1,
+		mdp.addDoubleOutcomAction(State.instance(i), State.instance(j1), State.instance(j2), reward1, reward2, p1,
 				p2,
 				"S" + i + " => [S" + j1 + ",S" + j2 + "]");
 	}

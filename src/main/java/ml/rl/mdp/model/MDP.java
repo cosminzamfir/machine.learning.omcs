@@ -112,13 +112,13 @@ public class MDP {
 		return stateActions;
 	}
 
-	public void addSingleOutcomStateAction(State s, State sprime, double reward, String actionName) {
+	public void addSingleOutcomAction(State s, State sprime, double reward, String actionName) {
 		StateAction stateAction = StateAction.instance(s, Action.instance(actionName));
 		stateAction.addTransition(sprime, reward, 1);
 		addStateAction(stateAction);
 	}
 
-	public void addDoubleOutcomStateAction(State s, State sprime1, State sprime2, double reward1, double reward2, double prob1, double prob2, String actionName) {
+	public void addDoubleOutcomAction(State s, State sprime1, State sprime2, double reward1, double reward2, double prob1, double prob2, String actionName) {
 		StateAction stateAction = StateAction.instance(s, Action.instance(actionName));
 		stateAction.addTransition(sprime1, reward1, prob1);
 		stateAction.addTransition(sprime2, reward2, prob2);
@@ -133,7 +133,7 @@ public class MDP {
 	 * @param probabilities the probability to arrive to each of sPrime
 	 * @param actionNamePrefix the name of the Action
 	 */
-	public void addMultipleOutcomStateAction(State s, List<State> sPrimes, List<Double> rewards, List<Double> probabilities, String actionName) {
+	public void addMultipleOutcomeAction(State s, List<State> sPrimes, List<Double> rewards, List<Double> probabilities, String actionName) {
 		StateAction stateAction = StateAction.instance(s, Action.instance(actionName));
 		for (int i = 0; i < sPrimes.size(); i++) {
 			stateAction.addTransition(sPrimes.get(i), rewards.get(i), probabilities.get(i));
