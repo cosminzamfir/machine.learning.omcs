@@ -1,7 +1,6 @@
 package ml.rl.td;
 
-import static org.junit.Assert.*;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import ml.rl.builder.EpisodeBuilder;
@@ -11,15 +10,15 @@ public class KEstimatorsTest {
 
 	@Test
 	public void test1() throws Exception {
-		Episode episode = EpisodeBuilder.instance().addRewards(1,1,1).build();
-		episode.setStateValueAt(3,1);
-		estimate(episode,1);
-		estimate(episode,2);
-		estimate(episode,3);
+		Episode episode = EpisodeBuilder.instance().addRewards(1, 1, 1).build();
+		episode.setStateValueAt(3, 1);
+		estimate(episode, 1, 2);
+		estimate(episode, 2, 2);
+		estimate(episode, 3, 3);
 	}
 
-	private void estimate(Episode episode, int k) {
+	private void estimate(Episode episode, int k, int expected) {
 		double val = new KEstimator().estimate(episode, k, 1);
-		System.out.println(val);
+		Assert.assertEquals(expected, val, 00001);
 	}
 }
