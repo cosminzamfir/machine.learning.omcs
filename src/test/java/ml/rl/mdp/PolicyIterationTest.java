@@ -1,12 +1,11 @@
 package ml.rl.mdp;
+import org.junit.Assert;
+import org.junit.Test;
+
 import ml.rl.mdp.model.Action;
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
-import ml.rl.mdp.view.MDPViewer;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class PolicyIterationTest {
 
@@ -19,7 +18,7 @@ public class PolicyIterationTest {
 		PolicyIteration pi = new PolicyIteration(mdp);
 		pi.run();
 		MDPPolicy policy = pi.getPolicy();
-		Assert.assertEquals(policy.getStatePolicy(State.instance(1)).getStateAction().getAction().getName(), Action.WEST);
+		Assert.assertEquals(policy.getAction(State.instance(1)).getName(), Action.WEST);
 		
 	}
 
@@ -43,16 +42,11 @@ public class PolicyIterationTest {
 		MDPPolicy policy = pi.getPolicy();
 		System.out.println(policy);
 		
-		//MDPViewer viewer = MDPViewer.instance(mdp);
-		//viewer.display();
-		//viewer.setCompleted();
-		//viewer.markPolicy(policy);
-		
-		Assert.assertEquals(policy.getStatePolicy(State.instance(1)).getStateAction().getAction().getName(), Action.NORTH_EAST);
-		Assert.assertEquals(policy.getStatePolicy(State.instance(2)).getStateAction().getAction().getName(), Action.EAST);
-		Assert.assertEquals(policy.getStatePolicy(State.instance(3)).getStateAction().getAction().getName(), Action.NORTH);
-		Assert.assertEquals(policy.getStatePolicy(State.instance(5)).getStateAction().getAction().getName(), Action.NORTH);
-		Assert.assertEquals(policy.getStatePolicy(State.instance(6)).getStateAction().getAction().getName(), Action.NORTH);
+		Assert.assertEquals(policy.getAction(State.instance(1)).getName(), Action.NORTH_EAST);
+		Assert.assertEquals(policy.getAction(State.instance(2)).getName(), Action.EAST);
+		Assert.assertEquals(policy.getAction(State.instance(3)).getName(), Action.NORTH);
+		Assert.assertEquals(policy.getAction(State.instance(5)).getName(), Action.NORTH);
+		Assert.assertEquals(policy.getAction(State.instance(6)).getName(), Action.NORTH);
 	
 	}
 

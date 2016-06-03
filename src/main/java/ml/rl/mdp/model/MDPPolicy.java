@@ -84,6 +84,10 @@ public class MDPPolicy {
 	public void setStatePolicy(State state, StatePolicy statePolicy) {
 		statePolicies.put(state, statePolicy);
 	}
+	
+	public Action getAction(State state) {
+		return getStatePolicy(state).getStateAction().getAction();
+	}
 
 	@Override
 	public String toString() {

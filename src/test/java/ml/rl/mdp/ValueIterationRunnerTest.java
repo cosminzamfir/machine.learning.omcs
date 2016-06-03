@@ -1,46 +1,56 @@
 package ml.rl.mdp;
-import ml.rl.mdp.ValueIterationRunner;
-import ml.rl.mdp.model.Action;
-import ml.rl.mdp.model.MDP;
-import ml.rl.mdp.model.State;
 
 import org.junit.Test;
 
+import ml.rl.mdp.model.MDP;
+import ml.rl.mdp.model.State;
+
 public class ValueIterationRunnerTest {
 
+	MDP mdp;
+
+	@Test
+	public void test1() throws Exception {
+		mdp = MDP.instance();
+		addDoubleOutcomeAction(0, 1, 2, 2, 3, 0.6, 0.7);
+		addSingleOutcomeAction(1, 3, 20);
+		addSingleOutcomeAction(2, 4, 30);
+		addSingleOutcomeAction(3, 5, 10);
+		addSingleOutcomeAction(4, 6, 10);
+		ValueIterationRunner vir = new ValueIterationRunner(mdp);
+		vir.run();
+		System.in.read();
+	}
 
 	@Test
 	public void test2() throws Exception {
-		MDP mdp = MDP.instance();
-		mdp.addDoubleOutcomStateAction(State.instance(0), State.instance(1), State.instance(2), 7.9, -5.1, 0.81, 0.19, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(1), State.instance(3), 2.5, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(2), State.instance(3), -7.2, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(3), State.instance(4), 9, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(4), State.instance(5), 0, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(5), State.instance(6), 1.6, Action.defaultName);
+		mdp = MDP.instance();
+		addDoubleOutcomeAction(0, 1, 2, 7.9, -5.1, 0.81, 0.19);
+		addDoubleOutcomeAction(0, 3, 4, 7.9, -5.1, 0.81, 0.19);
+		addSingleOutcomeAction(1, 2, 2.5);
+		addSingleOutcomeAction(2, 5, 2.5);
+		addSingleOutcomeAction(2, 7, 2.5);
+		addSingleOutcomeAction(3, 7, 2.5);
+		addSingleOutcomeAction(7, 9, 2.5);
+		addSingleOutcomeAction(6, 8, 2.5);
+		addSingleOutcomeAction(4, 6, 2.5);
+		addSingleOutcomeAction(7, 9, 2.5);
+
 		ValueIterationRunner vir = new ValueIterationRunner(mdp);
+		vir.setGamma(0.8);
 		vir.run();
 		System.in.read();
 	}
 
-	@Test
-	public void test3() throws Exception {
-		MDP mdp = MDP.instance();
-		mdp.addDoubleOutcomStateAction(State.instance(0), State.instance(1), State.instance(2), 7.9, -5.1, 0.81, 0.19, Action.defaultName);
-		mdp.addDoubleOutcomStateAction(State.instance(0), State.instance(3), State.instance(4), 7.9, -5.1, 0.81, 0.19, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(1), State.instance(5), 2.5, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(2), State.instance(5), -7.2, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(3), State.instance(6), 9, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(4), State.instance(7), 0, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(5), State.instance(8), 1.6, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(6), State.instance(9), 1.6, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(9), State.instance(9), 1.6, Action.defaultName);
-		mdp.addSingleOutcomStateAction(State.instance(9), State.instance(10), 1.6, Action.defaultName);
-
-		ValueIterationRunner vir = new ValueIterationRunner(mdp);
-		vir.setGamma(1);
-		vir.run();
-		System.in.read();
+	private void addSingleOutcomeAction(int s, int sprime, double reward) {
+		mdp.addSingleOutcomStateAction(State.instance(s), State.instance(sprime), reward, "S" + s + " => S" + sprime);
 	}
+
+	private void addDoubleOutcomeAction(int i, int j1, int j2, double reward1, double reward2, double p1, double p2) {
+		mdp.addDoubleOutcomStateAction(State.instance(i), State.instance(j1), State.instance(j2), reward1, reward2, p1,
+				p2,
+				"S" + i + " => [S" + j1 + ",S" + j2 + "]");
+	}
+
 
 }
