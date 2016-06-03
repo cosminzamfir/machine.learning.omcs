@@ -2,6 +2,11 @@ package ml.rl.mdp.model;
 
 import util.MLUtils;
 
+/**
+ * The transition from s to s' with reward triggered by a {@link StateAction}
+ * @author eh2zamf
+ *
+ */
 public class Transition {
 
 	private static int count = 1;
@@ -9,7 +14,6 @@ public class Transition {
 	private State s;
 	private State sPrime;
 	private double reward;
-	private int index;
 
 	public static Transition instance(Action action, State s, State sPrime, double reward) {
 		return new Transition(action, s, sPrime, reward);
@@ -21,7 +25,6 @@ public class Transition {
 		this.s = s;
 		this.sPrime = sPrime;
 		this.reward = reward;
-		this.index = count++;
 	}
 
 	public Action getAction() {

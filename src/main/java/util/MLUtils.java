@@ -156,6 +156,11 @@ public class MLUtils {
 		return res;
 	}
 	
+	/**
+	 * Given a List of probabilities summing to 1, select randomly an element index based on its probability value
+	 * <p>
+	 * Ex: Given [0.5,0.3,0.2] select first elem with prob 0.5, second with prob 0.3, third with prob 0.2
+	 */
 	public static int randomSelectionFromDistribution(List<Double> probs) {
 		List<Double> clone = new ArrayList<>(probs);
 		Collections.sort(clone);

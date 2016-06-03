@@ -176,7 +176,7 @@ public class MDPViewer {
 	
 	private void setSelectedEdgeStyle(mxCell edge) {
 		addStyle(edge, STYLE_FONTSTYLE, FONT_BOLD);
-		addStyle(edge, STYLE_FONTSIZE, 15);
+		addStyle(edge, STYLE_FONTSIZE, 12);
 		addStyle(edge, STYLE_FONTCOLOR, "black");
 		addStyle(edge, STYLE_STROKECOLOR, "red");
 		addStyle(edge, STYLE_STROKEWIDTH, 2);
@@ -248,6 +248,13 @@ public class MDPViewer {
 		graph.refresh();
 	}
 	
+	public void updateStateVerticesValues() {
+		graph.getModel().beginUpdate();
+		stateVertices.keySet().forEach((state) -> stateVertices.get(state).setValue(getLabel(state)));
+		graph.getModel().endUpdate();
+		graph.refresh();
+	}
+	
 	public void setCompleted() {
 		graph.getModel().beginUpdate();
 		stateVertices.values().forEach((cell) -> setCompletedStateVertexStyle(cell));
@@ -257,7 +264,8 @@ public class MDPViewer {
 	
 	public void markPolicy(MDPPolicy policy) {
 		graph.getModel().beginUpdate();
-		for (State state : mdp.getStates()) {
+		edges.values().forEach((edge) -> setDefaultEdgeStyle(edge));
+		for (State state : mdp.getNonTerminalStates()) {
 			StateAction stateAction = policy.getStatePolicy(state).getStateAction();
 			if(mdp.getStateActions(state).size() > 1) {  //if more than one action in state, we have the intermediate StateAction node
 				setSelectedEdgeStyle(getStateToActionEdge(stateAction));

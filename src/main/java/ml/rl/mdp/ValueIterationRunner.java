@@ -9,13 +9,11 @@ import ml.rl.mdp.view.MDPViewer;
 
 public class ValueIterationRunner implements Observer {
 
-	private MDP mdp;
 	private MDPViewer mdpViewer;
 	private ValueIteration vi;
 
 	public ValueIterationRunner(MDP mdp) {
 		super();
-		this.mdp = mdp;
 		this.mdpViewer = MDPViewer.instance(mdp);
 		mdpViewer.display();
 		vi = new ValueIteration(mdp);

@@ -188,7 +188,7 @@ public class MDP {
 
 	public Object printStateValues() {
 		StringBuilder res = new StringBuilder();
-		states.forEach((s) -> res.append(s + "=" + MLUtils.format6(s.getValue())).append(" "));
+		states.forEach((s) -> res.append(s + "=" + MLUtils.format(s.getValue())).append(" "));
 		return res.toString();
 	}
 

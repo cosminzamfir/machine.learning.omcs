@@ -33,7 +33,7 @@ public class HW4HillClimbing {
 	public void test() throws Exception {
 		while (true) {
 			MDP mdp = createRadomMDP();
-			PolicyIteration pi = new PolicyIteration(mdp, 0.75);
+			PolicyIteration pi = new PolicyIteration(mdp);
 			pi.run();
 			int iterations = pi.getIterationCount();
 			while (true) {
@@ -121,7 +121,7 @@ public class HW4HillClimbing {
 			}
 
 			//compute
-			pi = new PolicyIteration(mdp, 0.75);
+			pi = new PolicyIteration(mdp);
 			pi.run();
 			if(++numMDPTried  % 100000 == 0) {
 				System.out.println("Tried " + MLUtils.format(numMDPTried) + " MDPs. Best result:" + currentIterations);

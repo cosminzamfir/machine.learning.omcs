@@ -2,12 +2,13 @@ package ml.rl.mdp;
 
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.State;
+import ml.rl.mdp.view.MDPViewer;
 
 import org.junit.Test;
 
-public class HW4Single {
+public class HW4SingleSecondTry {
 
-	int numStates = 30;
+	int numStates = 100;
 	MDP mdp;
 	boolean showView = false;
 	double gamma = 0.75;
@@ -15,23 +16,23 @@ public class HW4Single {
 	@Test
 	public void test() throws Exception {
 		createMDP();
-		if(!showView) {
-			PolicyIteration pi = new PolicyIteration(mdp);
-			pi.setGamma(gamma);
-			pi.run();
-			mdp.saveAsJson("mymdp.json", 0.75);
-		} else {
-			PolicyIterationRunner pir = new PolicyIterationRunner(mdp);
-			pir.setGamma(gamma);
-			pir.setSlideShowDelay(20000);
-			pir.run();
+		PolicyIteration pi = new PolicyIteration(mdp);
+		pi.setGamma(gamma);
+		pi.run();
+		System.out.println("Iterations:" + pi.getIterationCount());
+		mdp.saveAsJson("mymdp.json", 0.75);
+		if (showView) {
+			MDPViewer v = MDPViewer.instance(mdp);
+			v.display();
+			v.setCompleted();
+			v.markPolicy(pi.getPolicy());
 			System.in.read();
 		}
 
 	}
 
 	private void createMDP() {
-		double rnn = 10000;
+		double rnn = 10;
 		double rs = 1;
 		double multiplier = 1 / (1-gamma); 
 		State first = State.instance(0);
@@ -42,8 +43,14 @@ public class HW4Single {
 		double rn0 = between(v0sn - gamma*vs0, v0sn - v0s0);
 		
 		mdp = MDP.instance();
-		
-		//guess what?
+		addSingleOutcomeAction(0, 1, 1);
+		addSingleOutcomeAction(0, 0, 2);
+		for (int i = 1; i < numStates - 1; i++) {
+			addSingleOutcomeAction(i, i+1, 1);
+			addSingleOutcomeAction(i, i-1, 1);
+		}
+		addSingleOutcomeAction(numStates-1, numStates-1, 2);
+		addSingleOutcomeAction(numStates-1, numStates-2, 1);
 	}
 	
 	private double between(double d1, double d2) {

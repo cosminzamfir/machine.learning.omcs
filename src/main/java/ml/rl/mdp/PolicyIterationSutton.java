@@ -16,7 +16,8 @@ import org.apache.log4j.Logger;
  * <p>
  * Whether a policy improvement took place for any state is determined by comparing the previous StateAction with the current StateAction for the State 
  * <p>
- * This implementation seem to converge slower (in some cases it may go back-and-forth between 2 StateActions for a given State when values are very close, ie 0.00...1)
+ * This implementation seems to converge slower in special cases (it may go back-and-forth between 2 StateActions for a given State when values are very close, 
+ * ie 0.00...1)
  * @author eh2zamf
  *
  */
