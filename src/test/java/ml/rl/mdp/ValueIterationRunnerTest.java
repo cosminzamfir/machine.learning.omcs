@@ -35,9 +35,11 @@ public class ValueIterationRunnerTest {
 		addSingleOutcomeAction(6, 8, 2.5);
 		addSingleOutcomeAction(4, 6, 2.5);
 		addSingleOutcomeAction(7, 9, 2.5);
+		addSingleOutcomeAction(8, 8, 1E6);
+
 
 		ValueIterationRunner vir = new ValueIterationRunner(mdp);
-		vir.setGamma(0.8);
+		vir.setGamma(0.9);
 		vir.run();
 		System.in.read();
 	}

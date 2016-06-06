@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class HW4Single {
 
-	int numStates = 5;
+	int numStates = 3;
 	MDP mdp;
 	boolean showView = true;
 	double gamma = 0.75;
@@ -43,7 +43,15 @@ public class HW4Single {
 
 		mdp = MDP.instance();
 
-		// guess what
+		for (int i = 0; i < numStates - 1; i++) {
+
+			addSingleOutcomeAction(i, i, rs);
+			addSingleOutcomeAction(i, i + 1, 0);
+
+		}
+
+		addSingleOutcomeAction(numStates - 1, numStates - 1, rnn);
+		addSingleOutcomeAction(numStates - 1, 0, rn0);
 	}
 
 	private double between(double d1, double d2) {

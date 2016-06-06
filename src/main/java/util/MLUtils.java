@@ -3,6 +3,7 @@ package util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 public class MLUtils {
 	private static NumberFormat nf = NumberFormat.getInstance();
 	private static NumberFormat nf6 = NumberFormat.getInstance();
+	private static NumberFormat nfs = new DecimalFormat("0.###E0");
 	static {
 		nf.setMaximumFractionDigits(2);
 		nf.setMinimumFractionDigits(2);
@@ -135,7 +137,10 @@ public class MLUtils {
 		return l.get(random(l.size()) - 1);
 	}
 
-	public static String format(double d) {
+	public static String format(Object d) {
+		if(d instanceof Double && (double)d>1E5) {
+			return nfs.format(d);
+		}
 		return nf.format(d);
 	}
 

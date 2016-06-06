@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import util.MLUtils;
+
 public class State {
 
 	private static final Logger log = Logger.getLogger(State.class);
@@ -17,11 +19,6 @@ public class State {
 	* as oposded to problems where States are idenditified by their data
 	*/
 	private static Map<Integer, State> identifiableStates = new LinkedHashMap<Integer, State>();
-	private static NumberFormat nf = NumberFormat.getInstance();
-	static {
-		nf.setMaximumFractionDigits(2);
-		nf.setMinimumFractionDigits(2);
-	}
 
 	/**The value assigned to this state*/
 	private double value;
@@ -87,9 +84,9 @@ public class State {
 	public String toExtendedString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("S" + id);
-		sb.append("\n val=" + nf.format(value) + "");
+		sb.append("\n val=" + MLUtils.format(value) + "");
 		for (String key : data.keySet()) {
-			sb.append(MessageFormat.format("\n {0} = {1}", key, nf.format(get(key))));
+			sb.append(MessageFormat.format("\n {0} = {1}", key, MLUtils.format(get(key))));
 		}
 		return sb.toString();
 	}

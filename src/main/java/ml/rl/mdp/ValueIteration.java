@@ -3,15 +3,13 @@ package ml.rl.mdp;
 import java.util.List;
 import java.util.Observable;
 
+import org.apache.log4j.Logger;
+
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
 import ml.rl.mdp.model.StateAction;
 import ml.rl.mdp.model.StatePolicy;
-
-import org.apache.log4j.Logger;
-
-import util.DoubleHolder;
 
 public class ValueIteration extends Observable {
 
