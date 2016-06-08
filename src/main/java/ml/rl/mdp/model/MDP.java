@@ -91,7 +91,7 @@ public class MDP {
 	}
 	
 	public void resetStateValues() {
-		states.forEach((s) -> s.setValue(0));
+		nonTerminalStates.forEach((s) -> s.setValue(0));
 	}
 
 	@Override

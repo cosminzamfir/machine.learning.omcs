@@ -51,7 +51,7 @@ public class ValueIteration extends Observable {
 		int iteration = 1;
 		do {
 			delta = 0;
-			for (State s : mdp.getStates()) {
+			for (State s : mdp.getNonTerminalStates()) {
 				double v = s.getValue();
 				s.setValue(getMaxValue(s));
 				if (log.isDebugEnabled()) {

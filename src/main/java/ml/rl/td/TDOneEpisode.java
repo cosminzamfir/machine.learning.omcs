@@ -47,7 +47,7 @@ public class TDOneEpisode extends Observable {
 	}
 
 	private void updateEligibilities() {
-		episode.getAllStates().forEach((s) -> s.put(ELIGIBILITY,(double)s.get(ELIGIBILITY) * gamma));
+		episode.getAllStates().forEach((s) -> s.set(ELIGIBILITY,(double)s.get(ELIGIBILITY) * gamma));
 	}
 
 	private void updateStateValues(double stepProfitability) {
@@ -59,10 +59,10 @@ public class TDOneEpisode extends Observable {
 	}
 
 	private void incrementEligibility(State s) {
-		s.put(ELIGIBILITY, (double)s.get(ELIGIBILITY) + 1);
+		s.set(ELIGIBILITY, (double)s.get(ELIGIBILITY) + 1);
 	}
 
 	private void initEligibilities() {
-		episode.getAllStates().forEach((s) -> s.put(ELIGIBILITY,0.0));
+		episode.getAllStates().forEach((s) -> s.set(ELIGIBILITY,0.0));
 	}
 }

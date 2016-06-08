@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import ml.rl.qlearning.Environment;
+
 import org.apache.log4j.Logger;
 
 import util.MLUtils;
@@ -20,13 +22,20 @@ public class State {
 	*/
 	private static Map<Integer, State> identifiableStates = new LinkedHashMap<Integer, State>();
 
+	/** Optional. For States solely identified by their id*/
+	private Integer id;
+
 	/**The value assigned to this state*/
 	private double value;
-	private int id;
+
 	private Map<String, Object> data = new LinkedHashMap<>();
 
 	public static List<State> allIdentifiableStates() {
 		return new ArrayList<>(identifiableStates.values());
+	}
+
+	public static State instance() {
+		return new State();
 	}
 
 	public static State instance(int id) {
@@ -72,21 +81,44 @@ public class State {
 		return data.get(name);
 	}
 
-	public void put(String name, Object value) {
+	public Integer getInteger(String name) {
+		return (Integer) get(name);
+	}
+
+	public Long getLong(String name) {
+		return (Long) get(name);
+	}
+
+	public Double getDouble(String name) {
+		return (Double) get(name);
+	}
+
+	public String getString(String name) {
+		return (String) get(name);
+	}
+
+	public Boolean getBoolean(String name) {
+		return true == (Boolean) get(name);
+	}
+
+	public void set(String name, Object value) {
 		data.put(name, value);
 	}
 
 	@Override
 	public String toString() {
-		return "S" + id;
+		if (id != null) {
+			return "S" + (id == null ? "[Id=N.A.]" : id);
+		}
+		return toExtendedString();
 	}
 
 	public String toExtendedString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("S" + id);
-		sb.append("\n val=" + MLUtils.format(value) + "");
+		sb.append("S" + (id == null ? "[Id=N.A.]" : id));
+		sb.append("[val=" + MLUtils.format(value) + "]");
 		for (String key : data.keySet()) {
-			sb.append(MessageFormat.format("\n {0} = {1}", key, MLUtils.format(get(key))));
+			sb.append(MessageFormat.format("[{0}={1}]", key, MLUtils.format(get(key))));
 		}
 		return sb.toString();
 	}
@@ -96,12 +128,18 @@ public class State {
 		if (!(obj instanceof State)) {
 			return false;
 		}
-		return ((State) obj).getId() == id;
+		if (id != null) {
+			return ((State) obj).getId() == id;
+		}
+		return data.equals(((State) obj).data);
 	}
 
 	@Override
 	public int hashCode() {
-		return Integer.valueOf(id).hashCode();
+		if (id != null) {
+			return id.hashCode();
+		}
+		return data.hashCode();
 	}
 
 }

@@ -1,0 +1,64 @@
+A. 3 states (Enhancement 3 does not work)
+There are 3 states: S1,S2,S3
+
+0.75		64	48
+0.5625		64	36
+0.421875	64	27
+
+Approach1 => 4 iterations
+R33=16 => V1(S3)=64
+R22=1 => V1(S2) = 1
+R11=1 => V1(S1) = 1
+
+Enhancement1 => 5 iterations
+Add action from S3 to S1, such that at the beginning A33 is better, but at the end, when V(S0) is set, A30 is better.
+The conditions must be: 
+	R30 < V1(S3) + R33 (the value of S3 after A30 to be less than this value + R33 - such that at second step action A33 is taken) 
+	R30+0.75*V(S1) > V(S3) (the value of R30 + discounted value of S1 > the current value of S3, such that at the last step the action A30 is taken)
+	
+	Solving the above:
+	R30 < R30 + R33 => any R30 works
+	R30 + 0.75^3*4*R33 > 4*R33
+	R30 > 4*R33 - 0.75^3*4*R33 => R30 > 64 - 0.75^3*64 => R30 > 37
+Conclusion: R30 can be a number as high as required, but bigger then 37 -> Vf(S3) can be made arbitrarily high, according to further enhancements requirements	
+
+
+Enhancement3: Does not work
+After S3 best action goes to S1, how to make that the action A11 becomes best action for A1?
+If instead of A11, we make the action stochastic: A1_13: goes to 1 with some p1 and r1 and goes to 3 with some p2 and r2.
+There are 2 restrictions needed:
+1. A1_13 is worse than A12, as long as the best action for S3 is A33.
+2. A1_13 is better than A12, after the best action for S3 becomes A30
+
+The equations for the above are:
+1.Vi(S0) + evaluate(A1_13) < Vi(S0) + evaluate(A12) - when best action for S3 = A33
+2.Vi(S0) + evaluate(A1_13) < Vi(S0) + evaluate(A12) - when best action for S3 becomes A30
+
+1. p1*(r1 + 0.75*Vi(S1)) + p2(r2 + 0.75*Vintermediar(S3)) < 0.75 * 0.75 * Vintermediar(S3)
+2. p1*(r1 + 0.75*Vintermediar(S1)) + p2(r2 + 0.75*Vf(S3)) > 0.75 * 0.75 * Vf(S3)
+
+1. p1*r1 + p2(r2 + 0.75*64) < 0.75*0.75*64
+2. p1*(r1 + 0.75^3*64) + p2(r2 + Vf(S3)) > 0.75*0.75*Vf(S3)
+
+See in excel a 'solver' for the above equations.
+
+Why it does not work: If there is cycle: S1->S3 and S3->S1 => the values of S1 and S3 will be equal, and equal to the rewards*4 => the rest will not work as expected (e.g. A1_13 will stay as best action)
+
+===========================================
+B. 4 States
+
+Approach1 => 5 iterations
+R44=256
+R11 = R22 = R33 = 1
+
+Enhancement1 => 6 iterations
+Add action from S4 to S1, such that at the beginning A44 is better, but at the end, when V(S1) is set, A41 is better.
+The conditions must be: 
+	R41 < Vi(S4) + R44 (the value of S4 after A41 to be less than this value + R44 - such that at second step action A44 is taken) 
+	R41 + 0.75*Vf(S1) > V(S4) (the value of R41 + discounted value of Vf(S1)  > the current value of S4, such that at the last step the action A41 is taken)
+	
+	Solving the above:
+	R41 < R41 + R44 => any R30 works
+	R41 + 0.75^4*4*R44 > 4*R44
+	R41 > 4*R44 - 0.75^4*4*R44 => R41 > 1024 - 0.75^4*1024 => R41 > 700
+Conclusion: R41 can be a number as high as required, but bigger then 700 -> Vf(S4) can be made arbitrarily high, according to further enhancements requirements	

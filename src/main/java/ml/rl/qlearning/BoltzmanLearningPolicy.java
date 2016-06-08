@@ -11,14 +11,14 @@ import util.MLUtils;
 public class BoltzmanLearningPolicy implements LearningPolicy {
 
 	private Map<State, Map<StateAction, Double>> qValues;
-	private Environment environment;
+	private CompleteInfoEnvironment environment;
 	/**
 	 * The k in the Boltzman distribution formula.
 	 * Higher k <=> higer probability to select non greedy optimal actions 
 	 */
 	private double explorationRate;
 
-	public BoltzmanLearningPolicy(Map<State, Map<StateAction, Double>> qValues, Environment environment, double explorationRate) {
+	public BoltzmanLearningPolicy(Map<State, Map<StateAction, Double>> qValues, CompleteInfoEnvironment environment, double explorationRate) {
 		super();
 		this.qValues = qValues;
 		this.environment = environment;
@@ -31,7 +31,7 @@ public class BoltzmanLearningPolicy implements LearningPolicy {
 	 * Greedy policy with some decaying exploration probability given by Boltzan distribution
 	 */
 	public StateAction selectAction(State state) {
-		List<StateAction> availableActions = environment.availableActions(state);
+		List<StateAction> availableActions = environment.getStateActions(state);
 		List<Double> probabilities = computeActionProbabilities(state, availableActions);
 		return availableActions.get(MLUtils.randomSelectionFromDistribution(probabilities));
 	}

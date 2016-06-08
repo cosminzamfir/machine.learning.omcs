@@ -138,10 +138,14 @@ public class MLUtils {
 	}
 
 	public static String format(Object d) {
+		if(d == null) {
+			return "N.A.";
+		}
 		if(d instanceof Double && (double)d>1E5) {
 			return nfs.format(d);
-		}
-		return nf.format(d);
+		} if(d instanceof Number) {
+			return nf.format(d);
+		} return d.toString();
 	}
 
 	public static String format6(double d) {
