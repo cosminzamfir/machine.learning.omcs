@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import ml.rl.mdp.model.FullTransitionInfoEnvironment;
 import ml.rl.mdp.model.State;
 import ml.rl.mdp.model.StateAction;
 import util.MLUtils;
@@ -11,14 +12,14 @@ import util.MLUtils;
 public class BoltzmanLearningPolicy implements LearningPolicy {
 
 	private Map<State, Map<StateAction, Double>> qValues;
-	private CompleteInfoEnvironment environment;
+	private FullTransitionInfoEnvironment environment;
 	/**
 	 * The k in the Boltzman distribution formula.
 	 * Higher k <=> higer probability to select non greedy optimal actions 
 	 */
 	private double explorationRate;
 
-	public BoltzmanLearningPolicy(Map<State, Map<StateAction, Double>> qValues, CompleteInfoEnvironment environment, double explorationRate) {
+	public BoltzmanLearningPolicy(Map<State, Map<StateAction, Double>> qValues, FullTransitionInfoEnvironment environment, double explorationRate) {
 		super();
 		this.qValues = qValues;
 		this.environment = environment;
@@ -31,7 +32,7 @@ public class BoltzmanLearningPolicy implements LearningPolicy {
 	 * Greedy policy with some decaying exploration probability given by Boltzan distribution
 	 */
 	public StateAction selectAction(State state) {
-		List<StateAction> availableActions = environment.getStateActions(state);
+		List<StateAction> availableActions = environment.getTransitions(state);
 		List<Double> probabilities = computeActionProbabilities(state, availableActions);
 		return availableActions.get(MLUtils.randomSelectionFromDistribution(probabilities));
 	}

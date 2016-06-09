@@ -110,7 +110,7 @@ public class StatePolicy {
 	@Override
 	public String toString() {
 		if(stateActionsProbabilities.size() == 1) {
-			return "[" + state + ":" + stateActionsProbabilities.keySet().iterator().next().getAllSprimes().get(0) + "]";
+			return "[" + state + ":" + stateActionsProbabilities.keySet().iterator().next().getAction().getName() + "]";
 		}
 		StringBuilder sb = new StringBuilder("StatePolicy[state="+state + "][");
 		stateActionsProbabilities.keySet().forEach((sa) -> sb.append(sa.getAction().toString() + "=" + getProbability(sa) + " "));

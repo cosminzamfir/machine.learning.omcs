@@ -1,6 +1,5 @@
 package ml.rl.qlearning;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,7 @@ import ml.rl.mdp.model.Transition;
 
 public class QLearning {
 
-	private CompleteInfoEnvironment environment;
+	private LearningEnvironment environment;
 	private LearningPolicy learningPolicy;
 	private double gamma;
 	private double alfa;
@@ -28,7 +27,7 @@ public class QLearning {
 	}
 	
 	/**
-	 * Act in the {@link CompleteInfoEnvironment} until reaching a terminal state, updating the Q-values on the way
+	 * Act in the {@link LearningEnvironment} until reaching a terminal state, updating the Q-values on the way
 	 * @param initialState
 	 */
 	private void runLearningEpisode(State initialState) {
@@ -69,10 +68,12 @@ public class QLearning {
 	}
 	
 	/**
-	 * Seelect the action with maximum qValue for the given state
+	 * Select the action with maximum qValue for the given state
 	 */
 	public StateAction getBestAction(State state) {
-		return environment.getStateActions(state).stream().max(Comparator.comparing(stateAction -> getQValue(stateAction))).get(); 
+		// ??
+		//return environment.getTransitions(state).stream().max(Comparator.comparing(stateAction -> getQValue(stateAction))).get();
+		return null;
 	}
 
 

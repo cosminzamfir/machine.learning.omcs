@@ -50,7 +50,7 @@ public class PolicyIteration extends Observable {
 			setChanged();
 			notifyObservers(policy); //policy has changed
 			
-			log.info("Policy:                " + policy);
+			log.debug("Policy:                " + policy);
 			maxDelta = evaluatePolicy(policy);
 			iterationCount++;
 			
@@ -94,11 +94,11 @@ public class PolicyIteration extends Observable {
 				delta = Math.max(delta, Math.abs(newValue - prevValue));
 				state.setValue(newValue);
 				if (log.isDebugEnabled()) {
-					log.info(state + ":" + prevValue + "->" + newValue);
+					log.debug(state + ":" + prevValue + "->" + newValue);
 				}
 			}
 		} while (delta > epsilon);
-		log.info("Policy evaluation:     " + mdp.printStateValues());
+		log.debug("Policy evaluation:     " + mdp.printStateValues());
 		return getMaxDelta();
 	}
 

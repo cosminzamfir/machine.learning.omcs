@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import ml.rl.qlearning.Environment;
+import ml.rl.model.Environment;
 
 import org.apache.log4j.Logger;
 
@@ -108,14 +108,18 @@ public class State {
 	@Override
 	public String toString() {
 		if (id != null) {
-			return "S" + (id == null ? "[Id=N.A.]" : id);
+			return "S" + id;
 		}
 		return toExtendedString();
 	}
 
 	public String toExtendedString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("S" + (id == null ? "[Id=N.A.]" : id));
+		if(id != null) {
+			sb.append("S" + id);
+		} else {
+			sb.append("State");
+		}
 		sb.append("[val=" + MLUtils.format(value) + "]");
 		for (String key : data.keySet()) {
 			sb.append(MessageFormat.format("[{0}={1}]", key, MLUtils.format(get(key))));
