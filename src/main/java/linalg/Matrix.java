@@ -27,6 +27,21 @@ public class Matrix {
 		return new Matrix(data);
 	}
 	
+	public static Matrix emtpyMatrix() {
+		return new Matrix();
+	}
+	
+	public void addRow(double[] row) {
+		n=row.length;
+		double[][] newData = new double[m+1][n];
+		for (int i = 0; i < m; i++) {
+			newData[i] = data[i];
+		}
+		newData[m] = row;
+		data = newData;
+		m++;
+	}
+	
 	public static Matrix rowMatrix(Vector v) {
 		double[][] data = new double[1][v.size()];
 		for (int i = 0; i < v.size(); i++) {
@@ -92,6 +107,10 @@ public class Matrix {
 				}
 			}
 		}
+	}
+
+	public Matrix() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**

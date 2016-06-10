@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
+import linalg.Matrix;
+import linalg.Vector;
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
@@ -24,7 +26,7 @@ import org.apache.log4j.Logger;
 public class PolicyIteration extends Observable {
 
 	private static final Logger log = Logger.getLogger(PolicyIteration.class);
-	private static final double epsilon = 0.00001;
+	private static final double epsilon = 0.01;
 	private MDP mdp;
 	private double gamma = 0.75;
 	private MDPPolicy policy;
@@ -50,7 +52,7 @@ public class PolicyIteration extends Observable {
 			setChanged();
 			notifyObservers(policy); //policy has changed
 			
-			log.debug("Policy:                " + policy);
+			log.info("Policy:                " + policy);
 			maxDelta = evaluatePolicy(policy);
 			iterationCount++;
 			
@@ -83,6 +85,7 @@ public class PolicyIteration extends Observable {
 		}
 		double delta; 
 		mdp.resetStateValues();
+		Matrix matrix = Matrix.emtpyMatrix();
 		do { //value iteration given policy pi
 			delta = 0;
 			for (State state : mdp.getNonTerminalStates()) {
@@ -97,8 +100,10 @@ public class PolicyIteration extends Observable {
 					log.debug(state + ":" + prevValue + "->" + newValue);
 				}
 			}
+			matrix.addRow(mdp.getStateValues());
 		} while (delta > epsilon);
-		log.debug("Policy evaluation:     " + mdp.printStateValues());
+		//System.out.println(matrix);
+		log.info("Policy evaluation:     " + mdp.printStateValues());
 		return getMaxDelta();
 	}
 

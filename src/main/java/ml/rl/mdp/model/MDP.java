@@ -191,5 +191,14 @@ public class MDP {
 		states.forEach((s) -> res.append(s + "=" + MLUtils.format(s.getValue())).append(" "));
 		return res.toString();
 	}
+	
+	public double[] getStateValues() {
+		double[] res = new double[states.size()];
+		int index = 0;
+		for (State s : states) {
+			res[index++] = s.getValue();
+		}
+		return res;
+	}
 
 }

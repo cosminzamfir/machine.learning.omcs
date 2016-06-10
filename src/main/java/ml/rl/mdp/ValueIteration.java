@@ -5,6 +5,8 @@ import java.util.Observable;
 
 import org.apache.log4j.Logger;
 
+import linalg.Matrix;
+import linalg.Vector;
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
@@ -20,7 +22,7 @@ public class ValueIteration extends Observable {
 	private int maxIterations = 1000;
 	private double epsilon = 0.001;
 	private boolean hasRun = false;
-
+	
 	public ValueIteration(MDP mdp) {
 		super();
 		this.mdp = mdp;

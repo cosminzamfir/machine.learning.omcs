@@ -51,6 +51,10 @@ Approach1 => 5 iterations
 R44=256
 R11 = R22 = R33 = 1
 
+At the beginning, for each state, the best action is to go to itself.
+Then, after S4 value is set to 256*4, one by one the best action for states S3,S2 and S1 will be changed from going to itself to going to the next node.
+
+
 Enhancement1 => 6 iterations
 Add action from S4 to S1, such that at the beginning A44 is better, but at the end, when V(S1) is set, A41 is better.
 The conditions must be: 
@@ -62,3 +66,23 @@ The conditions must be:
 	R41 + 0.75^4*4*R44 > 4*R44
 	R41 > 4*R44 - 0.75^4*4*R44 => R41 > 1024 - 0.75^4*1024 => R41 > 700
 Conclusion: R41 can be a number as high as required, but bigger then 700 -> Vf(S4) can be made arbitrarily high, according to further enhancements requirements	
+
+Enhancement2
+After the last increase in value of S4, let's try to make S2 have a better outcome if would take the action: A2_24.
+Why this should work?
+	Before the increment of V(S4), best action of S2 is A23. This action makes that V(S2)=lambda^2 * Vintermediar(S4)
+	If we would have a stochastic action A2_24 with enough weight of S4, lets try to write the inequalities:
+	
+	Before the final update of S4, A23 is the best option. After the final update, A2_24 must become the best option:
+	
+	p1*(r1 + 0.75*Vintermediar(S2)) + p2*(r2 + 0.75*Vintermediar(S4)) < 0.75^2*Vintermediar(S4)
+	p1*(r1 + 0.75*Vintermediar1(S2)) + p2*(r2 + 0.75*Vfinal(S4)) > 0.75*2*Vfinal(S4)
+	
+	p1*(r1 + 0.75^3*1024) + p2*(r2 + 0.75*1024)) < 0.75^2 * 1024
+	p1*(r1 + 0.75^3*Vf(S4)) + p2*(r2 + 0.75*Vf(S4))) > 0.75^2 * Vf(S4)
+	
+	p1*(r1+432) + p2*(r2+768) < 576
+	p1*(r1 + 0.75^3*Vf(S4)) + p2*(r2 + 0.75*Vf(S4))) > 0.75^2 * Vf(S4)
+	
+	
+	
