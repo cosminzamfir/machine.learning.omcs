@@ -150,7 +150,7 @@ public class Vector {
 		return new Vector(res);
 	}
 	
-	public double rmse(Vector other) {
+	public double rootMeanSquaredError(Vector other) {
 		double res = 0;
 		for (int i = 0; i < data.length; i++) {
 			res += Math.pow(data[i] - other.data[i], 2);

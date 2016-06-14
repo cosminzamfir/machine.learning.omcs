@@ -59,8 +59,8 @@ public class RandomWalkTDLambdaSolver {
 		System.out.println("lamda=" + lambda +
 				"\nPrognosed values:   " + prognosis.toRowMatrix() +
 				"Theoretical values: " + expValues.toRowMatrix() +
-				";RMSE=" + prognosis.rmse(expValues));
-		return prognosis.rmse(expValues);
+				";RMSE=" + prognosis.rootMeanSquaredError(expValues));
+		return prognosis.rootMeanSquaredError(expValues);
 	}
 
 	private void runExperimentTwo() {
@@ -87,7 +87,7 @@ public class RandomWalkTDLambdaSolver {
 			weights.add(run(trainingSet));
 		}
 		Vector averageWeights = Vector.average(weights);
-		return averageWeights.rmse(expValues);
+		return averageWeights.rootMeanSquaredError(expValues);
 	}
 
 	/**
