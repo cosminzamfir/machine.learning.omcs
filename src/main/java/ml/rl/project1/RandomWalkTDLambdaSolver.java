@@ -22,7 +22,7 @@ public class RandomWalkTDLambdaSolver {
 
 	private static final Logger log = Logger.getLogger(RandomWalkTDLambdaSolver.class);
 
-	private static int numEpisodes = 1000;
+	private static int numEpisodesPerTrainingSet = 10;
 	private static int numTrainingSets = 100;
 	private static Vector expValues = new Vector(1.0 / 6, 2.0 / 6, 3.0 / 6, 4.0 / 6, 5.0 / 6);
 	private Vector w;
@@ -34,14 +34,12 @@ public class RandomWalkTDLambdaSolver {
 
 	public static void main(String[] args) {
 		RandomWalkTDLambdaSolver solver = new RandomWalkTDLambdaSolver();
-		solver.setup(numEpisodes, numTrainingSets);
-		//new RandomWalkTDLambdaSolver().runExperimentOne();
-		solver.runExperimentTwo();
+		solver.setup(numEpisodesPerTrainingSet, numTrainingSets);
+		solver.runExperimentOne();
+		//solver.runExperimentTwo();
 	}
 
 	private void runExperimentOne() {
-		setup(numEpisodes, numTrainingSets);
-
 		List<Double> lambdas = Arrays.asList(0.0, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0);
 		Map<Number, Number> map = new HashMap<>();
 		for (Double lambda : lambdas) {
@@ -187,12 +185,12 @@ public class RandomWalkTDLambdaSolver {
 	 * @param numEpisodes total number of Episodes
 	 * @param numTrainingSets total number of training set (a training set is a List<Episode>)
 	 */
-	private void setup(int numEpisodes, int numTrainingSets) {
+	private void setup(int numEpisodesPerTrainingSet, int numTrainingSets) {
 		createMDP();
 		MDPPolicy randomWalkPolicy = MDPPolicy.initialNonDeterministicPolicy(mdp);
 		for (int i = 0; i < numTrainingSets; i++) {
 			List<Episode> trainingSet = new ArrayList<>();
-			for (int j = 0; j < numEpisodes / numTrainingSets; j++) {
+			for (int j = 0; j < numEpisodesPerTrainingSet; j++) {
 				trainingSet.add(mdp.generateEpisode(State.instance("D"), randomWalkPolicy));
 			}
 			trainingSets.add(trainingSet);

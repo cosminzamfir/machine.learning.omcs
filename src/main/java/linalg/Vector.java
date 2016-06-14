@@ -155,7 +155,7 @@ public class Vector {
 		for (int i = 0; i < data.length; i++) {
 			res += Math.pow(data[i] - other.data[i], 2);
 		}
-		return Math.sqrt(res);
+		return Math.sqrt(res/size());
 	}
 	
 	
