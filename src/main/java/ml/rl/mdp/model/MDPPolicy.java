@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * Maintains a probabilistic mapping of State -> StateAction, ie for each State, give the probabilities to following each StateAction available for this state
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public class MDPPolicy {
@@ -43,7 +43,7 @@ public class MDPPolicy {
 	/** Generate initial policy - equal probabilities for all decisions */
 	public static MDPPolicy initialNonDeterministicPolicy(MDP mdp) {
 		MDPPolicy res = instance(mdp);
-		for (State state : mdp.getStates()) {
+		for (State state : mdp.getNonTerminalStates()) {
 			StatePolicy statePolicy = StatePolicy.instace(state);
 			int count = mdp.getStateActions(state).size();
 			mdp.getStateActions(state).forEach((stateAction) -> statePolicy.setActionProbability(stateAction, 1.0 / count));

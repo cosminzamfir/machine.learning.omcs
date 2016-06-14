@@ -1,5 +1,10 @@
 package ml.model.function;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class Solver {
 
 	public double solve(Function f, double target, double error) {

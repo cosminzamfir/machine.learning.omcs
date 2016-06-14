@@ -2,6 +2,11 @@ package ml.model.function;
 
 import java.io.IOException;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class QuadraticFunction extends AbstractFunction {
 
 	private double a, b, c;

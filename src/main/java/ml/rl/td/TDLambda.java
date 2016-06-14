@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import util.IntHolder;
 import ml.rl.mdp.model.Episode;
 
 /**
  * Compute the state values for a sequence of {@link Episode}s
+ * @author Cosmin Zamfir
  *
  */
 public class TDLambda {
@@ -28,8 +30,8 @@ public class TDLambda {
 	}
 	
 	public void run() {
-		final AtomicInteger T = new AtomicInteger(0);
-		episodes.forEach((episode) -> new TDLambdaEpisode(episode, lambda, gamma, (1.0/(T.incrementAndGet()))).run());
+		final IntHolder T = new IntHolder(0);
+		episodes.forEach((episode) -> new TDLambdaEpisode(episode, lambda, gamma, (1.0/(T.addAndGet(1)))).run());
 	}
 	
 	

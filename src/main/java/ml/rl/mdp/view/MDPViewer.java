@@ -22,6 +22,11 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class MDPViewer {
 
 	private static int stateVertexHeight = 50;

@@ -12,7 +12,7 @@ import ml.rl.model.Environment;
  * <p>
  * In any state, the full set of {@link Action} available is known, but the ooutcome of the actions (all Transition with their probabilities) 
  * is not know in advance. They have to be experimented and learned by the agent. 
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public interface LearningEnvironment extends Environment {

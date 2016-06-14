@@ -2,6 +2,11 @@ package ml.model.function;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class DefiniteIntegral {
 
 	private static final Logger log = Logger.getLogger(DefiniteIntegral.class);

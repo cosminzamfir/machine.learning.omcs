@@ -1,5 +1,10 @@
 package ml.rl.mdp.model;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class Action {
 
 	public static String defaultName = "Action";

@@ -15,6 +15,7 @@ public class GramSchimdt {
 	 * <li>At the end, diveide each vector by its lengths to have it normalized
 	 * <ul> 
 	 * @return the matrix Q containing the orthonormal vectors as columns
+	 * @author Cosmin Zamfir
 	 */
 	public Matrix orthonormal(Matrix A) {
 		return processInternal(A, true);

@@ -25,5 +25,17 @@ public class IntHolder {
 		this.value += value;
 	}
 	
+	public int addAndGet(int value) {
+		this.value += value;
+		return value;
+		
+	}
+
+	public int getAndAdd(int i) {
+		int res = value;
+		this.value+=i;
+		return res;
+	}
+	
 
 }

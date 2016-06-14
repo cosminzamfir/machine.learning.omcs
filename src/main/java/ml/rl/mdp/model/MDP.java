@@ -15,6 +15,11 @@ import java.util.stream.Collectors;
 import util.JsonEncoder;
 import util.MLUtils;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class MDP {
 
 	private List<State> states = new ArrayList<>();
@@ -78,9 +83,9 @@ public class MDP {
 	}
 
 	/** Generate an Episode by sampling actions according to the given mdppolicy */
-	public Episode generateEpisode(MDPPolicy policy) {
+	public Episode generateEpisode(State initialState, MDPPolicy policy) {
 		Episode res = Episode.instance();
-		State state = states.iterator().next();
+		State state = initialState;
 		while (!isTerminal(state)) {
 			StateAction stateAction = policy.generate(state);
 			Transition transition = stateAction.generateTransition();

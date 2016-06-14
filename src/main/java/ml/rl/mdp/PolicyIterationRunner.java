@@ -8,6 +8,11 @@ import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.view.MDPViewer;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class PolicyIterationRunner implements Observer {
 
 	private MDPViewer mdpViewer;

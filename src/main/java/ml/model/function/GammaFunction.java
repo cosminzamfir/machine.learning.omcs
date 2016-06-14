@@ -1,5 +1,10 @@
 package ml.model.function;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class GammaFunction extends DifferentiableFunction {
 
 	@Override

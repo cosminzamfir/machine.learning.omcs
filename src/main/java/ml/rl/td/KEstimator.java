@@ -3,6 +3,11 @@ package ml.rl.td;
 import ml.rl.mdp.model.Episode;
 import ml.rl.mdp.model.Transition;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class KEstimator {
 
 	

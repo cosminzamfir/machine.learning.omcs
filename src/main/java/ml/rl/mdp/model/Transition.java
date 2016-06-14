@@ -4,7 +4,7 @@ import util.MLUtils;
 
 /**
  * The transition from s to s' with reward triggered by a {@link StateAction}
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public class Transition {

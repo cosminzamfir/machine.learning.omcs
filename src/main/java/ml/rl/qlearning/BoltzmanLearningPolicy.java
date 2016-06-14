@@ -9,6 +9,11 @@ import ml.rl.mdp.model.State;
 import ml.rl.mdp.model.StateAction;
 import util.MLUtils;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class BoltzmanLearningPolicy implements LearningPolicy {
 
 	private Map<State, Map<StateAction, Double>> qValues;

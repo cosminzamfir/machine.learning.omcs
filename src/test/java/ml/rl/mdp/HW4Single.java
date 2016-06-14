@@ -59,7 +59,7 @@ public class HW4Single {
 	}
 
 	private double discountFrom(State s1, State s2) {
-		return Math.pow(gamma, s2.getId() - s1.getId());
+		return Math.pow(gamma, (int)s2.getId() - (int)s1.getId());
 	}
 
 

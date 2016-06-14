@@ -3,10 +3,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ml.rl.mdp.model.MDP;
-import ml.rl.mdp.model.State;
 import ml.rl.mdp.view.MDPViewer;
 
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class ValueIterationRunner implements Observer {
 
 	private MDPViewer mdpViewer;

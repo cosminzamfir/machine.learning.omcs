@@ -3,16 +3,19 @@ package ml.rl.mdp;
 import java.util.List;
 import java.util.Observable;
 
-import org.apache.log4j.Logger;
-
-import linalg.Matrix;
-import linalg.Vector;
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
 import ml.rl.mdp.model.StateAction;
 import ml.rl.mdp.model.StatePolicy;
 
+import org.apache.log4j.Logger;
+
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class ValueIteration extends Observable {
 
 	private static final Logger log = Logger.getLogger(ValueIteration.class);

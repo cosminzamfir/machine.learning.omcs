@@ -1,5 +1,10 @@
 package ml.model.function;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class Derivative {
 
 	public double compute(Function f, double x, double error) {

@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 /**
  * The relative/absolute income tax in Germany as of 2016 for married couples
  * 
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public class GermanyIncomeTax2016 extends AbstractFunction {

@@ -8,7 +8,9 @@ import java.util.Map;
 import util.DoubleHolder;
 import util.MLUtils;
 
-/** An action performed in a state, stochastic outcome*/
+/** An action performed in a state, stochastic outcome
+ * @author Cosmin Zamfir
+ * */
 public class StateAction {
 
 	private State state;

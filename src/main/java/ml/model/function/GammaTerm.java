@@ -4,7 +4,7 @@ package ml.model.function;
 /**
  * The term inside the integral expression of gamma function:
  * integral(0..infinity) [t^(x-1) * e^(-t) dt]. x is a constant, t is the variable
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public class GammaTerm extends AbstractFunction {

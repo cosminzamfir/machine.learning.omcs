@@ -8,6 +8,11 @@ import ml.rl.mdp.model.Episode;
 import ml.rl.mdp.model.Transition;
 import ml.rl.td.view.EpisodeViewer;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class TDLambdaRunner implements Observer {
 
 	public static int updateSpeed = 5000;

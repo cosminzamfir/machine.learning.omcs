@@ -5,7 +5,7 @@ import ml.rl.mdp.model.State;
 
 /**
  * The basic Environment interface
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public interface Environment {

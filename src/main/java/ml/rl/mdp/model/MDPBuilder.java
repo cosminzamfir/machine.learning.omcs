@@ -1,17 +1,15 @@
 package ml.rl.mdp.model;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 /**
  * Build an {@link MDP} given an {@link FullTransitionInfoEnvironment}
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public class MDPBuilder {

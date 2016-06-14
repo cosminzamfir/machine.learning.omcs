@@ -9,7 +9,7 @@ import ml.rl.qlearning.LearningEnvironment;
  * An environment which provides full information about the transitions triggered by each of the available Actions for any State.
  * <p>
  * Such Environment can be used to generate an MDP, as oposed {@link LearningEnvironment} where the transitions can be discovered by executing the Actions 
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public interface FullTransitionInfoEnvironment extends Environment {

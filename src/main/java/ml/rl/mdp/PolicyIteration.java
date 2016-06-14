@@ -1,12 +1,10 @@
 package ml.rl.mdp;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
 import linalg.Matrix;
-import linalg.Vector;
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
@@ -20,7 +18,7 @@ import org.apache.log4j.Logger;
  * If the value change > threshold => policy was improved
  * <p>
  * This implementation seems to converge faster than {@link PolicyIterationSutton} (plus it's the one used to evaluate HW4) 
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public class PolicyIteration extends Observable {

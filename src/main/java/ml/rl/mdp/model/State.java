@@ -1,18 +1,20 @@
 package ml.rl.mdp.model;
 
 import java.text.MessageFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import ml.rl.model.Environment;
-
 import org.apache.log4j.Logger;
 
 import util.MLUtils;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class State {
 
 	private static final Logger log = Logger.getLogger(State.class);
@@ -20,10 +22,10 @@ public class State {
 	* States identified by their Id. To support MDPs with predefined states e.g. S1,S2,...,Sn
 	* as oposded to problems where States are idenditified by their data
 	*/
-	private static Map<Integer, State> identifiableStates = new LinkedHashMap<Integer, State>();
+	private static Map<Object, State> identifiableStates = new LinkedHashMap<Object, State>();
 
 	/** Optional. For States solely identified by their id*/
-	private Integer id;
+	private Object id;
 
 	/**The value assigned to this state*/
 	private double value;
@@ -38,7 +40,7 @@ public class State {
 		return new State();
 	}
 
-	public static State instance(int id) {
+	public static State instance(Object id) {
 		State res = identifiableStates.get(id);
 		if (res == null) {
 			res = new State(id);
@@ -58,8 +60,8 @@ public class State {
 		identifiableStates.clear();
 	}
 
-	private State(int index) {
-		this.id = index;
+	private State(Object id) {
+		this.id = id;
 	}
 
 	public State() {
@@ -73,7 +75,7 @@ public class State {
 		return value;
 	}
 
-	public int getId() {
+	public Object getId() {
 		return id;
 	}
 
@@ -108,7 +110,7 @@ public class State {
 	@Override
 	public String toString() {
 		if (id != null) {
-			return "S" + id;
+			return id.toString();
 		}
 		return toExtendedString();
 	}

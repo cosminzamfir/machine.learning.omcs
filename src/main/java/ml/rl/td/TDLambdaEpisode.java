@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Compute the state values for one {@link Episode}
+ * @author Cosmin Zamfir
  */
 public class TDLambdaEpisode extends Observable {
 
@@ -58,6 +59,11 @@ public class TDLambdaEpisode extends Observable {
 	}
 
 	private void updateStateValues(double stepProfitability) {
+		if (log.isDebugEnabled()) {
+			final StringBuilder message = new StringBuilder("Updating state values for stepProfitability=" + stepProfitability + ". Eligibilites:");
+			episode.getAllStates().forEach((state) -> message.append(state + "=" + state.getDouble(ELIGIBILITY) + ";"));
+			log.debug(message);
+		}
 		episode.getAllStates().forEach((s) -> s.setValue(s.getValue() + alpha * stepProfitability * (double) s.get(ELIGIBILITY)));
 	}
 

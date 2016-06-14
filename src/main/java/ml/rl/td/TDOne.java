@@ -10,6 +10,7 @@ import ml.rl.mdp.model.Episode;
  * Compute the state values for a sequence of {@link Episode}s
  * For reference only, is same as TDLambda(lambda=1) 
  *
+ * @author Cosmin Zamfir
  */
 public class TDOne {
 

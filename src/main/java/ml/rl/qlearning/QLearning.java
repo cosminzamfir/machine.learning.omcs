@@ -7,6 +7,11 @@ import ml.rl.mdp.model.State;
 import ml.rl.mdp.model.StateAction;
 import ml.rl.mdp.model.Transition;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public class QLearning {
 
 	private LearningEnvironment environment;

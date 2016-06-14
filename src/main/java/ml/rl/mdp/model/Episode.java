@@ -1,5 +1,10 @@
 package ml.rl.mdp.model;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -21,11 +26,10 @@ public class Episode {
 	 */
 	private int count;
 	private List<State> allStates = new ArrayList<>();
-	
+
 	public static Episode instance() {
 		return new Episode();
 	}
-
 
 	public void addTransition(Transition transition) {
 		if (!transitions.isEmpty() && !transition.getS().equals(transitions.get(transitions.size() - 1).getsPrime())) {
@@ -43,12 +47,12 @@ public class Episode {
 	public List<Transition> getTransitions() {
 		return transitions;
 	}
-	
+
 	/** zero-index based*/
 	public Transition getTransition(int i) {
 		return transitions.get(i);
 	}
-	
+
 	/** zero-index based*/
 	public double getStateValueAt(int i) {
 		return getAllStates().get(i).getValue();
@@ -66,7 +70,13 @@ public class Episode {
 	}
 
 	public List<State> getAllStates() {
-		return allStates;
+		return new ArrayList<>(allStates);
+	}
+	
+	public List<State> getNonTerminalStates() {
+		List<State> res = new ArrayList<>(allStates);
+		res.remove(res.size()-1);
+		return res;
 	}
 
 	public static List<State> getAllStates(List<Episode> episodes) {
@@ -115,9 +125,21 @@ public class Episode {
 	public void setStateValueAt(int i, double value) {
 		getAllStates().get(i).setValue(value);
 	}
-	
+
 	public double getTotalReward() {
 		return transitions.parallelStream().mapToDouble(Transition::getReward).sum();
+	}
+
+	public State getLastState() {
+		return allStates.get(allStates.size() - 1);
+	}
+	
+	public State getState(int i) {
+		return allStates.get(i);
+	}
+	
+	public int length() {
+		return allStates.size();
 	}
 
 }

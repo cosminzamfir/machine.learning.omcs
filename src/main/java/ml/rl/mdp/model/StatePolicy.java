@@ -1,12 +1,9 @@
 package ml.rl.mdp.model;
 
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import util.DoubleHolder;
 import util.IntHolder;
@@ -14,7 +11,7 @@ import util.MLUtils;
 
 /**
  * The policy for a given State, i.e. the {@link StateAction} -> probability mapping for a given State
- * @author eh2zamf
+ * @author Cosmin Zamfir
  *
  */
 public class StatePolicy {

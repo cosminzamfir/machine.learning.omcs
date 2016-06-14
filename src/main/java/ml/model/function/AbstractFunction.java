@@ -2,6 +2,11 @@ package ml.model.function;
 
 import ml.utils.FunctionChart;
 
+/**
+ * 
+ * @author Cosmin Zamfir
+ *
+ */
 public abstract class AbstractFunction implements Function {
 
 	@Override
