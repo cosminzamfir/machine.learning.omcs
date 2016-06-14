@@ -118,7 +118,7 @@ public class State {
 	public String toExtendedString() {
 		StringBuilder sb = new StringBuilder();
 		if(id != null) {
-			sb.append("S" + id);
+			sb.append(id);
 		} else {
 			sb.append("State");
 		}

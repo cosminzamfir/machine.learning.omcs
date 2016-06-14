@@ -11,6 +11,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+/**
+ * One series represented by a map x->y
+ * @author Cosmin Zamfir
+ *
+ */
 public class MappingChart extends ApplicationFrame {
 
 	private static final long serialVersionUID = 1L;

@@ -11,6 +11,7 @@ import ml.rl.mdp.model.Episode;
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
+import ml.rl.mdp.view.MDPViewer;
 
 import org.apache.log4j.Logger;
 
@@ -66,7 +67,7 @@ public class RandomWalkTDLambdaSolver {
 
 	private void runExperimentTwo() {
 		List<Double> lambdas = Arrays.asList(0.0, 0.3, 0.8, 1.0);
-		List<Double> alphas = Arrays.asList(0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6);
+		List<Double> alphas = Arrays.asList(0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6);
 		List<Map<Number, Number>> results = new ArrayList<>(); //one mapping of alpha=>rmse for each lambda
 		List<String> legends = new ArrayList<>();
 		for (Double lambda : lambdas) {
@@ -77,7 +78,7 @@ public class RandomWalkTDLambdaSolver {
 			}
 			results.add(map);
 		}
-		new MultiMappingChart(results, legends, "alpha" , "rmse" , "Alpha-Lambda");
+		new MultiMappingChart(results, legends, "alpha" , "rmse" , "Experiment-2");
 	}
 
 	private double runExperimentTwo(double lambda, double alpha) {
@@ -187,7 +188,7 @@ public class RandomWalkTDLambdaSolver {
 	 * @param numTrainingSets total number of training set (a training set is a List<Episode>)
 	 */
 	private void setup(int numEpisodes, int numTrainingSets) {
-		mdp = createMDP();
+		createMDP();
 		MDPPolicy randomWalkPolicy = MDPPolicy.initialNonDeterministicPolicy(mdp);
 		for (int i = 0; i < numTrainingSets; i++) {
 			List<Episode> trainingSet = new ArrayList<>();
@@ -198,8 +199,8 @@ public class RandomWalkTDLambdaSolver {
 		}
 	}
 
-	private MDP createMDP() {
-		MDP mdp = MDP.instance();
+	private void createMDP() {
+		mdp = MDP.instance();
 
 		mdp.addSingleOutcomAction(State.instance("B"), State.instance("A"), 0, "West");
 		mdp.addSingleOutcomAction(State.instance("B"), State.instance("C"), 0, "East");
@@ -218,8 +219,6 @@ public class RandomWalkTDLambdaSolver {
 
 		State.instance("A").setValue(0);
 		State.instance("G").setValue(1);
-
-		return mdp;
 	}
 
 	/**

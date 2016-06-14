@@ -1,7 +1,5 @@
 package prob.chart;
 
-import java.awt.BasicStroke;
-import java.awt.Stroke;
 import java.util.List;
 import java.util.Map;
 
@@ -9,13 +7,16 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+/**
+ * Each series represented by a map : x->y
+ * @author Cosmin Zamfir
+ *
+ */
 public class MultiMappingChart extends ApplicationFrame {
 
 	private static final long serialVersionUID = 1L;
