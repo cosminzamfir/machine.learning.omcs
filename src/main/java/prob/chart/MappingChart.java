@@ -20,16 +20,17 @@ public class MappingChart extends ApplicationFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public MappingChart(Map<Number,Number> map, final String title) {
-		super(title);
-		final XYSeries series = new XYSeries("Mapping chart");
+	public MappingChart(Map<Number, Number> map, String xAxisTitle, String yAxisTitle, final String chartTitle) {
+		super(chartTitle);
+		final XYSeries series = new XYSeries(yAxisTitle);
 
 		map.keySet().forEach((x) -> series.add(x, map.get(x)));
-		
+
 		final XYSeriesCollection data = new XYSeriesCollection(series);
-		final JFreeChart chart = ChartFactory.createXYLineChart(title, "X", "Y", data, PlotOrientation.VERTICAL,
+		final JFreeChart chart = ChartFactory.createXYLineChart(chartTitle, xAxisTitle, yAxisTitle, data, PlotOrientation.VERTICAL,
 				true, true, false
 				);
+		ChartUtils.configureSingleSeriesPlot(chart);
 
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
@@ -37,7 +38,6 @@ public class MappingChart extends ApplicationFrame {
 		pack();
 		RefineryUtilities.centerFrameOnScreen(this);
 		setVisible(true);
-
 
 	}
 }

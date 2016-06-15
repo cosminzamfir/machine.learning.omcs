@@ -183,5 +183,14 @@ public class MLUtils {
 		}
 		throw new RuntimeException("Assertion error. List does not sum to 1? " + probs);
 	}
+	
+	public static List<Double> generateList(Double startValue, Double endValue, Double step) {
+		List<Double> res = new ArrayList<>();
+		while (startValue <= endValue) {
+			res.add(startValue);
+			startValue += step;
+		}
+		return res;
+	}
 
 }

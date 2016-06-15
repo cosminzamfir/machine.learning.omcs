@@ -11,12 +11,13 @@ import ml.rl.mdp.model.Episode;
 import ml.rl.mdp.model.MDP;
 import ml.rl.mdp.model.MDPPolicy;
 import ml.rl.mdp.model.State;
-import ml.rl.mdp.view.MDPViewer;
 
 import org.apache.log4j.Logger;
 
 import prob.chart.MappingChart;
 import prob.chart.MultiMappingChart;
+import util.DoubleHolder;
+import util.MLUtils;
 
 public class RandomWalkTDLambdaSolver {
 
@@ -35,8 +36,9 @@ public class RandomWalkTDLambdaSolver {
 	public static void main(String[] args) {
 		RandomWalkTDLambdaSolver solver = new RandomWalkTDLambdaSolver();
 		solver.setup(numEpisodesPerTrainingSet, numTrainingSets);
-		solver.runExperimentOne();
-		//solver.runExperimentTwo();
+		//solver.runExperimentOne();
+		solver.runExperimentTwo();
+		//solver.runExperimentThree();
 	}
 
 	private void runExperimentOne() {
@@ -45,27 +47,27 @@ public class RandomWalkTDLambdaSolver {
 		for (Double lambda : lambdas) {
 			map.put(lambda, runExperimentOne(lambda));
 		}
-		new MappingChart(map, "TD(lambda)");
+		new MappingChart(map, "lambda", "rmse", "RMSE (trainingSets=" + numTrainingSets + ")");
 	}
 
 	private double runExperimentOne(double lambda) {
 		this.lambda = lambda;
 
-		List<Vector> weights = new ArrayList<>(); //each tranining set generates a weight vector
-		trainingSets.forEach((trainingSet) -> weights.add(runUntilConvergence(trainingSet)));
-		Vector averageWeights = Vector.average(weights);
-
-		Vector prognosis = getPrognosedValues(averageWeights);
-		System.out.println("lamda=" + lambda +
-				"\nPrognosed values:   " + prognosis.toRowMatrix() +
-				"Theoretical values: " + expValues.toRowMatrix() +
-				";RMSE=" + prognosis.rootMeanSquaredError(expValues));
-		return prognosis.rootMeanSquaredError(expValues);
+		double rmse = 0;
+		for (List<Episode> trainingSet : trainingSets) {
+			Vector weights = runUntilConvergence(trainingSet);
+			Vector prognosis = getPrognosedValues(weights);
+			rmse += prognosis.rootMeanSquaredError(expValues);
+		}
+		rmse /= trainingSets.size();
+		System.out.println("lamda=" + lambda + ";RMSE=" + rmse);
+		return rmse;
 	}
 
 	private void runExperimentTwo() {
 		List<Double> lambdas = Arrays.asList(0.0, 0.3, 0.8, 1.0);
-		List<Double> alphas = Arrays.asList(0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6);
+		List<Double> alphas = MLUtils.generateList(0.0, 0.50, 0.05);
+		
 		List<Map<Number, Number>> results = new ArrayList<>(); //one mapping of alpha=>rmse for each lambda
 		List<String> legends = new ArrayList<>();
 		for (Double lambda : lambdas) {
@@ -76,18 +78,39 @@ public class RandomWalkTDLambdaSolver {
 			}
 			results.add(map);
 		}
-		new MultiMappingChart(results, legends, "alpha" , "rmse" , "Experiment-2");
+		new MultiMappingChart(results, legends, "alpha" , "rmse" , "RMSE vs alpha");
 	}
 
 	private double runExperimentTwo(double lambda, double alpha) {
 		this.lambda = lambda;
 		this.alpha = alpha;
-		List<Vector> weights = new ArrayList<>();
+		double rmse = 0;
 		for (List<Episode> trainingSet : trainingSets) {
-			weights.add(run(trainingSet));
+			Vector weights = run(trainingSet);
+			Vector prognosedValues = getPrognosedValues(weights);
+			rmse += prognosedValues.rootMeanSquaredError(expValues);
 		}
-		Vector averageWeights = Vector.average(weights);
-		return averageWeights.rootMeanSquaredError(expValues);
+		return rmse/trainingSets.size();
+	}
+	
+	/**
+	 * For each lambda from 0 to 1 in increments of 0.1, get the RMSE using the best alfa for that lambda
+	 */
+	private void runExperimentThree() {
+		List<Double> lambdas = MLUtils.generateList(0.0, 1.0, 0.1);
+		List<Double> alphas = MLUtils.generateList(0.0, 0.6, 0.05); 
+		Map<Number, Number> res = new HashMap<>();
+		for (Double lambda : lambdas) {
+			double bestRmse = Double.MAX_VALUE;
+			for (Double alpha : alphas) {
+				double rmse = runExperimentTwo(lambda, alpha);
+				if(rmse < bestRmse) {
+					bestRmse = rmse;
+				}
+			}
+			res.put(lambda, bestRmse);
+		}
+		new MappingChart(res, "lambda", "rmse", "Errror vs lambda using best alfa");
 	}
 
 	/**

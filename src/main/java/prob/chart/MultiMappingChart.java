@@ -35,6 +35,7 @@ public class MultiMappingChart extends ApplicationFrame {
 		final JFreeChart chart = ChartFactory.createXYLineChart(title, xAxis, yAxis, data, PlotOrientation.VERTICAL,
 				true, true, false
 				);
+		ChartUtils.configureMultipleSeriesPlot(chart);
 
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
