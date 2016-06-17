@@ -28,17 +28,28 @@ public class RandomWalkTDLambdaSolver {
 	private static Vector expValues = new Vector(1.0 / 6, 2.0 / 6, 3.0 / 6, 4.0 / 6, 5.0 / 6);
 	private Vector w;
 	private double lambda = 0;
-	private double alpha = 0.01;
+	private double alpha = 0.025;
 	private double epsilon = 0.001;
 	private MDP mdp;
 	private List<List<Episode>> trainingSets = new ArrayList<List<Episode>>();
 
 	public static void main(String[] args) {
+		if(args.length != 1) {
+			System.out.println("Usage: 'java RandomWalkTDLambdaSolver one|two|three' to run the desired experiment");
+			System.exit(0);
+		}
+		String experiment = args[0];
 		RandomWalkTDLambdaSolver solver = new RandomWalkTDLambdaSolver();
 		solver.setup(numEpisodesPerTrainingSet, numTrainingSets);
-		//solver.runExperimentOne();
-		solver.runExperimentTwo();
-		//solver.runExperimentThree();
+		if(experiment.equals("one")) {
+			solver.runExperimentOne();
+		}
+		if(experiment.equals("two")) {
+			solver.runExperimentTwo();
+		}
+		if(experiment.equals("three")) {
+			solver.runExperimentThree();
+		}
 	}
 
 	private void runExperimentOne() {
@@ -66,7 +77,7 @@ public class RandomWalkTDLambdaSolver {
 
 	private void runExperimentTwo() {
 		List<Double> lambdas = Arrays.asList(0.0, 0.3, 0.8, 1.0);
-		List<Double> alphas = MLUtils.generateList(0.0, 0.50, 0.05);
+		List<Double> alphas = MLUtils.generateList(0.0, 0.60, 0.05);
 		
 		List<Map<Number, Number>> results = new ArrayList<>(); //one mapping of alpha=>rmse for each lambda
 		List<String> legends = new ArrayList<>();
@@ -88,7 +99,12 @@ public class RandomWalkTDLambdaSolver {
 		for (List<Episode> trainingSet : trainingSets) {
 			Vector weights = run(trainingSet);
 			Vector prognosedValues = getPrognosedValues(weights);
-			rmse += prognosedValues.rootMeanSquaredError(expValues);
+			double trainingSetError = prognosedValues.rootMeanSquaredError(expValues);
+			if(trainingSetError < 0.1) {
+				System.out.println("lambda=" + lambda + ";alpha=" + alpha + ";error=" + trainingSetError);
+				trainingSet.forEach((episode) -> System.out.println(episode));
+			}
+			rmse += trainingSetError;
 		}
 		return rmse/trainingSets.size();
 	}

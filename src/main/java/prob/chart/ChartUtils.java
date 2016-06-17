@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Shape;
+import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -14,14 +15,18 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.util.ShapeUtilities;
 
+import util.DoubleHolder;
+import util.MLUtils;
+
 public class ChartUtils {
 
 	public static void configureSingleSeriesPlot(JFreeChart chart) {
 		chart.getTitle().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
+		chart.getTitle().setVisible(false);
 		XYPlot plot = chart.getXYPlot();
 		((NumberAxis) plot.getRangeAxis()).setAutoRangeIncludesZero(false);
 		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
-		plot.setBackgroundPaint(Color.BLACK);
+		plot.setBackgroundPaint(Color.WHITE);
 		plot.setDomainGridlinePaint(Color.lightGray);
 		plot.setRangeGridlinePaint(Color.lightGray);
 		plot.setDomainCrosshairVisible(true);
@@ -34,6 +39,7 @@ public class ChartUtils {
 
 	public static void configureMultipleSeriesPlot(JFreeChart chart) {
 		chart.getTitle().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
+		chart.getTitle().setVisible(false);
 		XYPlot plot = chart.getXYPlot();
 		((NumberAxis) plot.getRangeAxis()).setAutoRangeIncludesZero(false);
 		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
@@ -53,13 +59,5 @@ public class ChartUtils {
 		legend.setFrame(BlockBorder.NONE);
 		legend.setBackgroundPaint(Color.lightGray);
 
-	}
-
-	public static void main(String[] a) {
-		GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		Font[] fonts = e.getAllFonts(); // Get the fonts
-		for (Font f : fonts) {
-			System.out.println(f.getFontName());
-		}
 	}
 }
