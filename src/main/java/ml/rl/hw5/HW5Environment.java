@@ -11,12 +11,14 @@ import ml.rl.mdp.model.StateAction;
 import prob.distribution.DiscreteDistributionResult;
 
 /**
- * A one dimensional environemnt with x in [0..xMax]
+ * A one dimensional environment with x in [0..xMax]
+ * <p>
  * The interval in divided in numTerrainTypes terrain types of equal length
+ * <p>
  * There are numActions possible actions
- * Given the terrain state and action, the mean and standard deviation of the position change is given => a two-dimensional array
- * of size [numTypes, numActions] 
- * @author eh2zamf
+ * <p>
+ * Given the terrain state and action, the mean and standard deviation of the position change is given => a two-dimensional array of size [numTerrainTypes, numActions] 
+ * @author Cosmin Zamfir
  *
  */
 public class HW5Environment implements FullTransitionInfoEnvironment {
@@ -25,7 +27,7 @@ public class HW5Environment implements FullTransitionInfoEnvironment {
 	public static final String TERRAIN_TYPE = "terrainType";
 	Random random = new Random();
 	/** How many times to sample from the gaussian distribution of position change in order to build the transition matrix for each state-action pair */
-	private int samplingSize = 1000;
+	private int samplingSize = 10000;
 	
 	private double xMax = 1.0;
 	private int numTerrainTypes = 5;
@@ -99,6 +101,10 @@ public class HW5Environment implements FullTransitionInfoEnvironment {
 		return res;
 	}
 
+	/** Build the {@link StateAction}, ie including the transition probability matrix
+	 * for the given Action in the given State, by sampling {@link #samplingSize} samples from the gaussian distribution
+	 * given by {@link #movementMean} and {@link #movementSD}
+	 */
 	private StateAction getStateAction(State state, Action action) {
 		StateAction res = StateAction.instance(state, action);
 		double position = state.getDouble(POSITION);
@@ -110,7 +116,7 @@ public class HW5Environment implements FullTransitionInfoEnvironment {
 		DiscreteDistributionResult<State> distribution = new DiscreteDistributionResult<State>();
 
 		for (int i = 0; i < samplingSize; i++) {
-			double positionPrime = position + (random.nextGaussian() + mean) * sd;
+			double positionPrime = position + random.nextGaussian() * sd  + mean;
 			State sPrime = getState(positionPrime);
 			distribution.add(sPrime);
 		}
