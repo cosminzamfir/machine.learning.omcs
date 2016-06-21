@@ -9,7 +9,8 @@ import java.util.TreeMap;
 
 /**
  * Data container for a distribution simulation
- * @author eh2zamf
+ * 
+ * @author Cosmin Zamfir
  *
  */
 public class  DiscreteDistributionResult<T> {

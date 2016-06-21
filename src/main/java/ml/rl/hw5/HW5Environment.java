@@ -35,6 +35,7 @@ public class HW5Environment implements FullTransitionInfoEnvironment {
 	/** In how many descrete intervals (States) to divide. An initialState + an absorbingState will be added, besides the numStates States*/
 	private int numStates = 100;
 	
+	
 	private double[][] movementMean;
 	private double[][] movementSD;
 	private List<Action> actions;

@@ -4,7 +4,7 @@ import java.text.NumberFormat;
 import java.util.List;
 
 /**
- * One pair (value, P(X=value)) for a discrete random variable outcome
+ * One pair (value, P(X=value)) for a discrete distribution
  * @author eh2zamf
  *
  */
@@ -12,7 +12,7 @@ public class DiscreteDistributionPoint<T> {
 
 	private static NumberFormat nf = NumberFormat.getInstance();
 	
-	/**The value of the random variable X*/
+	/**The value. Might be an object representing and event or a number representing a random variable */
 	public T value;
 
 	/** The probablity that X=value */
