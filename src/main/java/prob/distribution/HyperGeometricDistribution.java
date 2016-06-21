@@ -25,7 +25,7 @@ public class HyperGeometricDistribution implements Distribution {
 	private int N;
 	private int k;
 	private int smallN;
-	private DiscreteDistributionResult result = new DiscreteDistributionResult();
+	private DiscreteDistributionResult<Integer> result = new DiscreteDistributionResult<Integer>();
 
 	public HyperGeometricDistribution(int N, int k, int n) {
 		this.N = N;
@@ -70,7 +70,7 @@ public class HyperGeometricDistribution implements Distribution {
 	
 	}
 
-	public DiscreteDistributionResult getResult() {
+	public DiscreteDistributionResult<Integer> getResult() {
 		return result;
 	}
 	

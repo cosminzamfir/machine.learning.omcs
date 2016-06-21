@@ -18,7 +18,7 @@ public class EMTestDailyTemp {
 		DiscreteProbabilityDistribution spring = new DiscreteProbabilityDistribution();
 		DiscreteProbabilityDistribution winter = new DiscreteProbabilityDistribution();
 		DiscreteProbabilityDistribution autumn = new DiscreteProbabilityDistribution();
-		HashMap<Object, DiscreteProbabilityDistribution> map = new LinkedHashMap();
+		HashMap<Object, DiscreteProbabilityDistribution> map = new LinkedHashMap<Object, DiscreteProbabilityDistribution>();
 		map.put("Spring", spring);
 		map.put("Summer", summer);
 		map.put("Winter", winter);

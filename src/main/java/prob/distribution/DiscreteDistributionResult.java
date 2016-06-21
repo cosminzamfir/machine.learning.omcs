@@ -2,6 +2,7 @@ package prob.distribution;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -11,13 +12,20 @@ import java.util.TreeMap;
  * @author eh2zamf
  *
  */
-public class DiscreteDistributionResult {
+public class  DiscreteDistributionResult<T> {
 
 	/**Map outcomes to number of occurences*/
-	private Map<Integer, Integer> outcomes = new TreeMap<Integer, Integer>();
-	private List<DiscreteDistributionPoint> points = new ArrayList<>();
+	private Map<T, Integer> outcomes;
+	private List<DiscreteDistributionPoint<T>> points = new ArrayList<>();
 
-	public void add(Integer res) {
+	public void add(T res) {
+		if(outcomes == null) {
+			if(res instanceof Comparable) {
+				outcomes =new TreeMap<T, Integer>();
+			} else {
+				outcomes = new LinkedHashMap<T, Integer>();
+			}
+		}
 		if (outcomes.containsKey(res)) {
 			outcomes.put(res, outcomes.get(res) + 1);
 		} else {
@@ -25,28 +33,30 @@ public class DiscreteDistributionResult {
 		}
 	}
 	
-	public void add(Integer value, double p) {
-		points.add(new DiscreteDistributionPoint(value, p));
+	public void add(T value, double p) {
+		points.add(new DiscreteDistributionPoint<T>(value, p));
 	}
 	
-	public List<DiscreteDistributionPoint> get() {
+	public List<DiscreteDistributionPoint<T>> get() {
 		int n = n();
-		List<DiscreteDistributionPoint> res = new ArrayList<>();
-		for (Integer outcome : outcomes.keySet()) {
-			res.add(new DiscreteDistributionPoint(outcome, outcomes.get(outcome) / (double) n));
+		List<DiscreteDistributionPoint<T>> res = new ArrayList<>();
+		for (T outcome : outcomes.keySet()) {
+			res.add(new DiscreteDistributionPoint<T>(outcome, outcomes.get(outcome) / (double) n));
 		}
 		return res;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public double[][] asArray() {
 		if(!points.isEmpty()) {
-			return DiscreteDistributionPoint.asArray(points);
+			List<DiscreteDistributionPoint> copy = new ArrayList<>(points);
+			return DiscreteDistributionPoint.asArray(copy);
 		}
 		double[][] res = new double[outcomes.size()][2];
 		int index = 0;
 		int n = n();
-		for (Integer value : outcomes.keySet()) {
-			res[index][0] = value;
+		for (T value : outcomes.keySet()) {
+			res[index][0] = (double) value;
 			res[index++][1] = outcomes.get(value) / (double)n;
 		}
 		return res;

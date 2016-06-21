@@ -16,7 +16,7 @@ public class GeometricDistribution {
 
 	private double p;
 	private double q;
-	private DiscreteDistributionResult result = new DiscreteDistributionResult();
+	private DiscreteDistributionResult<Integer> result = new DiscreteDistributionResult<Integer>();
 
 	public GeometricDistribution(double p) {
 		this.p = p;
@@ -55,7 +55,7 @@ public class GeometricDistribution {
 		return Math.pow(q, j-1) * p;
 	}
 	
-	public DiscreteDistributionResult getResult() {
+	public DiscreteDistributionResult<Integer> getResult() {
 		return result;
 	}
 	

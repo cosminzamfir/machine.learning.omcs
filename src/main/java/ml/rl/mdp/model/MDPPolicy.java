@@ -86,6 +86,9 @@ public class MDPPolicy {
 	}
 	
 	public Action getAction(State state) {
+		if(mdp.isTerminal(state)) {
+			return null;
+		}
 		return getStatePolicy(state).getStateAction().getAction();
 	}
 

@@ -25,7 +25,7 @@ public class State {
 	private static Map<Object, State> identifiableStates = new LinkedHashMap<Object, State>();
 
 	/** Optional. For States solely identified by their id*/
-	private Object id;
+	private Comparable id;
 
 	/**The value assigned to this state*/
 	private double value;
@@ -40,7 +40,8 @@ public class State {
 		return new State();
 	}
 
-	public static State instance(Object id) {
+	@SuppressWarnings("rawtypes")
+	public static State instance(Comparable id) {
 		State res = identifiableStates.get(id);
 		if (res == null) {
 			res = new State(id);
@@ -60,7 +61,8 @@ public class State {
 		identifiableStates.clear();
 	}
 
-	private State(Object id) {
+	@SuppressWarnings("rawtypes")
+	private State(Comparable id) {
 		this.id = id;
 	}
 
@@ -75,7 +77,8 @@ public class State {
 		return value;
 	}
 
-	public Object getId() {
+	@SuppressWarnings("rawtypes")
+	public Comparable getId() {
 		return id;
 	}
 

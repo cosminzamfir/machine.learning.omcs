@@ -13,7 +13,7 @@ import java.util.Map;
 public class DiscreteProbabilityDistribution {
 
 	private Map<Object, Double> probabilitites = new LinkedHashMap<Object, Double>();
-	private List<Object> observations = new ArrayList();
+	private List<Object> observations = new ArrayList<Object>();
 	
 	public double p(Object instance) {
 		Double res = getProbabilities().get(instance);

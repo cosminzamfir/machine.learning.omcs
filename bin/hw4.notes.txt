@@ -44,8 +44,10 @@ See in excel a 'solver' for the above equations.
 
 Why it does not work: If there is cycle: S1->S3 and S3->S1 => the values of S1 and S3 will be equal, and equal to the rewards*4 => the rest will not work as expected (e.g. A1_13 will stay as best action)
 
-===========================================
+============================================================================================================================================================================
+============================================================================================================================================================================
 B. 4 States
+Notation exammple: V(S,A)
 
 Approach1 => 5 iterations
 R44=256
@@ -62,27 +64,18 @@ The conditions must be:
 	R41 + 0.75*Vf(S1) > V(S4) (the value of R41 + discounted value of Vf(S1)  > the current value of S4, such that at the last step the action A41 is taken)
 	
 	Solving the above:
-	R41 < R41 + R44 => any R30 works
+	R41 < R41 + R44 => any R41 works
 	R41 + 0.75^4*4*R44 > 4*R44
 	R41 > 4*R44 - 0.75^4*4*R44 => R41 > 1024 - 0.75^4*1024 => R41 > 700
 Conclusion: R41 can be a number as high as required, but bigger then 700 -> Vf(S4) can be made arbitrarily high, according to further enhancements requirements	
 
 Enhancement2
-After the last increase in value of S4, let's try to make S2 have a better outcome if would take the action: A2_24.
-Why this should work?
-	Before the increment of V(S4), best action of S2 is A23. This action makes that V(S2)=lambda^2 * Vintermediar(S4)
-	If we would have a stochastic action A2_24 with enough weight of S4, lets try to write the inequalities:
-	
-	Before the final update of S4, A23 is the best option. After the final update, A2_24 must become the best option:
-	
-	p1*(r1 + 0.75*Vintermediar(S2)) + p2*(r2 + 0.75*Vintermediar(S4)) < 0.75^2*Vintermediar(S4)
-	p1*(r1 + 0.75*Vintermediar1(S2)) + p2*(r2 + 0.75*Vfinal(S4)) > 0.75*2*Vfinal(S4)
-	
-	p1*(r1 + 0.75^3*1024) + p2*(r2 + 0.75*1024)) < 0.75^2 * 1024
-	p1*(r1 + 0.75^3*Vf(S4)) + p2*(r2 + 0.75*Vf(S4))) > 0.75^2 * Vf(S4)
-	
-	p1*(r1+432) + p2*(r2+768) < 576
-	p1*(r1 + 0.75^3*Vf(S4)) + p2*(r2 + 0.75*Vf(S4))) > 0.75^2 * Vf(S4)
+After the last increase in value of S4, let's try to make S2 have a better outcome if would take the action: A2_214:
+	- S2 will take value from S4 
+	- constraints:
+		- the value of triple for S2 must be worse than the value taken from S3
+		- it must be worse than the value of S1 through A11
+		- but at the end it must be better than the value taken from 
 	
 	
 	

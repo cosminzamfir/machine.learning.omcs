@@ -18,13 +18,21 @@ import org.apache.commons.lang.StringUtils;
 public class MLUtils {
 	private static NumberFormat nf = NumberFormat.getInstance();
 	private static NumberFormat nf6 = NumberFormat.getInstance();
+	private static NumberFormat nf4 = NumberFormat.getInstance();
+	private static NumberFormat intf = NumberFormat.getIntegerInstance();
 	private static NumberFormat nfs = new DecimalFormat("0.###E0");
+	
 	static {
 		nf.setMaximumFractionDigits(2);
 		nf.setMinimumFractionDigits(2);
 
-		nf6.setMaximumFractionDigits(5);
-		nf6.setMinimumFractionDigits(5);
+		nf6.setMaximumFractionDigits(6);
+		nf6.setMinimumFractionDigits(6);
+		
+		nf4.setMaximumFractionDigits(4);
+		nf4.setMinimumFractionDigits(4);
+		
+		intf.setGroupingUsed(true);
 	}
 
 	private static NumberFormat integerf = NumberFormat.getInstance();
@@ -68,6 +76,10 @@ public class MLUtils {
 
 	public static boolean equals(double d1, double d2, double precision) {
 		return Math.abs(d1 - d2) < precision;
+	}
+
+	public static boolean effectiveEquals(double d1, double d2) {
+		return equals(d1, d2, 0.0000001);
 	}
 
 	public static String asString(Object o, String... attributeNames) {
@@ -141,10 +153,13 @@ public class MLUtils {
 		if(d == null) {
 			return "N.A.";
 		}
+		if(d instanceof Integer || d instanceof Long) {
+			return intf.format(d);
+		}
 		if(d instanceof Double && (double)d>1E5) {
 			return nfs.format(d);
 		} if(d instanceof Number) {
-			return nf.format(d);
+			return nf4.format(d);
 		} return d.toString();
 	}
 

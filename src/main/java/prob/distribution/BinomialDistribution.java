@@ -11,7 +11,7 @@ public class BinomialDistribution {
 
 	private double p;
 	private int n;
-	private DiscreteDistributionResult result = new DiscreteDistributionResult();
+	private DiscreteDistributionResult<Integer> result = new DiscreteDistributionResult<Integer>();
 
 	public BinomialDistribution(double p, int n) {
 		this.p = p;
@@ -31,7 +31,7 @@ public class BinomialDistribution {
 		}
 	}
 	
-	public DiscreteDistributionResult getResult() {
+	public DiscreteDistributionResult<Integer> getResult() {
 		return result;
 	}
 	

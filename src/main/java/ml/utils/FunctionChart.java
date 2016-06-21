@@ -23,6 +23,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import prob.chart.ChartUtils;
+
 public class FunctionChart extends ApplicationFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -51,6 +53,7 @@ public class FunctionChart extends ApplicationFrame {
 				true, true, false
 				);
 
+		ChartUtils.configureSingleFunctionSeriesPlot(chart);
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
 		setContentPane(chartPanel);

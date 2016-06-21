@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -191,11 +192,20 @@ public class MDP {
 		}
 	}
 
-	public Object printStateValues() {
+	public String printStateValues() {
 		StringBuilder res = new StringBuilder();
+		states.sort((state1,state2)-> Integer.valueOf(state1.hashCode()).compareTo(Integer.valueOf(state2.hashCode())));
 		states.forEach((s) -> res.append(s + "=" + MLUtils.format(s.getValue())).append(" "));
 		return res.toString();
 	}
+	
+	public String printStateData(String attrName) {
+		StringBuilder res = new StringBuilder();
+		states.sort((state1,state2)-> Integer.valueOf(state1.hashCode()).compareTo(Integer.valueOf(state2.hashCode())));
+		states.forEach((s) -> res.append(s + "=" + MLUtils.format(s.get(attrName))).append(" "));
+		return res.toString();
+	}
+	
 	
 	public double[] getStateValues() {
 		double[] res = new double[states.size()];

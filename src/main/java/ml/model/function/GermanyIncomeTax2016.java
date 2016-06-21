@@ -45,8 +45,10 @@ public class GermanyIncomeTax2016 extends AbstractFunction {
 		public double computeTax(double d) {
 			double res = new DefiniteIntegral()
 					.compute(((x) -> (lowerTax + (upperTax - lowerTax) * x /
-							(upperAmount - lowerAmount))), 0, d, 0.1);
-			//double res = d * (lowerTax + (upperTax - lowerTax) * d / (upperAmount - lowerAmount));
+							(upperAmount - lowerAmount))), 0, d, 0.001);
+			//			double tax = lowerTax + (upperTax - lowerTax) * (d / (upperAmount - lowerAmount));
+			//			double res = d * tax;
+			
 			log.info(MessageFormat.format("{0}. Tax for {1} is {2}", TaxLevel.this, d, res));
 			return res;
 		}

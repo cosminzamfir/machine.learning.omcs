@@ -8,7 +8,7 @@ import prob.chart.DataChart;
 public class PoissonDistribution {
 
 	private double lambda;
-	private DiscreteDistributionResult result = new DiscreteDistributionResult();
+	private DiscreteDistributionResult<Integer> result = new DiscreteDistributionResult<Integer>();
 
 	public PoissonDistribution(double lambda) {
 		super();
@@ -19,7 +19,7 @@ public class PoissonDistribution {
 		return lambda;
 	}
 	
-	public DiscreteDistributionResult getResult() {
+	public DiscreteDistributionResult<Integer> getResult() {
 		return result;
 	}
 

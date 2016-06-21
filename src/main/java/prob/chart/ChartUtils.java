@@ -37,6 +37,21 @@ public class ChartUtils {
 		renderer.setSeriesVisibleInLegend(0, false);
 	}
 
+	public static void configureSingleFunctionSeriesPlot(JFreeChart chart) {
+		chart.getTitle().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
+		chart.getTitle().setVisible(false);
+		XYPlot plot = chart.getXYPlot();
+		((NumberAxis) plot.getRangeAxis()).setAutoRangeIncludesZero(false);
+		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+		plot.setBackgroundPaint(Color.WHITE);
+		plot.setDomainGridlinePaint(Color.lightGray);
+		plot.setRangeGridlinePaint(Color.lightGray);
+		plot.setDomainCrosshairVisible(true);
+		plot.setRangeCrosshairVisible(true);
+		renderer.setSeriesShapesVisible(0, false);
+		renderer.setSeriesVisibleInLegend(0, false);
+	}
+
 	public static void configureMultipleSeriesPlot(JFreeChart chart) {
 		chart.getTitle().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
 		chart.getTitle().setVisible(false);
