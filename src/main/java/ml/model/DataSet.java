@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import linalg.Vector;
-import ml.utils.Utils;
+import util.MLUtils;
 
 import org.apache.log4j.Logger;
 import org.jfree.data.general.Dataset;
@@ -178,14 +178,14 @@ public class DataSet {
 		double res = 0;
 		for (List<Observation> l : categoriesMapping.values()) {
 			double p = l.size() / (double) size();
-			double logp = Utils.log2(p);
+			double logp = MLUtils.log2(p);
 			res = res - p * logp;
 		}
 		return res;
 	}
 	
 	public DataSet subSet(int start, int end) {
-		return new DataSet(attributes, Utils.clone(data, start, end), targetAttribute);
+		return new DataSet(attributes, MLUtils.clone(data, start, end), targetAttribute);
 	}
 
 	

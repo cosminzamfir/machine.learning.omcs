@@ -33,7 +33,7 @@ public class HW5Environment implements FullTransitionInfoEnvironment {
 	private int numTerrainTypes = 5;
 	private int numActions = 8;
 	/** In how many descrete intervals (States) to divide. An initialState + an absorbingState will be added, besides the numStates States*/
-	private int numStates = 100;
+	private int numStates = 300;
 	
 	
 	private double[][] movementMean;
@@ -63,7 +63,7 @@ public class HW5Environment implements FullTransitionInfoEnvironment {
 	private void initStates() {
 		states = new ArrayList<>();
 		double intervalLength = xMax / numStates;
-		double terrainTypeIntervalSize = 1.0 / numTerrainTypes;
+		double terrainTypeIntervalSize = xMax / numTerrainTypes;
 		for (int i = 0; i < numStates; i++) {
 			double pos = (i*intervalLength + (i+1)*intervalLength) / 2; //position is the middle of the interval.
 			int terrainType = (int) Math.floor(pos/terrainTypeIntervalSize);

@@ -2,7 +2,7 @@ package ml.model.function;
 
 import linalg.Vector;
 import ml.slearning.regression.GradientDescent;
-import ml.utils.Utils;
+import util.MLUtils;
 
 /**
  * A differentiable {@link MultivariableFunction} usable in regression ( {@link GradientDescent})
@@ -11,8 +11,10 @@ import ml.utils.Utils;
  */
 public abstract class DifferentiableMultivariableFunction  extends MultivariableFunction {
 
-	/** The first coefficient refers to synthetic variable x0, always equal to 1 */
-	protected double[] coefficients;
+	public abstract void generateRandomCoefficients(double minValue, double maxValue);
+	
+	public abstract double[] getCoefficients();
+
 
 	/**
 	 * Compute and return the partial derivative for variable i at value x
@@ -32,15 +34,7 @@ public abstract class DifferentiableMultivariableFunction  extends Multivariable
 		}
 		return new Vector(res);
 	}
+
+
 	
-	public void generateRandomCoefficients(double minValue, double maxValue) {
-		coefficients = new double[n];
-		for (int i = 0; i < this.n; i++) {
-			coefficients[i] = Utils.randomDouble(minValue, maxValue);
-		}
-	}
-	
-	public double[] getCoefficients() {
-		return coefficients;
-	}
 }

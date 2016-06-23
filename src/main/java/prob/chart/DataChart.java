@@ -1,6 +1,6 @@
 package prob.chart;
 
-import ml.utils.Utils;
+import util.MLUtils;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -37,7 +37,7 @@ public class DataChart extends ApplicationFrame {
 	}
 
 	public static void main(final String[] args) {
-		new DataChart("Random", Utils.randomDiscreteDistribution(1000));
+		new DataChart("Random", MLUtils.randomDiscreteDistribution(1000));
 	}
 
 }

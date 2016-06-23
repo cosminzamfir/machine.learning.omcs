@@ -2,7 +2,7 @@ package prob.chart.problems.grinstead;
 
 import java.util.List;
 
-import ml.utils.Utils;
+import util.MLUtils;
 
 /**
  * There are n applicants for the director of computing. The applicants are interviewed
@@ -25,9 +25,9 @@ public class Interviews {
 		int successes = 0;
 		//generate trials permutations. Success if at least 2 permutations have '1' as the first element
 		for (int i = 0; i < trials; i++) {
-			List<Integer> l1 = Utils.randomPermutation(n);
-			List<Integer> l2 = Utils.randomPermutation(n);
-			List<Integer> l3 = Utils.randomPermutation(n);
+			List<Integer> l1 = MLUtils.randomPermutation(n);
+			List<Integer> l2 = MLUtils.randomPermutation(n);
+			List<Integer> l3 = MLUtils.randomPermutation(n);
 			if(l1.get(0) == 1 && l2.get(0) == 1 || l2.get(0) == 1 && l3.get(0) == 1 || l3.get(0) == 1 && l1.get(0) == 1) {
 				successes ++;
 			}

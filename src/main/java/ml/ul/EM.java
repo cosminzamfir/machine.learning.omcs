@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import ml.utils.Utils;
+import util.MLUtils;
 
 public class EM {
 
@@ -30,7 +30,7 @@ public class EM {
 	public void run() {
 		logStartConditions();
 		log.info("Computing most likely theta for observation: " + observation);
-		targetTheta = Utils.randomElement(thetaValues);
+		targetTheta = MLUtils.randomElement(thetaValues);
 		log.info("Choose random theta: " +targetTheta);
 		DiscreteProbabilityDistribution distribution = computeProbabilityDistribution(targetTheta, observation);
 		//log.info("Probability distribution given initial theta and the observed event: \n" + distribution);

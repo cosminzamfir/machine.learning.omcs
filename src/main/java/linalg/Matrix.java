@@ -3,7 +3,7 @@ package linalg;
 import java.util.ArrayList;
 import java.util.List;
 
-import ml.utils.Utils;
+import util.MLUtils;
 
 /**
  * 
@@ -67,7 +67,7 @@ public class Matrix {
 		double[][] data = new double[m][n]; 
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < data[i].length; j++) {
-				data[i][j] = Utils.randomDouble(minValue, maxValue);
+				data[i][j] = MLUtils.randomDouble(minValue, maxValue);
 			}
 		}
 		return new Matrix(data);
@@ -77,7 +77,7 @@ public class Matrix {
 		double[][] data = new double[m][n];
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < data[i].length; j++) {
-				data[i][j] = Utils.random(maxValue);
+				data[i][j] = MLUtils.random(maxValue);
 			}
 		}
 		return new Matrix(data);
@@ -290,7 +290,7 @@ public class Matrix {
 		StringBuilder sb = new StringBuilder();
 		for (double[] row : data) {
 			for (double d : row) {
-				sb.append(Utils.printNumber(d, maxLength));
+				sb.append(MLUtils.printNumber(d, maxLength));
 			}
 			sb.append("\n");
 		}
@@ -302,7 +302,7 @@ public class Matrix {
 		int res = 0;
 		for (double[] row : data) {
 			for (double d : row) {
-				String s = Utils.nf.format(d);
+				String s = MLUtils.format(d);
 				if (s.length() > res) {
 					res = s.length();
 				}

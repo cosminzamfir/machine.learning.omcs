@@ -6,9 +6,14 @@ package ml.model.function;
  * @author Cosmin Zamfir
  *
  */
-public class PolynomialMultivariableFunction extends MultivariableFunction {
+public class PolynomialMultivariableFunction extends DifferentiableMultivariableFunction {
 
-	/** The coefficients */
+	/** The free coeficient */
+	private double c;
+	/** The coefficients of xi  
+	 * a[0] is the grade 1 coefficient array 
+	 * a[n] is the grade n-1 coefficient array
+	 * */
 	private double[][] a;
 
 	public PolynomialMultivariableFunction(double[][] a) {

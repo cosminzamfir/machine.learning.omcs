@@ -2,7 +2,7 @@ package prob.chart.problems.grinstead;
 
 import java.util.List;
 
-import ml.utils.Utils;
+import util.MLUtils;
 
 public class BridgeSimulation {
 
@@ -19,7 +19,7 @@ public class BridgeSimulation {
 		int successes = 0;
 		int relevantSamples = 0;
 		for (int i = 0; i < samples; i++) {
-			List<Card> hand = Utils.randomChoice(deck, 13, true);
+			List<Card> hand = MLUtils.randomChoice(deck, 13, true);
 			if(!Card.contains(hand, 1, null)) {
 				continue;
 			}
@@ -39,7 +39,7 @@ public class BridgeSimulation {
 		int successes = 0;
 		int relevantSamples = 0;
 		for (int i = 0; i < samples; i++) {
-			List<Card> hand = Utils.randomChoice(deck, 13, true);
+			List<Card> hand = MLUtils.randomChoice(deck, 13, true);
 			if(!Card.contains(hand, 1, Shape.Spades)) {
 				continue;
 			}

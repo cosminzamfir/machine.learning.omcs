@@ -1,11 +1,12 @@
 package prob.chart.problems.stat110;
 
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import ml.utils.Utils;
-import static ml.utils.Utils.*;
+import util.MLUtils;
+import static util.MLUtils.*;
 
 public class Homework2_31 extends Simulation {
 
@@ -14,7 +15,7 @@ public class Homework2_31 extends Simulation {
 		int amount = 1000000;
 		int targetAmount = amount + 2;
 		while (amount >= 0 && amount < targetAmount) {
-			boolean win = Utils.trueWithProbability(0.33);
+			boolean win = MLUtils.trueWithProbability(0.33);
 			amount = win ? amount + 1  : amount -1; 
 			System.out.println(amount);
 		}

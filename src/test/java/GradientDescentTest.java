@@ -1,4 +1,3 @@
-import static org.junit.Assert.*;
 import ml.model.DataSet;
 import ml.model.function.DifferentiableMultivariableFunction;
 import ml.model.function.LinearMultivariableFunction;
@@ -16,7 +15,8 @@ public class GradientDescentTest {
 		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("house_prices.txt", false);
 		DifferentiableMultivariableFunction targetFunction = new LinearMultivariableFunction(new double[dataSet.getWidth() + 1]);
 		GradientDescent gd = new GradientDescent(targetFunction, dataSet);
-		gd.train(0.01, 20, 0.005);
+		gd.train(0.01, 20, 0.000001);
+		System.out.println(targetFunction);
 	}
 
 	@Test

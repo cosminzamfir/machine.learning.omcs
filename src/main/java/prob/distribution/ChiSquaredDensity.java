@@ -1,7 +1,8 @@
 package prob.distribution;
 
-import ml.utils.Utils;
+
 import prob.chart.DataChart;
+import util.MLUtils;
 
 /**
  * The distribution of mean squared difference of the observed values over a number of categories, where the expected value is the maximum likelyhood of 
@@ -73,14 +74,14 @@ public class ChiSquaredDensity {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		Utils.appendAligned(sb, "", 20, Utils.AlignType.LEFT);
-		Utils.appendAligned(sb, "Criterion1.Cat1", 20, Utils.AlignType.LEFT);
-		Utils.appendAligned(sb, "Criterion1.Cat2", 20, Utils.AlignType.LEFT);
+		MLUtils.appendAligned(sb, "", 20, MLUtils.AlignType.LEFT);
+		MLUtils.appendAligned(sb, "Criterion1.Cat1", 20, MLUtils.AlignType.LEFT);
+		MLUtils.appendAligned(sb, "Criterion1.Cat2", 20, MLUtils.AlignType.LEFT);
 		sb.append("\n");
 		for (int i = 0; i < expectedValues.length; i++) {
-			Utils.appendAligned(sb, "Criterion2.Cat" + i, 20, Utils.AlignType.LEFT);
-			Utils.appendAligned(sb, expectedValues[i][0], 20, Utils.AlignType.LEFT);
-			Utils.appendAligned(sb, expectedValues[i][0], 20, Utils.AlignType.LEFT);
+			MLUtils.appendAligned(sb, "Criterion2.Cat" + i, 20, MLUtils.AlignType.LEFT);
+			MLUtils.appendAligned(sb, expectedValues[i][0], 20, MLUtils.AlignType.LEFT);
+			MLUtils.appendAligned(sb, expectedValues[i][0], 20, MLUtils.AlignType.LEFT);
 			sb.append("\n");
 		}
 		return sb.toString();

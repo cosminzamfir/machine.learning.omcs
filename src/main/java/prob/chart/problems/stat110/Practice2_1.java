@@ -3,7 +3,7 @@ package prob.chart.problems.stat110;
 import java.util.HashMap;
 import java.util.Map;
 
-import ml.utils.Utils;
+import util.MLUtils;
 
 public class Practice2_1 extends Simulation {
 
@@ -11,7 +11,7 @@ public class Practice2_1 extends Simulation {
 	protected Boolean simulate() {
 		Map<Integer, Integer> map = new HashMap<>();
 		for (int i = 0; i < 7; i++) {
-			int season = Utils.random(4);
+			int season = MLUtils.random(4);
 			map.put(season, season);
 			if(map.size() == 4) {
 				return true;

@@ -6,7 +6,7 @@ import ml.ulearning.kmeans.KMeans;
 import ml.ulearning.kmeans.model.EuclideanPoint2D;
 import ml.ulearning.kmeans.model.Points2DSet;
 import ml.utils.PointsChart;
-import ml.utils.Utils;
+import util.MLUtils;
 
 import org.junit.Test;
 
@@ -34,14 +34,14 @@ public class KMeansTest {
 		int n = 10000;
 		List<EuclideanPoint2D> l = new ArrayList<>();
 		for (int i = 0; i < n; i++) {
-			l.add(new EuclideanPoint2D(Utils.randomDouble(0, 100), Utils.randomDouble(0, 100)));
+			l.add(new EuclideanPoint2D(MLUtils.randomDouble(0, 100), MLUtils.randomDouble(0, 100)));
 		}
 
 		Points2DSet set = new Points2DSet(l);
 		KMeans kMeans = new KMeans(set, 2);
 
 		Map<EuclideanPoint2D, List<EuclideanPoint2D>> s = kMeans.compute();
-		Utils.showClusterChart(s);
+		MLUtils.showClusterChart(s);
 		System.in.read();
 	}
 

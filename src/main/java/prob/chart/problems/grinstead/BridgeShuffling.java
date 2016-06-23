@@ -2,7 +2,7 @@ package prob.chart.problems.grinstead;
 
 import java.util.List;
 
-import ml.utils.Utils;
+import util.MLUtils;
 
 public class BridgeShuffling {
 
@@ -19,10 +19,10 @@ public class BridgeShuffling {
 		for (int i = 0; i < samples; i++) {
 
 			List<Card> deck = Card.generateAll();
-			List<Card> hand1 = Utils.randomChoice(deck, 13, true);
-			List<Card> hand2 = Utils.randomChoice(deck, 13, true);
-			List<Card> hand3 = Utils.randomChoice(deck, 13, true);
-			List<Card> hand4 = Utils.randomChoice(deck, 13, true);
+			List<Card> hand1 = MLUtils.randomChoice(deck, 13, true);
+			List<Card> hand2 = MLUtils.randomChoice(deck, 13, true);
+			List<Card> hand3 = MLUtils.randomChoice(deck, 13, true);
+			List<Card> hand4 = MLUtils.randomChoice(deck, 13, true);
 			if (Card.count(hand1, 1, null) == 1 &&
 					Card.count(hand2, 1, null) == 1 &&
 					Card.count(hand3, 1, null) == 1 &&

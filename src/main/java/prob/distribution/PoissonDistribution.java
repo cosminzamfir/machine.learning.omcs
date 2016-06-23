@@ -2,7 +2,7 @@ package prob.distribution;
 
 import java.math.BigDecimal;
 
-import ml.utils.Utils;
+import util.MLUtils;
 import prob.chart.DataChart;
 
 public class PoissonDistribution {
@@ -29,7 +29,7 @@ public class PoissonDistribution {
 	 * @return
 	 */
 	public double compute(int k) {
-		return BigDecimal.valueOf(lambda).pow(k).multiply(BigDecimal.valueOf(Math.pow(Math.E, -lambda))).divide(Utils.factorialBD(k)).doubleValue();
+		return BigDecimal.valueOf(lambda).pow(k).multiply(BigDecimal.valueOf(Math.pow(Math.E, -lambda))).divide(MLUtils.factorialBD(k)).doubleValue();
 	}
 	
 	public void compute() {

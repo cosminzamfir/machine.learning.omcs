@@ -3,7 +3,7 @@ package prob.chart.problems.grinstead;
 import java.util.ArrayList;
 import java.util.List;
 
-import ml.utils.Utils;
+import util.MLUtils;
 
 /**
  *  The Polya urn model for contagion is as follows: We start with an urn which
@@ -28,10 +28,10 @@ public class PolyaUrnModel {
 		l.add(0);
 		l.add(1);
 		for (int i = 0; i < n; i++) {
-			Integer val = Utils.randomElement(l);
+			Integer val = MLUtils.randomElement(l);
 			l.add(val);
-			int zeros = Utils.count(l,Integer.valueOf(0));
-			int ones = Utils.count(l, Integer.valueOf(1));
+			int zeros = MLUtils.count(l,Integer.valueOf(0));
+			int ones = MLUtils.count(l, Integer.valueOf(1));
 			System.out.println("Proportion of zeros to ones: " + zeros/(double)ones);
 		}
 	}

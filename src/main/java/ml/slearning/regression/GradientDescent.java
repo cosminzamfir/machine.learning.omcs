@@ -1,12 +1,13 @@
 package ml.slearning.regression;
 
-import org.apache.log4j.Logger;
-
 import linalg.Vector;
 import ml.model.DataSet;
 import ml.model.Observation;
 import ml.model.function.DifferentiableMultivariableFunction;
-import ml.utils.Utils;
+
+import org.apache.log4j.Logger;
+
+import util.MLUtils;
 
 /** 
  * A general tool for regression:
@@ -51,8 +52,6 @@ public class GradientDescent {
 	 */
 	public void train(double maxError, int maxIterations, double learningRate) {
 		targetFunction.generateRandomCoefficients(0, 0.1);
-		targetFunction.getCoefficients()[0] = 0;
-		targetFunction.getCoefficients()[1] = 2;
 		int iteration = 0;
 		double error = Double.POSITIVE_INFINITY;
 		while (iteration < maxIterations && error > maxError) {
@@ -80,17 +79,17 @@ public class GradientDescent {
 			i++;
 		}
 		log.debug("Learning rate:" + learningRate);
-		log.debug("Target function coeficients: " + Utils.toString(targetFunction.getCoefficients()));
-		log.debug("Computed values: " + Utils.toString(yPrime));
-		log.debug("Actual values: " + Utils.toString(y));
+		log.debug("Target function: " + targetFunction);
+		log.debug("Computed values: " + MLUtils.toString(yPrime));
+		log.debug("Actual values: " + MLUtils.toString(y));
 		log.debug("Error: " + evaluateErrorFunction(yPrime, y));
 		partialDerivatives = computePartialDerivatives(yPrime, y);
-		log.debug("Partial derivatives: " + Utils.toString(partialDerivatives));
+		log.debug("Partial derivatives: " + MLUtils.toString(partialDerivatives));
 		for (int j = 0; j < partialDerivatives.length; j++) {
 			targetFunction.getCoefficients()[j] = targetFunction.getCoefficients()[j] + (-1) * partialDerivatives[j] * learningRate;
 		}
 		double res = evaluateErrorFunction(yPrime, y);
-		log.debug("New coeficient values: " + Utils.toString(targetFunction.getCoefficients()));
+		log.debug("New coeficient values: " + MLUtils.toString(targetFunction.getCoefficients()));
 		return res;
 	}
 

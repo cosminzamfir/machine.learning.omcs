@@ -6,7 +6,7 @@ import linalg.Vector;
 import ml.model.DataSet;
 import ml.model.Observation;
 import ml.model.function.DifferentiableMultivariableFunction;
-import ml.utils.Utils;
+import util.MLUtils;
 
 /** 
  * A general tool for regression:
@@ -56,11 +56,6 @@ public class StochasticGradientDescent {
 		while (iteration < maxIterations && error > maxError) {
 			log.debug("Iteration " + iteration);
 			double newError = runIteration(learningRate);
-			//			if (newError < error) {
-			//				learningRate *= 2;
-			//			} else {
-			//				learningRate /= 2;
-			//			}
 			error = newError;
 			iteration++;
 		}
@@ -71,22 +66,22 @@ public class StochasticGradientDescent {
 		double y = 0;
 		double[] partialDerivatives;
 		int i = 0;
-		Observation observation = Utils.randomElement(dataSet.getObservations());
+		Observation observation = MLUtils.randomElement(dataSet.getObservations());
 		Vector v = observation.getVectorValues();
 		yPrime = targetFunction.evaluate(v.getData());
 		y = (double) observation.getTargetAttributeValue();
 		log.debug("Learning rate:" + learningRate);
-		log.debug("Target function coeficients: " + Utils.toString(targetFunction.getCoefficients()));
+		log.debug("Target function coeficients: " + MLUtils.toString(targetFunction.getCoefficients()));
 		log.debug("Computed value: " + yPrime);
 		log.debug("Actual value: " + y);
 		log.debug("Error: " + evaluateErrorFunction(yPrime, y));
 		partialDerivatives = computePartialDerivatives(yPrime, y, observation);
-		log.debug("Partial derivatives: " + Utils.toString(partialDerivatives));
+		log.debug("Partial derivatives: " + MLUtils.toString(partialDerivatives));
 		for (int j = 0; j < partialDerivatives.length; j++) {
 			targetFunction.getCoefficients()[j] = targetFunction.getCoefficients()[j] + (-1) * partialDerivatives[j] * learningRate;
 		}
 		double res = evaluateErrorFunction(yPrime, y);
-		log.debug("New coeficient values: " + Utils.toString(targetFunction.getCoefficients()));
+		log.debug("New coeficient values: " + MLUtils.toString(targetFunction.getCoefficients()));
 		printResults();
 		return res;
 	}
@@ -98,8 +93,8 @@ public class StochasticGradientDescent {
 				yPrime[i] = targetFunction.evaluate(dataSet.getObservation(i).getVectorValues().getData());
 				y[i] = (double) dataSet.getObservation(i).getTargetAttributeValue();
 			}
-			log.debug(Utils.toString(yPrime));
-			log.debug(Utils.toString(y));
+			log.debug(MLUtils.toString(yPrime));
+			log.debug(MLUtils.toString(y));
 		}
 
 	/** E = 1/2 * sum[k in trainingSet] (y' - y)^2*/

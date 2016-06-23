@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ml.ulearning.kmeans.model.EuclideanPoint2D;
-import ml.utils.Utils;
+import util.MLUtils;
 
 /**
  * 
@@ -42,7 +42,7 @@ public class KMeansSimulator {
 
 	private static void addPoints(int minX, int maxX, int minY, int maxY, int counts, List<EuclideanPoint2D> points) {
 		for (int i = 0; i < counts; i++) {
-			points.add(new EuclideanPoint2D(Utils.randomDouble(minX, maxX), Utils.randomDouble(minY, maxY)));
+			points.add(new EuclideanPoint2D(MLUtils.randomDouble(minX, maxX), MLUtils.randomDouble(minY, maxY)));
 		}
 	}
 }

@@ -3,7 +3,7 @@ package prob.chart.problems.grinstead;
 import java.util.Arrays;
 import java.util.List;
 
-import ml.utils.Utils;
+import util.MLUtils;
 
 public class MontyHall {
 
@@ -18,12 +18,12 @@ public class MontyHall {
 		int successes = 0;
 		for (int i = 0; i < n; i++) {
 			List<Integer> doors = Arrays.asList(1, 2, 3);
-			int winningDoor = Utils.randomElement(doors);
-			int firstChoice = Utils.randomElement(doors);
+			int winningDoor = MLUtils.randomElement(doors);
+			int firstChoice = MLUtils.randomElement(doors);
 			int badDoor = (winningDoor == firstChoice ?
-					Utils.randomElement(Utils.minus(doors, winningDoor)) :
-					Utils.minus(doors, winningDoor, firstChoice).get(0));
-			int secondChoice = switchDoor ? Utils.minus(doors, firstChoice, badDoor).get(0) : firstChoice;
+					MLUtils.randomElement(MLUtils.minus(doors, winningDoor)) :
+					MLUtils.minus(doors, winningDoor, firstChoice).get(0));
+			int secondChoice = switchDoor ? MLUtils.minus(doors, firstChoice, badDoor).get(0) : firstChoice;
 			if (secondChoice == winningDoor) {
 				successes++;
 			}
@@ -34,6 +34,6 @@ public class MontyHall {
 
 	public static void main(String[] args) {
 		MontyHall m = new MontyHall();
-		System.out.println("No switch success rate: " + m.run(false)*3 + "; Switch success rate: " + m.run(true)*3/2);
+		System.out.println("No switch success rate: " + m.run(false) * 3 + "; Switch success rate: " + m.run(true) * 3 / 2);
 	}
 }

@@ -3,7 +3,7 @@ package ml.slearning.neuralnet;
 import linalg.Vector;
 import ml.model.DataSet;
 import ml.model.Observation;
-import ml.utils.Utils;
+import util.MLUtils;
 
 import org.apache.log4j.Logger;
 
@@ -32,14 +32,14 @@ public abstract class Perceptron {
 	protected void generateRandomCoefficients(DataSet dataSet) {
 		coefficients = new double[dataSet.getAttributes().size() + 1];
 		for (int i = 0; i < coefficients.length; i++) {
-			coefficients[i] = Utils.randomDouble(0, 1);
+			coefficients[i] = MLUtils.randomDouble(0, 1);
 		}
 	}
 
 	protected void generateRandomCoefficients(int size) {
 		coefficients = new double[size];
 		for (int i = 0; i < coefficients.length; i++) {
-			coefficients[i] = Utils.randomDouble(0, 1);
+			coefficients[i] = MLUtils.randomDouble(0, 1);
 		}
 	}
 
@@ -59,6 +59,6 @@ public abstract class Perceptron {
 	
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + Utils.toString(coefficients);
+		return this.getClass().getSimpleName() + MLUtils.toString(coefficients);
 	}
 }

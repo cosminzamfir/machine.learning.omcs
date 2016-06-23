@@ -3,7 +3,7 @@ package ml.slearning.neuralnet;
 import linalg.Vector;
 import ml.model.DataSet;
 import ml.model.Observation;
-import ml.utils.Utils;
+import util.MLUtils;
 
 import org.apache.log4j.Logger;
 
@@ -93,6 +93,6 @@ public class ThresholdedPerceptron extends Perceptron{
 
 	@Override
 	public String toString() {
-		return "Perceptron:" + Utils.toString(coefficients);
+		return "Perceptron:" + MLUtils.toString(coefficients);
 	}
 }

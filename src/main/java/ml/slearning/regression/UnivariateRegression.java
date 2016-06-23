@@ -57,7 +57,7 @@ public class UnivariateRegression {
 	
 	public static void main(String[] args) {
 		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("house_prices.txt", false);
-		PolynomialFunction f = new UnivariateRegression().compute(dataSet, 8);
+		PolynomialFunction f = new UnivariateRegression().compute(dataSet, 4);
 		System.out.println(f);
 		new FunctionChart("Regression", f,dataSet.data());
 	}

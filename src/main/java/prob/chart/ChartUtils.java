@@ -38,8 +38,10 @@ public class ChartUtils {
 	}
 
 	public static void configureSingleFunctionSeriesPlot(JFreeChart chart) {
-		chart.getTitle().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
-		chart.getTitle().setVisible(false);
+		if (chart.getTitle() != null) {
+			chart.getTitle().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
+			chart.getTitle().setVisible(false);
+		}
 		XYPlot plot = chart.getXYPlot();
 		((NumberAxis) plot.getRangeAxis()).setAutoRangeIncludesZero(false);
 		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
@@ -53,8 +55,10 @@ public class ChartUtils {
 	}
 
 	public static void configureMultipleSeriesPlot(JFreeChart chart) {
-		chart.getTitle().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
-		chart.getTitle().setVisible(false);
+		if (chart.getTitle() != null) {
+			chart.getTitle().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
+			chart.getTitle().setVisible(false);
+		}
 		XYPlot plot = chart.getXYPlot();
 		((NumberAxis) plot.getRangeAxis()).setAutoRangeIncludesZero(false);
 		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();

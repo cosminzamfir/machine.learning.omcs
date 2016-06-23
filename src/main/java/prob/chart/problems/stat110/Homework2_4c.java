@@ -1,12 +1,12 @@
 package prob.chart.problems.stat110;
 
-import ml.utils.Utils;
+import util.MLUtils;
 
 public class Homework2_4c extends Simulation {
 
 	@Override
 	protected Boolean simulate() {
-		boolean cIsFair = Utils.trueWithProbability(0.5);
+		boolean cIsFair = MLUtils.trueWithProbability(0.5);
 		double headProb;
 		if(cIsFair) {
 			headProb = 0.5;
@@ -15,7 +15,7 @@ public class Homework2_4c extends Simulation {
 		}
 		int headCounts = 0;
 		for (int i = 0; i < 10; i++) {
-			if(Utils.trueWithProbability(headProb)) {
+			if(MLUtils.trueWithProbability(headProb)) {
 				headCounts ++;
 			}
 		}
@@ -24,7 +24,7 @@ public class Homework2_4c extends Simulation {
 
 	@Override
 	protected double computedResult() {
-		 return (Utils.choose(10, 3)*Math.pow(0.5, 3)*Math.pow(0.5, 7) + Utils.choose(10, 3)*Math.pow(0.25, 3)*Math.pow(0.75, 7))/2; 
+		 return (MLUtils.choose(10, 3)*Math.pow(0.5, 3)*Math.pow(0.5, 7) + MLUtils.choose(10, 3)*Math.pow(0.25, 3)*Math.pow(0.75, 7))/2; 
 	}
 
 }

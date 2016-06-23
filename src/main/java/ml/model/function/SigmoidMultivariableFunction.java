@@ -1,7 +1,7 @@
 package ml.model.function;
 
 import linalg.Vector;
-import ml.utils.Utils;
+import util.MLUtils;
 
 /**
  * F(x1,x2,...,xn) = 1 / ( 1 + e ^ -(dotProduct(x,coefficients))
@@ -11,14 +11,29 @@ import ml.utils.Utils;
 public class SigmoidMultivariableFunction extends DifferentiableMultivariableFunction {
 
 	
+	/** The first coefficient refers to synthetic variable x0, always equal to 1 */
+	protected double[] coefficients;
+
 	public SigmoidMultivariableFunction(double[] coefficients) {
 		this.coefficients = coefficients;
 		this.n = coefficients.length;
 	}
 	
+	public void generateRandomCoefficients(double minValue, double maxValue) {
+		coefficients = new double[n];
+		for (int i = 0; i < this.n; i++) {
+			coefficients[i] = MLUtils.randomDouble(minValue, maxValue);
+		}
+	}
+	
+	public double[] getCoefficients() {
+		return coefficients;
+	}
+
+	
 	@Override
 	public double evaluate(double... x) {
-		double[] copy = Utils.concatenate(1, x);
+		double[] copy = MLUtils.concatenate(1, x);
 		double dotProduct = new Vector(copy).dotProduct(new Vector(coefficients));
 		return 1 / (1 + Math.pow(Math.E, -dotProduct));
 	}

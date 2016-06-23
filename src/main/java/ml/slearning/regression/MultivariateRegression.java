@@ -23,9 +23,9 @@ import ml.utils.FunctionChart;
  * @author Cosmin Zamfir
  *
  */
-public class MultipleRegression {
+public class MultivariateRegression {
 
-	public PolynomialFunction compute(DataSet dataSet, int range) {
+	public PolynomialMultivariableFunction compute(DataSet dataSet, int range) {
 		Matrix X = getMatrix(dataSet, range);
 		Vector y = getYVector(dataSet);
 		Matrix Xt = X.transpose();
@@ -34,7 +34,10 @@ public class MultipleRegression {
 		Vector v = new Vector(coefficients);
 		System.out.println(X.multiplyBy(Matrix.columnMatrix(v))); //this should be closed to y vector
 		
-		return null;
+		double[][] c = new double[1][coefficients.length];
+		c[0] = coefficients;
+		PolynomialMultivariableFunction res = new PolynomialMultivariableFunction(c);
+		return res;
 	}
 
 	/** Each row of the matrix will be: 1 x1 x1^2 ... x1^n 1 x2 x2^2 ... x2^n .... */
@@ -65,8 +68,8 @@ public class MultipleRegression {
 	
 	public static void main(String[] args) {
 		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("forest_fires.csv", false);
-		PolynomialFunction f = new MultipleRegression().compute(dataSet, 3);
+		PolynomialMultivariableFunction f = new MultivariateRegression().compute(dataSet, 3);
 		System.out.println(f);
-		new FunctionChart("Regression", f,dataSet.data());
+		
 	}
 }

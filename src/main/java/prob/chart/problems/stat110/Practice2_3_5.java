@@ -1,6 +1,6 @@
 package prob.chart.problems.stat110;
 
-import ml.utils.Utils;
+import util.MLUtils;
 
 public class Practice2_3_5 extends Simulation {
 
@@ -10,33 +10,33 @@ public class Practice2_3_5 extends Simulation {
 		double winIfIntermediate = 0.5;
 		double winIfAdvanced = 0.3;
 		
-		int opponentLevel = Utils.random(3);
+		int opponentLevel = MLUtils.random(3);
 		switch (opponentLevel) {
 		case 1:
-			if(!Utils.trueWithProbability(winIfBeginner)) {
+			if(!MLUtils.trueWithProbability(winIfBeginner)) {
 				return null;
 			}
 			break;
 		case 2:
-			if(!Utils.trueWithProbability(winIfIntermediate)) {
+			if(!MLUtils.trueWithProbability(winIfIntermediate)) {
 				return null;
 			}
 		case 3:
-			if(!Utils.trueWithProbability(winIfAdvanced)) {
+			if(!MLUtils.trueWithProbability(winIfAdvanced)) {
 				return null;
 			}
 		default:
 			break;
 		}
 		
-		opponentLevel = Utils.random(3);
+		opponentLevel = MLUtils.random(3);
 		switch (opponentLevel) {
 		case 1:
-			return Utils.trueWithProbability(winIfBeginner);
+			return MLUtils.trueWithProbability(winIfBeginner);
 		case 2:
-			return Utils.trueWithProbability(winIfIntermediate);
+			return MLUtils.trueWithProbability(winIfIntermediate);
 		case 3:
-			return Utils.trueWithProbability(winIfAdvanced);
+			return MLUtils.trueWithProbability(winIfAdvanced);
 		default:
 			break;
 		}

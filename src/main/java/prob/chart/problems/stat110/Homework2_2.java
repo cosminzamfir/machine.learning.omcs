@@ -6,16 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ml.utils.Utils;
-import static ml.utils.Utils.*;
-
+import util.MLUtils;
+import static util.MLUtils.*;
 public class Homework2_2 extends Simulation {
 
 	@Override
 	protected Boolean simulate() {
-		List<Integer> list = Utils.orderedList(52);
+		List<Integer> list = MLUtils.orderedList(52);
 		Map<Integer, Integer> days = new HashMap<>();
-		List<Integer> randomChoice = Utils.randomChoice(list, 13, true);
+		List<Integer> randomChoice = MLUtils.randomChoice(list, 13, true);
 		for (Integer choice : randomChoice) {
 			days.put(choice / 13, choice);
 		}

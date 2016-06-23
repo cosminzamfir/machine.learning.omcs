@@ -3,7 +3,7 @@ package prob.distribution;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import ml.utils.Utils;
+import util.MLUtils;
 import prob.chart.DataChart;
 
 /**
@@ -65,7 +65,7 @@ public class HyperGeometricDistribution implements Distribution {
 	 * @return
 	 */
 	public BigDecimal compute(int x) {
-		BigDecimal res = Utils.chooseBD(k, x).multiply(Utils.chooseBD(N-k, smallN-x)).divide(Utils.chooseBD(N, smallN),10,RoundingMode.HALF_UP);
+		BigDecimal res = MLUtils.chooseBD(k, x).multiply(MLUtils.chooseBD(N-k, smallN-x)).divide(MLUtils.chooseBD(N, smallN),10,RoundingMode.HALF_UP);
 		return res;
 	
 	}

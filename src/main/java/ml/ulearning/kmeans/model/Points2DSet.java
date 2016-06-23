@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import ml.utils.PointsChart;
-import ml.utils.Utils;
+import util.MLUtils;
 
 /**
  * A set of 2D points
@@ -38,7 +38,7 @@ public class Points2DSet {
 	}
 
 	public List<EuclideanPoint2D> getRandomPoints(int count) {
-		return Utils.randomChoice(points, count, true);
+		return MLUtils.randomChoice(points, count, true);
 	}
 	
 	@Override

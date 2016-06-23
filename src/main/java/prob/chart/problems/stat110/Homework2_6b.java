@@ -2,23 +2,23 @@ package prob.chart.problems.stat110;
 
 import java.util.List;
 
-import ml.utils.Utils;
-import static ml.utils.Utils.*;
+import util.MLUtils;
+import static util.MLUtils.*;
 
 public class Homework2_6b extends Simulation {
 
 	@Override
 	protected Boolean simulate() {
-		List<ml.utils.Utils.Gender> genders = Utils.genders();
-		List<Integer> months = Utils.months();
+		List<util.MLUtils.Gender> genders = MLUtils.genders();
+		List<Integer> months = MLUtils.months();
 		
-		ml.utils.Utils.Gender firstChildGender = randomElement(genders);
-		int firstChildMonth = Utils.randomElement(months);
+		util.MLUtils.Gender firstChildGender = randomElement(genders);
+		int firstChildMonth = MLUtils.randomElement(months);
 		
-		ml.utils.Utils.Gender secondChildGender = randomElement(genders);
-		int secondChildMonth = Utils.randomElement(months);
+		util.MLUtils.Gender secondChildGender = randomElement(genders);
+		int secondChildMonth = MLUtils.randomElement(months);
 		
-		if((firstChildGender == ml.utils.Utils.Gender.F && firstChildMonth == 2) || (secondChildGender == ml.utils.Utils.Gender.F && secondChildMonth == 2)) {
+		if((firstChildGender == util.MLUtils.Gender.F && firstChildMonth == 2) || (secondChildGender == util.MLUtils.Gender.F && secondChildMonth == 2)) {
 			if(firstChildGender == secondChildGender) {
 				return true;
 			} else {
