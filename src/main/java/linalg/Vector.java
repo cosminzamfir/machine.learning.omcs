@@ -129,6 +129,10 @@ public class Vector {
 		return data[i];
 	}
 	
+	public void set(int i, double value) {
+		data[i] = value;
+	}
+	
 	public void normalize() {
 		double length = length();
 		for (int i = 0; i < data.length; i++) {
@@ -161,7 +165,7 @@ public class Vector {
 	
 	@Override
 	public String toString() {
-		return Matrix.columnMatrix(this).toString();
+		return Matrix.columnMatrix(this).toString(false);
 	}
 
 	public static Vector average(List<Vector> vectors) {

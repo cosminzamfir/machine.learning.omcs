@@ -2,7 +2,6 @@ package ml.model.function;
 
 import linalg.Vector;
 import ml.slearning.regression.GradientDescent;
-import util.MLUtils;
 
 /**
  * A differentiable {@link MultivariableFunction} usable in regression ( {@link GradientDescent})
@@ -10,10 +9,6 @@ import util.MLUtils;
  *
  */
 public abstract class DifferentiableMultivariableFunction  extends MultivariableFunction {
-
-	public abstract void generateRandomCoefficients(double minValue, double maxValue);
-	
-	public abstract double[] getCoefficients();
 
 
 	/**

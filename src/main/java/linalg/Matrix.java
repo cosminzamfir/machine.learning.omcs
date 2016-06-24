@@ -26,14 +26,14 @@ public class Matrix {
 		}
 		return new Matrix(data);
 	}
-	
+
 	public static Matrix emtpyMatrix() {
 		return new Matrix();
 	}
-	
+
 	public void addRow(double[] row) {
-		n=row.length;
-		double[][] newData = new double[m+1][n];
+		n = row.length;
+		double[][] newData = new double[m + 1][n];
 		for (int i = 0; i < m; i++) {
 			newData[i] = data[i];
 		}
@@ -41,7 +41,7 @@ public class Matrix {
 		data = newData;
 		m++;
 	}
-	
+
 	public static Matrix rowMatrix(Vector v) {
 		double[][] data = new double[1][v.size()];
 		for (int i = 0; i < v.size(); i++) {
@@ -49,7 +49,7 @@ public class Matrix {
 		}
 		return new Matrix(data);
 	}
-	
+
 	public static Matrix fromColumnVectors(List<Vector> vectors) {
 		int rows = vectors.get(0).size();
 		int cols = vectors.size();
@@ -62,9 +62,9 @@ public class Matrix {
 		return new Matrix(data);
 
 	}
-	
+
 	public static Matrix randomDouble(int m, int n, double minValue, double maxValue) {
-		double[][] data = new double[m][n]; 
+		double[][] data = new double[m][n];
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < data[i].length; j++) {
 				data[i][j] = MLUtils.randomDouble(minValue, maxValue);
@@ -84,7 +84,7 @@ public class Matrix {
 	}
 
 	public Matrix(double[][] array) {
-		super(); 
+		super();
 		this.data = array;
 		this.m = array.length;
 		this.n = array[0].length;
@@ -174,7 +174,7 @@ public class Matrix {
 		}
 		return res;
 	}
-	
+
 	public List<Vector> toColumnVectors() {
 		List<Vector> res = new ArrayList<>();
 		for (int i = 0; i < n; i++) {
@@ -297,6 +297,20 @@ public class Matrix {
 		return sb.toString();
 	}
 
+	public String toString(boolean newLine) {
+		int maxLength = maxLength() + 1;
+		StringBuilder sb = new StringBuilder();
+		for (double[] row : data) {
+			for (double d : row) {
+				sb.append(MLUtils.printNumber(d, maxLength));
+			}
+			if (newLine) {
+				sb.append("\n");
+			}
+		}
+		return sb.toString();
+	}
+
 	/**The max length of the string representation of all matrix elements*/
 	private int maxLength() {
 		int res = 0;
@@ -379,24 +393,24 @@ public class Matrix {
 				multiplyBy(this.transpose().multiplyBy(this).inverse()).
 				multiplyBy(this.transpose());
 	}
-	
+
 	public Matrix projectOn(Matrix hyperPlane) {
 		if (n != 1) {
 			throw new RuntimeException("Only vectors(represented as a column matrix) can be projected on a hyperplane");
 		}
 		return hyperPlane.projectionMatrix().multiplyBy(this);
 	}
-	
+
 	public Matrix divide(double divisor) {
 		double res[][] = new double[m][n];
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < data[i].length; j++) {
-				res[i][j] = data [i][j]/divisor;
+				res[i][j] = data[i][j] / divisor;
 			}
 		}
 		return new Matrix(res);
 	}
-	
+
 	public double determinant() {
 		Solver solver = new Solver();
 		Matrix U = solver.solve(this);
@@ -405,9 +419,9 @@ public class Matrix {
 			res = res * U.get(i, i);
 		}
 		return solver.getRowExchanges() % 2 == 0 ? res : -res;
-		
+
 	}
-	
+
 	public Matrix multiplyByScalar(double scalar) {
 		double[][] copy = new double[m][n];
 		for (int i = 0; i < copy.length; i++) {
@@ -416,9 +430,9 @@ public class Matrix {
 			}
 		}
 		return new Matrix(copy);
-		
+
 	}
-	
+
 	/**
 	 * The variance/covariance matrix - this Matrix instance is interpreted as: rows = observations; columns = features
 	 * @return
@@ -432,5 +446,5 @@ public class Matrix {
 		Matrix variationMatrix = Matrix.fromColumnVectors(diffs);
 		return variationMatrix.transpose().multiplyBy(variationMatrix).divide(variationMatrix.m);
 	}
-	
+
 }

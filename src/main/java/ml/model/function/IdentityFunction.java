@@ -5,16 +5,16 @@ package ml.model.function;
  * @author Cosmin Zamfir
  *
  */
-public class GammaFunction extends DifferentiableFunction {
+public class IdentityFunction extends DifferentiableFunction {
 
 	@Override
 	public double derivativeAt(double x) {
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public double evaluate(double x) {
-		return 0;
+		return x;
 	}
 
 }

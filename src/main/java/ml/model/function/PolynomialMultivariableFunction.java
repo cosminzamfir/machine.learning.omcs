@@ -55,4 +55,10 @@ public class PolynomialMultivariableFunction extends DifferentiableMultivariable
 		}
 		return sb.toString();
 	}
+
+	@Override
+	public double partialDerivativeAt(double[] x, int i) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

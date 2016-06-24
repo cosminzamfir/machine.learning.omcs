@@ -7,11 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import linalg.Vector;
-import util.MLUtils;
-
 import org.apache.log4j.Logger;
 import org.jfree.data.general.Dataset;
+
+import util.MLUtils;
 
 /**
  * A collection of {@link Observation}s
@@ -220,6 +219,10 @@ public class DataSet {
 
 	public int getWidth() {
 		return attributes.size();
+	}
+	
+	public int getHeight() {
+		return data.size();
 	}
 
 }
