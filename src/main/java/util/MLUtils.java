@@ -28,17 +28,17 @@ public class MLUtils {
 	private static NumberFormat nf4 = NumberFormat.getInstance();
 	private static NumberFormat intf = NumberFormat.getIntegerInstance();
 	private static NumberFormat nfs = new DecimalFormat("0.###E0");
-	
+
 	static {
 		nf.setMaximumFractionDigits(2);
 		nf.setMinimumFractionDigits(2);
 
 		nf6.setMaximumFractionDigits(6);
 		nf6.setMinimumFractionDigits(6);
-		
+
 		nf4.setMaximumFractionDigits(4);
 		nf4.setMinimumFractionDigits(4);
-		
+
 		intf.setGroupingUsed(true);
 	}
 
@@ -153,17 +153,19 @@ public class MLUtils {
 	}
 
 	public static String format(Object d) {
-		if(d == null) {
+		if (d == null) {
 			return "N.A.";
 		}
-		if(d instanceof Integer || d instanceof Long) {
+		if (d instanceof Integer || d instanceof Long) {
 			return intf.format(d);
 		}
-		if(d instanceof Double && (double)d>1E5) {
+		if (d instanceof Double && (double) d > 1E5) {
 			return nfs.format(d);
-		} if(d instanceof Number) {
+		}
+		if (d instanceof Number) {
 			return nf4.format(d);
-		} return d.toString();
+		}
+		return d.toString();
 	}
 
 	public static String format6(double d) {
@@ -182,7 +184,7 @@ public class MLUtils {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Given a List of probabilities summing to 1, select randomly an element index based on its probability value
 	 * <p>
@@ -195,13 +197,13 @@ public class MLUtils {
 		double sum = 0;
 		for (int i = 0; i < clone.size(); i++) {
 			sum += probs.get(i);
-			if(p < sum) {
+			if (p < sum) {
 				return i;
 			}
 		}
 		throw new RuntimeException("Assertion error. List does not sum to 1? " + probs);
 	}
-	
+
 	public static List<Double> generateList(Double startValue, Double endValue, Double step) {
 		List<Double> res = new ArrayList<>();
 		while (startValue <= endValue) {
@@ -210,7 +212,7 @@ public class MLUtils {
 		}
 		return res;
 	}
-	
+
 	public static final List<Integer> orderedList(int n) {
 		List<Integer> res = new ArrayList<>();
 		for (int i = 0; i < n; i++) {
@@ -274,7 +276,7 @@ public class MLUtils {
 		for (int i = 1; i < k; i++) {
 			res = res * (n - i);
 		}
-		return (double)res / factorial(k);
+		return (double) res / factorial(k);
 	}
 
 	public static BigDecimal chooseBD(int n, int k) {
@@ -387,7 +389,7 @@ public class MLUtils {
 	}
 
 	public static String printNumber(Number n, int length) {
-		if(Math.abs(n.doubleValue()) < 0.00001) {
+		if (Math.abs(n.doubleValue()) < 0.00001) {
 			return StringUtils.leftPad("0", length);
 		}
 		return StringUtils.leftPad(nf.format(n), length);
@@ -396,9 +398,9 @@ public class MLUtils {
 	public static enum AlignType {
 		LEFT, RIGHT, CENTER
 	}
-	
+
 	public static boolean trueWithProbability(double p) {
-		if(randomDouble(0, 1) < p) {
+		if (randomDouble(0, 1) < p) {
 			return true;
 		} else {
 			return false;
@@ -408,11 +410,11 @@ public class MLUtils {
 	public static List<Integer> months() {
 		return orderedList(12);
 	}
-	
+
 	public static double log2(double x) {
 		return Math.log(x) / Math.log(2);
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List clone(List input, int start, int end) {
 		List res = new ArrayList<>();
@@ -422,12 +424,12 @@ public class MLUtils {
 		return res;
 
 	}
-	
+
 	public static <T> String toString(double[] d) {
 		StringBuilder res = new StringBuilder("[");
 		for (int i = 0; i < d.length; i++) {
 			res.append(format(d[i]));
-			if(i < d.length -1) {
+			if (i < d.length - 1) {
 				res.append(",");
 			} else {
 				res.append("]");
@@ -435,28 +437,46 @@ public class MLUtils {
 		}
 		return res.toString();
 	}
-	
+
 	public static double[] concatenate(double d, double[] array) {
 		double[] res = new double[array.length + 1];
 		res[0] = d;
 		for (int i = 1; i < res.length; i++) {
-			res[i] = array[i-1];
+			res[i] = array[i - 1];
 		}
 		return res;
 	}
-	
+
+	public <T> List<T> intersect(List<T> l1, List<T> l2) {
+		List<T> res = new ArrayList<>();
+		for (T t1 : l1) {
+			if (l2.contains(t1)) {
+				res.add(t1);
+			}
+		}
+		return res;
+	}
+
+	/** Elements in L but not in l */
+	public <T> List<T> minus(List<T> L, List<T> l) {
+		List<T> res = new ArrayList<>();
+		for (T t : L) {
+			if(!l.contains(t)) {
+				res.add(t);
+			}
+		}
+		return res;
+	}
+
 	public static List<Gender> genders() {
 		List<Gender> res = new ArrayList<>();
 		res.add(Gender.F);
 		res.add(Gender.M);
 		return res;
 	}
-	
+
 	public enum Gender {
-		M,F;
+		M, F;
 	}
-
-	
-
 
 }
