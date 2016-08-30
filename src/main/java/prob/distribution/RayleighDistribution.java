@@ -7,13 +7,13 @@ import prob.chart.DataChart;
  * @author eh2zamf
  *
  */
-public class RayleighDensity {
+public class RayleighDistribution implements ContinousDistribution {
 
 	private ContinuousDistributionResult result;
-	private NormalDensity x;
-	private NormalDensity y;
+	private NormalDistribution x;
+	private NormalDistribution y;
 	
-	public RayleighDensity(NormalDensity x, NormalDensity y) {
+	public RayleighDistribution(NormalDistribution x, NormalDistribution y) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -36,7 +36,7 @@ public class RayleighDensity {
 	}
 
 	public static void main(String[] args) {
-		RayleighDensity dist = new RayleighDensity(new NormalDensity(0, 1), new NormalDensity(0, 1));
+		RayleighDistribution dist = new RayleighDistribution(new NormalDistribution(0, 1), new NormalDistribution(0, 1));
 		dist.simulate(1000000);
 		new DataChart("Rayleigh dist" , dist.getResult().asArray(100));
 	}

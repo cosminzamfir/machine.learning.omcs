@@ -15,7 +15,7 @@ import util.MLUtils;
  * @author eh2zamf
  *
  */
-public class ChiSquaredDensity {
+public class ChiSquaredDistribution implements ContinousDistribution {
 
 	private int N;
 	private int[] criterion1Splits = new int[2];
@@ -24,7 +24,7 @@ public class ChiSquaredDensity {
 	/**The expected number of items from Criterion1Category1 and 2 in the data sets split by Criterion2*/
 	private int[][] expectedValues;
 
-	public ChiSquaredDensity(int N, int criterion1Category1Size, int criterion1Category2Size, int... criterion2Splits) {
+	public ChiSquaredDistribution(int N, int criterion1Category1Size, int criterion1Category2Size, int... criterion2Splits) {
 		this.N = N;
 		criterion1Splits[0] = criterion1Category1Size;
 		criterion1Splits[1] = criterion1Category2Size;
@@ -90,10 +90,15 @@ public class ChiSquaredDensity {
 	public ContinuousDistributionResult getResult() {
 		return result;
 	}
+	
+	@Override
+	public double compute(double x) {
+		throw new UnsupportedOperationException("TBI");
+	}
 
 
 	public static void main(String[] args) {
-		ChiSquaredDensity d = new ChiSquaredDensity(100, 50, 50, 10, 20, 30, 40);
+		ChiSquaredDistribution d = new ChiSquaredDistribution(100, 50, 50, 10, 20, 30, 40);
 		d.simulate(1000000);
 		new DataChart("ChiSquared", d.getResult().asArray(30));
 	}

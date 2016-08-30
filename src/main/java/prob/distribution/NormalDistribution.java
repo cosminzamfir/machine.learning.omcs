@@ -19,14 +19,14 @@ import prob.chart.DataChart;
  * @author eh2zamf
  *
  */
-public class NormalDensity {
+public class NormalDistribution implements ContinousDistribution{
 
 	private ContinuousDistributionResult result;
 	private NormalFunction underlyingFunction;
 	private double miu;
 	private double sigma;
 
-	public NormalDensity(double miu, double sigma) {
+	public NormalDistribution(double miu, double sigma) {
 		super();
 		this.miu = miu;
 		this.sigma = sigma;
@@ -68,7 +68,7 @@ public class NormalDensity {
 	}
 
 	public static void main(String[] args) {
-		NormalDensity dist = new NormalDensity(2, 5);
+		NormalDistribution dist = new NormalDistribution(2, 5);
 		dist.simulate(1000000);
 		new DataChart("Normal dist" , dist.getResult().asArray(50));
 	}

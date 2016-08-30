@@ -22,8 +22,8 @@ public class ValueIteration extends Observable {
 
 	private MDP mdp;
 	private double gamma = 1;
-	private int maxIterations = 1000;
-	private double epsilon = 0.001;
+	private int maxIterations = 10000;
+	private double epsilon = 0.00001;
 	private boolean hasRun = false;
 	
 	public ValueIteration(MDP mdp) {
@@ -68,6 +68,7 @@ public class ValueIteration extends Observable {
 				notifyObservers(s);
 			}
 		} while (delta > epsilon);
+		log.info("Value iteration done in " + iteration + " iterations");
 		hasRun = true;
 	}
 

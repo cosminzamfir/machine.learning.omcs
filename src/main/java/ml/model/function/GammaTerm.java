@@ -7,7 +7,7 @@ package ml.model.function;
  * @author Cosmin Zamfir
  *
  */
-public class GammaTerm extends AbstractFunction {
+public class GammaTerm implements Function {
 
 	private double t;
 	@Override

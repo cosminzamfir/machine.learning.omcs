@@ -43,6 +43,10 @@ public class Transition {
 		return reward;
 	}
 	
+	public void setReward(double reward) {
+		this.reward = reward;
+	}
+	
 	@Override
 	public String toString() {
 		//return MessageFormat.format("{3}:{0} --({1})--> {2}", s, reward,sPrime,index);

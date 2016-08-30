@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
 public class PolicyIteration extends Observable {
 
 	private static final Logger log = Logger.getLogger(PolicyIteration.class);
-	private static final double epsilon = 0.01;
+	private static final double epsilon = 0.0001;
 	private MDP mdp;
 	private double gamma = 0.75;
 	private MDPPolicy policy;

@@ -8,13 +8,17 @@ package ml.model.function;
 public class Solver {
 
 	public double solve(Function f, double target, double error) {
+		return solve(f, target, error, 0.5);
+	}
+
+	public double solve(Function f, double target, double error, double initialGuess) {
 		double err = Double.MAX_VALUE;
-		double x0 = 0.5;
+		double x0 = initialGuess;
 
 		do {
 			double f0 = f.evaluate(x0);
 			double deltaf = target - f0;
-			double derivative = new Derivative().compute(f, x0, 0.0001);
+			double derivative = new Derivative().compute(f, x0, 0.000001);
 			double deltax = deltaf / derivative;
 			x0 = x0 + deltax;
 			err = target - f.evaluate(x0);

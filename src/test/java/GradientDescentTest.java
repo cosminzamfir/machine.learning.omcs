@@ -14,7 +14,7 @@ public class GradientDescentTest {
 		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("house_prices.txt", false);
 		DifferentiableFunction targetFunction = new IdentityFunction();
 		GradientDescent gd = new GradientDescent(targetFunction, dataSet);
-		gd.train(0.01, 20, 0.00000001);
+		gd.train(0.01, 20, 0.01);
 		System.out.println(targetFunction);
 	}
 

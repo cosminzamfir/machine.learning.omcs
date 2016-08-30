@@ -7,11 +7,15 @@ import java.io.IOException;
  * @author Cosmin Zamfir
  *
  */
-public class PolynomialFunction extends AbstractFunction {
+public class PolynomialFunction implements Function {
 
 	/** The coefficients */
 	private double[] a;
 
+	/**
+	 * First coeeficient is for x^0, the last one for x^n
+	 * @param a
+	 */
 	public PolynomialFunction(double... a) {
 		super();
 		this.a = a;
@@ -20,8 +24,6 @@ public class PolynomialFunction extends AbstractFunction {
 	@Override
 	public double evaluate(double x) {
 		double res = 0; 
-		//test
-		double sss = 1;
 		for (int i = 0; i < a.length; i++) {
 			res += a[i] * Math.pow(x, i);
 		}

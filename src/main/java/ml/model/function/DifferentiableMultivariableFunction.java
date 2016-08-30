@@ -30,6 +30,4 @@ public abstract class DifferentiableMultivariableFunction  extends Multivariable
 		return new Vector(res);
 	}
 
-
-	
 }

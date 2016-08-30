@@ -53,7 +53,7 @@ public class FunctionChart extends ApplicationFrame {
 				true, true, false
 				);
 
-		ChartUtils.configureSingleFunctionSeriesPlot(chart);
+		ChartUtils.configureAsLine(chart, 0);
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
 		setContentPane(chartPanel);

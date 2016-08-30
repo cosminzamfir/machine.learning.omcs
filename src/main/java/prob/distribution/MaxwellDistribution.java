@@ -3,20 +3,20 @@ package prob.distribution;
 import prob.chart.DataChart;
 
 /**
- * A {@link RayleighDensity} in 3 dimensions
+ * A {@link RayleighDistribution} in 3 dimensions
  * <p>
  * The density of a random variable Z wich is the the sqrt of the squared sum of 3 random variables with normal density
  * @author eh2zamf
  *
  */
-public class MaxwellDensity {
+public class MaxwellDistribution implements ContinousDistribution{
 
 	private ContinuousDistributionResult result;
-	private NormalDensity x;
-	private NormalDensity y;
-	private NormalDensity z;
+	private NormalDistribution x;
+	private NormalDistribution y;
+	private NormalDistribution z;
 	
-	public MaxwellDensity(NormalDensity x, NormalDensity y, NormalDensity z) {
+	public MaxwellDistribution(NormalDistribution x, NormalDistribution y, NormalDistribution z) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -40,7 +40,7 @@ public class MaxwellDensity {
 	}
 
 	public static void main(String[] args) {
-		MaxwellDensity dist = new MaxwellDensity(new NormalDensity(0, 1), new NormalDensity(0, 1), new NormalDensity(0, 1));
+		MaxwellDistribution dist = new MaxwellDistribution(new NormalDistribution(0, 1), new NormalDistribution(0, 1), new NormalDistribution(0, 1));
 		dist.simulate(100000);
 		new DataChart("Maxwell dist" , dist.getResult().asArray(50));
 	}

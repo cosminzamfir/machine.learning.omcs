@@ -1,5 +1,6 @@
 package ml.rl.mdp.model;
 
+import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -150,5 +151,4 @@ public class State {
 		}
 		return data.hashCode();
 	}
-
 }

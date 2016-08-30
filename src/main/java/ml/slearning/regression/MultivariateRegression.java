@@ -4,10 +4,8 @@ import linalg.Matrix;
 import linalg.Vector;
 import ml.model.DataSet;
 import ml.model.Observation;
-import ml.model.function.PolynomialFunction;
 import ml.model.function.PolynomialMultivariableFunction;
 import ml.utils.DataSetCsvParser;
-import ml.utils.FunctionChart;
 
 /**
  * Input: (x1,x2,...,xn) mapped to y's

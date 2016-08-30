@@ -20,7 +20,7 @@ import prob.chart.DataChart;
  * @author eh2zamf
  *
  */
-public class HyperGeometricDistribution implements Distribution {
+public class HyperGeometricDistribution implements DiscreteDistribution {
 
 	private int N;
 	private int k;

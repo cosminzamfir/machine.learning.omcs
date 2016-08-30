@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
  * @author Cosmin Zamfir
  *
  */
-public class GermanyIncomeTax2016 extends AbstractFunction {
+public class GermanyIncomeTax2016 implements Function {
 
 	private static final Logger log = Logger.getLogger(GermanyIncomeTax2016.class);
 	private boolean usePercent = false;
@@ -46,8 +46,8 @@ public class GermanyIncomeTax2016 extends AbstractFunction {
 			double res = new DefiniteIntegral()
 					.compute(((x) -> (lowerTax + (upperTax - lowerTax) * x /
 							(upperAmount - lowerAmount))), 0, d, 0.001);
-			//			double tax = lowerTax + (upperTax - lowerTax) * (d / (upperAmount - lowerAmount));
-			//			double res = d * tax;
+			//						double tax = lowerTax + (upperTax - lowerTax) * (d / (upperAmount - lowerAmount));
+			//						double res = d * tax;
 			
 			log.info(MessageFormat.format("{0}. Tax for {1} is {2}", TaxLevel.this, d, res));
 			return res;

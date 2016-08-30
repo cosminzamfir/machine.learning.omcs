@@ -175,6 +175,19 @@ public class Vector {
 		}
 		return res.multiply(1.0/vectors.size());
 	}
+
+	public Vector insert(int index, double value) {
+		double[] temp = new double[data.length + 1];
+		for (int i = 0; i < index; i++) {
+			temp[i] = data[i];
+		}
+		temp[index] = value;
+		for (int i = index+1; i < temp.length; i++) {
+			temp[i] = data[i-1];
+		}
+		return new Vector(temp);
+		
+	}
 	
 	
 	

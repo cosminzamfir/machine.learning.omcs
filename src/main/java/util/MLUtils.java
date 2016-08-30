@@ -1,21 +1,27 @@
 package util;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Formatter;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import ml.model.function.Function;
 import ml.ulearning.kmeans.model.EuclideanPoint2D;
 import ml.ulearning.kmeans.model.Points2DSet;
 import ml.utils.PointsChart;
@@ -25,6 +31,7 @@ import org.apache.commons.lang.StringUtils;
 public class MLUtils {
 	private static NumberFormat nf = NumberFormat.getInstance();
 	private static NumberFormat nf6 = NumberFormat.getInstance();
+	private static NumberFormat nf12 = NumberFormat.getInstance();
 	private static NumberFormat nf4 = NumberFormat.getInstance();
 	private static NumberFormat intf = NumberFormat.getIntegerInstance();
 	private static NumberFormat nfs = new DecimalFormat("0.###E0");
@@ -38,6 +45,9 @@ public class MLUtils {
 
 		nf4.setMaximumFractionDigits(4);
 		nf4.setMinimumFractionDigits(4);
+
+		nf12.setMaximumFractionDigits(12);
+		nf12.setMinimumFractionDigits(12);
 
 		intf.setGroupingUsed(true);
 	}
@@ -151,6 +161,16 @@ public class MLUtils {
 	public static <T> T randomElement(List<T> l) {
 		return l.get(random(l.size()) - 1);
 	}
+	
+	public static <T> T randomElement(List<T> l, boolean withReplacement) {
+		int i = random(l.size()) - 1;
+		T res = l.get(i);
+		if(!withReplacement) {
+			l.remove(i);
+		}
+		return res;
+	}
+
 
 	public static String format(Object d) {
 		if (d == null) {
@@ -170,6 +190,10 @@ public class MLUtils {
 
 	public static String format6(double d) {
 		return nf6.format(d);
+	}
+
+	public static String format12(double d) {
+		return nf12.format(d);
 	}
 
 	public static String format(int n) {
@@ -461,9 +485,17 @@ public class MLUtils {
 	public <T> List<T> minus(List<T> L, List<T> l) {
 		List<T> res = new ArrayList<>();
 		for (T t : L) {
-			if(!l.contains(t)) {
+			if (!l.contains(t)) {
 				res.add(t);
 			}
+		}
+		return res;
+	}
+	
+	public static List<Double> randomList(int size, double min, double max) {
+		List<Double> res = new ArrayList<>();
+		for (int i = 0; i < size; i++) {
+			res.add(randomDouble(min, max));
 		}
 		return res;
 	}
@@ -479,4 +511,68 @@ public class MLUtils {
 		M, F;
 	}
 
+	public static List<String> readFile(String string) {
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(new File(string)));
+			List<String> res = new ArrayList<>();
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				res.add(line);
+			}
+			return res;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				br.close();
+			} catch (IOException e) {
+				throw new RuntimeException("",e);
+			}
+		}
+	}
+	
+	public  static Map<Double, Double> sampleToMap(Function f, double from, double to, int samples) {
+		Map<Double, Double> res = new LinkedHashMap<>();
+		double step = (to - from) / samples;
+		for (int i = 0; i < samples; i++) {
+			res.put(from + step * i, f.evaluate(from + step * i));
+		}
+		return res;
+	}
+
+	public  static List<Double> sampleToList(Function f, double from, double to, int samples) {
+		List<Double> res = new ArrayList<>();
+		double step = (to - from) / samples;
+		for (int i = 0; i < samples; i++) {
+			res.add(f.evaluate(from + step * i));
+		}
+		return res;
+	}
+
+	public  static List<Double> noisySampleToList(Function f, double from, double to, int samples, double noise) {
+		List<Double> res = new ArrayList<>();
+		double step = (to - from) / samples;
+		for (int i = 0; i < samples; i++) {
+			double x = from + step*i;
+			double y = f.evaluate(x);
+			double gaussianNoise = new Random().nextGaussian() * noise;
+			res.add(y + gaussianNoise);
+		}
+		return res;
+	}
+	
+	public static void printF(String s, Object ... args) {
+		System.out.println(MessageFormat.format(s,args));
+	}
+	
+	public static List<Double> readFromResource(String resourceName, String separator, int index) {
+		List<Double> res = new ArrayList<>();
+		List<String> lines = FileUtils.readLines(resourceName);
+		lines.remove(0);
+		for (String line : lines) {
+			res.add(Double.valueOf(line.split(separator)[index]));
+		}
+		return res;
+	}
 }

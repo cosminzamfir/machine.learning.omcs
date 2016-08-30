@@ -7,7 +7,7 @@ package prob.distribution;
  */
 public class MultipleDistribution {
 
-	private Distribution baseDistribution;
+	private DiscreteDistribution baseDistribution;
 	private int n;
 	
 	

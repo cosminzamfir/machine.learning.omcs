@@ -59,6 +59,8 @@ public class UnivariateRegression {
 		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("house_prices.txt", false);
 		PolynomialFunction f = new UnivariateRegression().compute(dataSet, 4);
 		System.out.println(f);
+		System.out.println(f.evaluate(200000)/3600000/24);
+		
 		new FunctionChart("Regression", f,dataSet.data());
 	}
 }

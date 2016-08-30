@@ -39,14 +39,14 @@ public class PoissonDistribution {
 	}
 	
 	/**
-	 * Generate a Poisson distribution given an existing exponential distribution simulation - {@link ExponentialDensity#simulateNext()}
+	 * Generate a Poisson distribution given an existing exponential distribution simulation - {@link ExponentialDistribution#simulateNext()}
 	 * <ul>
 	 * <li> generate exponentialy random variables summing up to the unit time
 	 * <li> the number of occurences(emmission) is the number of generations above
 	 * <li> 
 	 */
 	public void simulate(int samples) {
-		ExponentialDensity expDist = new ExponentialDensity(lambda);
+		ExponentialDistribution expDist = new ExponentialDistribution(lambda);
 		for (int i = 0; i < samples; i++) {
 			int emmissionsInInterval = 0;
 			double totalTime = 0;

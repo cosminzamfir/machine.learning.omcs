@@ -33,7 +33,7 @@ public class GradientDescent {
 		super();
 		this.targetFunction = targetFunction;
 		this.dataSet = dataSet;
-		w = new Vector(MLUtils.randomArray(dataSet.getWidth()));
+		w = new Vector(MLUtils.randomArray(dataSet.getWidth() + 1)); //add the synthetic x0 = 1
 		m = dataSet.getWidth();
 		n = dataSet.getHeight();
 	}
@@ -78,19 +78,22 @@ public class GradientDescent {
 	private double runIteration(double learningRate) {
 		for (int obsIndex = 0; obsIndex < n; obsIndex++) {
 			Vector x = dataSet.getObservation(obsIndex).getVectorValues();
+			x = x.insert(0,1);
 			double dotProduct = x.dotProduct(w);
 			double yprime = targetFunction.evaluate(dotProduct);
 			double y = (double) dataSet.getTargetAttributeValue(obsIndex);
 			double dydx = targetFunction.derivativeAt(dotProduct);
 			log.debug("Computed value=" + yprime + ";Observed value=" +y + ";Weights=" + w + ";StateVector=" + x);
-			for (int attrIndex = 0; attrIndex < m; attrIndex++) {
+			for (int attrIndex = 0; attrIndex < m+1; attrIndex++) {
 				double deltawi = -1 * (yprime - y) * dydx * x.get(attrIndex) * learningRate;
 				w.set(attrIndex, w.get(attrIndex) + deltawi);
 				log.debug("deltaW" + attrIndex + "=" + deltawi);
 			}
-			log.debug("Weights=" + w);
 		}
-		return computeMeanSquareError();
+		double rmse = computeMeanSquareError();
+		log.info("Weights=" + w + "; RMSE=" + rmse);
+		return rmse;
+		
 	}
 
 	/** E = 1/2 * sum[k in trainingSet] (y' - y)^2*/

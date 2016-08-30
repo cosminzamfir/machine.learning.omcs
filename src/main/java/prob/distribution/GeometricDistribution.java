@@ -1,6 +1,6 @@
 package prob.distribution;
 
-import ml.model.function.AbstractFunction;
+import ml.model.function.Function;
 import prob.chart.DataChart;
 
 /**
@@ -68,14 +68,13 @@ public class GeometricDistribution {
 		dist.actualSimulate(100000);
 		new DataChart("Geom dist with p = " + dist.getP(), dist.getResult().asArray());
 		
-		AbstractFunction function = new AbstractFunction() {
+		new Function() {
 			
 			@Override
 			public double evaluate(double x) {
 				return dist.compute((int) x);
 			}
-		};
-		function.plot(0, 100);
+		}.plot(0, 100);
 	}
 
 }

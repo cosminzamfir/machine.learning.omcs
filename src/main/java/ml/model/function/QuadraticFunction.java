@@ -7,7 +7,7 @@ import java.io.IOException;
  * @author Cosmin Zamfir
  *
  */
-public class QuadraticFunction extends AbstractFunction {
+public class QuadraticFunction implements Function {
 
 	private double a, b, c;
 

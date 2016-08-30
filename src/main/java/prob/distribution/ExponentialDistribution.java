@@ -8,12 +8,12 @@ import prob.chart.DataChart;
  * @author eh2zamf
  *
  */
-public class ExponentialDensity {
+public class ExponentialDistribution implements ContinousDistribution {
 
 	private double lambda;
 	private ContinuousDistributionResult result = new ContinuousDistributionResult();
 
-	public ExponentialDensity(double lambda) {
+	public ExponentialDistribution(double lambda) {
 		super();
 		this.lambda = lambda;
 	}
@@ -67,7 +67,7 @@ public class ExponentialDensity {
 	}
 
 	public static void main(String[] args) {
-		ExponentialDensity dist = new ExponentialDensity(1);
+		ExponentialDistribution dist = new ExponentialDistribution(1);
 		dist.simulate(100000);
 		new DataChart("Exponential dist with lambda = " + dist.getLambda(), dist.getResult().asArray(100));
 	}
