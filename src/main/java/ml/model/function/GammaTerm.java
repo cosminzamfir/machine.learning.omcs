@@ -1,19 +1,24 @@
 package ml.model.function;
 
+import static java.lang.Math.*;
 
 /**
  * The term inside the integral expression of gamma function:
- * integral(0..infinity) [t^(x-1) * e^(-t) dt]. x is a constant, t is the variable
  * @author Cosmin Zamfir
  *
  */
 public class GammaTerm implements Function {
 
 	private double t;
+
+	public GammaTerm(double t) {
+		super();
+		this.t = t;
+	}
+
 	@Override
 	public double evaluate(double x) {
-		return 0;
+		return pow(E, -x) * pow(x, t-1);
 	}
-	
 
 }

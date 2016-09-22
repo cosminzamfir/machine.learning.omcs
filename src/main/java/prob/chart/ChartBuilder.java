@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import ml.model.function.Function;
+import ml.stat.StatUtils;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -15,6 +16,9 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import prob.distribution.ExponentialDistribution;
+import prob.distribution.NormalDistribution;
+import prob.distribution.RayleighDistribution;
 import util.IntHolder;
 import util.MLUtils;
 
@@ -50,6 +54,17 @@ public class ChartBuilder {
 		return this;
 	}
 
+	/**
+	 * Create a qqplot, set1 on the X axis, set2 on the Y axis
+	 * https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot
+	 */
+	public ChartBuilder addQuantileQuantilePlot(List<Double> set1, List<Double> set2, int quantilesNum, String title) {
+		List<Double> quantileValues1 = StatUtils.quantiles(set1, quantilesNum);
+		List<Double> quantileValues2 = StatUtils.quantiles(set2, quantilesNum);
+		add(quantileValues1, quantileValues2, title, PlotType.Scatter);
+		return this;
+	}
+
 	public ChartBuilder add(Function f, double from, double to, int samples, String seriesName, PlotType plotType) {
 		return add(MLUtils.sampleToMap(f, from, to, samples), seriesName, plotType);
 	}
@@ -60,13 +75,13 @@ public class ChartBuilder {
 		final JFreeChart chart = ChartFactory.createXYLineChart(title, xAxisTitle, yAxisTitle, data, PlotOrientation.VERTICAL, true, true, false);
 		for (int i = 0; i < plotTypes.size(); i++) {
 			PlotType plotType = plotTypes.get(i);
-			if(plotType == PlotType.Line) {
+			if (plotType == PlotType.Line) {
 				ChartUtils.configureAsLine(chart, i);
 			}
-			if(plotType == PlotType.LineWithShape) {
+			if (plotType == PlotType.LineWithShape) {
 				ChartUtils.configureAsLineShape(chart, i);
 			}
-			if(plotType == PlotType.Scatter) {
+			if (plotType == PlotType.Scatter) {
 				ChartUtils.configureAsScatter(chart, i);
 			}
 		}
@@ -78,5 +93,18 @@ public class ChartBuilder {
 		frame.pack();
 		RefineryUtilities.centerFrameOnScreen(frame);
 		frame.setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		List<Double> set1 = MLUtils.sample(new NormalDistribution(0, 1), 1000);
+		List<Double> set2 = MLUtils.sample(new NormalDistribution(0, 1), 1000);
+		List<Double> set3 = MLUtils.sample(new RayleighDistribution(new NormalDistribution(0, 1), new NormalDistribution(0, 1)), 1000);
+		List<Double> set4 = MLUtils.sample(new ExponentialDistribution(1), 1000);
+
+		new ChartBuilder("Q-Q", "set1", "set2").addQuantileQuantilePlot(set1, set2, 100, "Normal-Normal").
+			addQuantileQuantilePlot(set1, set3, 1000, "Normal-Rayliegh").
+			addQuantileQuantilePlot(set1, set4, 1000, "Normal-Exponential").
+			addQuantileQuantilePlot(set3, set4, 1000, "Rayleight-Exponential").
+			build();
 	}
 }

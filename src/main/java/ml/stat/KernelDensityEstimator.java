@@ -56,9 +56,10 @@ public class KernelDensityEstimator implements Function {
 		KernelDensityEstimator tricubeEst = new KernelDensityEstimator(data, new TricubeKernel(), bandWidth);
 		new ChartBuilder("KDE", "x", "p(x)")
 			.add(gaussianEst, -10, 10, 1000, "gaussian", PlotType.Line)
-			.add(uniformEst, -10, 10, 1000, "uniform", PlotType.Line)
-			.add(triangularEst, -10, 10, 1000, "triangular", PlotType.Line)
-			.add(tricubeEst, -10, 10, 1000, "tricube", PlotType.Line).build();
+			//.add(uniformEst, -10, 10, 1000, "uniform", PlotType.Line)
+			//.add(triangularEst, -10, 10, 1000, "triangular", PlotType.Line)
+			.add(tricubeEst, -10, 10, 1000, "tricube", PlotType.Line)
+			.build();
 	}
 	
 }

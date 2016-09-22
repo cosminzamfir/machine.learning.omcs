@@ -28,6 +28,8 @@ import ml.utils.PointsChart;
 
 import org.apache.commons.lang.StringUtils;
 
+import prob.distribution.ContinousDistribution;
+
 public class MLUtils {
 	private static NumberFormat nf = NumberFormat.getInstance();
 	private static NumberFormat nf6 = NumberFormat.getInstance();
@@ -112,6 +114,8 @@ public class MLUtils {
 		}
 		return res.toString();
 	}
+	
+	
 
 	public static String output(Object o) {
 		if (o == null) {
@@ -354,11 +358,12 @@ public class MLUtils {
 
 	public static <T> List<T> randomChoice(List<T> sampleSpace, int count, boolean replacement) {
 		List<T> res = new ArrayList<>();
+		List<T> copy = new ArrayList<>(sampleSpace);
 		for (int i = 0; i < count; i++) {
-			T elem = randomElement(sampleSpace);
+			T elem = randomElement(copy);
 			res.add(elem);
 			if (replacement) {
-				sampleSpace.remove(elem);
+				copy.remove(elem);
 			}
 		}
 		return res;
@@ -461,6 +466,26 @@ public class MLUtils {
 		}
 		return res.toString();
 	}
+
+	public static <T> String toString(List<T> l) {
+		StringBuilder res = new StringBuilder();
+		l.forEach(x -> res.append(x).append("\n"));
+		return res.toString();
+	}
+
+	public static <T> String toString(Object[] o) {
+		StringBuilder res = new StringBuilder("[");
+		for (int i = 0; i < o.length; i++) {
+			res.append(format(o[i]));
+			if (i < o.length - 1) {
+				res.append(",");
+			} else {
+				res.append("]");
+			}
+		}
+		return res.toString();
+	}
+
 
 	public static double[] concatenate(double d, double[] array) {
 		double[] res = new double[array.length + 1];
@@ -575,4 +600,41 @@ public class MLUtils {
 		}
 		return res;
 	}
+	
+	public double min(Collection<Double> coll) {
+		return coll.stream().min((x,y) -> x.compareTo(y)).get();
+	}
+
+	public double max(Collection<Double> coll) {
+		return coll.stream().max((x,y) -> x.compareTo(y)).get();
+	}
+	
+	/**
+	 * Sample from the given distribution
+	 * @return the List of sample results
+	 */
+	public static List<Double> sample(ContinousDistribution dist, int samples) {
+		dist.simulate(samples);
+		return dist.getResult().asList();
+	}
+
+	public static Object[] removeIndex(Object[] o, int marginalizedIdx) {
+		Object[] res = new Object[o.length -1];
+		for (int i = 0; i < marginalizedIdx; i++) {
+			res[i] = o[i];
+		}
+		for (int i = marginalizedIdx + 1; i < o.length; i++) {
+			res[i-1] = o[i];
+		}
+		return res;
+	}
+	
+	public static <T> List<T> asList(T[] array) {
+		List<T> res = new ArrayList<>();
+		for (int i = 0; i < array.length; i++) {
+			res.add(array[i]);
+		}
+		return res;
+	}
+
 }

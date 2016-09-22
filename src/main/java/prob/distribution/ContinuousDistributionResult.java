@@ -55,6 +55,10 @@ public class ContinuousDistributionResult {
 	public int n() {
 		return outcomes.size();
 	}
+	
+	public List<Double> asList() {
+		return outcomes;
+	}
 
 	@Override
 	public String toString() {

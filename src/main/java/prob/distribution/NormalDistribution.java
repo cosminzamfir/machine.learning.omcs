@@ -19,7 +19,7 @@ import prob.chart.DataChart;
  * @author eh2zamf
  *
  */
-public class NormalDistribution implements ContinousDistribution{
+public class NormalDistribution implements ContinousDistribution {
 
 	private ContinuousDistributionResult result;
 	private NormalFunction underlyingFunction;
