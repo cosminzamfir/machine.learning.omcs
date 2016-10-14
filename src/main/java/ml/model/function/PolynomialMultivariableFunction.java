@@ -10,13 +10,16 @@ public class PolynomialMultivariableFunction extends DifferentiableMultivariable
 
 	/** The free coeficient */
 	private double c;
-	/** The coefficients of xi  
-	 * a[0] is the grade 1 coefficient array 
-	 * a[n] is the grade n-1 coefficient array
+	/** The coefficients   
+	 * a[i] represents the coefficients for the xi 
 	 * */
 	private double[][] a;
 
-	public PolynomialMultivariableFunction(double[][] a) {
+	/** 
+	 * @param c the free coeficient
+	 * @param a a[i] are the coefficients of xi
+	 */
+	public PolynomialMultivariableFunction(double c, double[][] a) {
 		super();
 		this.a = a;
 	}
@@ -28,10 +31,10 @@ public class PolynomialMultivariableFunction extends DifferentiableMultivariable
 			double x = xs[i];
 			double[] coefficients = a[i];
 			for (int j = 0; j < coefficients.length; j++) {
-				res = res + coefficients[j]*Math.pow(x, j);
+				res = res + coefficients[j]*Math.pow(x, (j+1));
 			}
 		}
-		return res;
+		return res + c;
 	}
 
 	@Override
@@ -41,13 +44,10 @@ public class PolynomialMultivariableFunction extends DifferentiableMultivariable
 			for (int j = 0; j < a[i].length; j++) {
 				if(a[i][j] != 0) {
 					if(j == 0) {
-						sb.append(" + " + a[i][j]);
+						sb.append(" + " + a[i][j] + "*x" + (i+1));
 					}
-					if(j == 1) {
-						sb.append(" + " + a[i][j] + "*x" + i);
-					}
-					if(j > 1) {
-						sb.append(" + " + a[i][j] + "*x" + (i+1) + "^" + j);
+					if(j > 0) {
+						sb.append(" + " + a[i][j] + "*x" + (i+1) + "^" + (j+1));
 					}
 
 				}

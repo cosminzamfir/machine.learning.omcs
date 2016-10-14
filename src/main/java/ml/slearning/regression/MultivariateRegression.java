@@ -34,7 +34,7 @@ public class MultivariateRegression {
 		
 		double[][] c = new double[1][coefficients.length];
 		c[0] = coefficients;
-		PolynomialMultivariableFunction res = new PolynomialMultivariableFunction(c);
+		PolynomialMultivariableFunction res = new PolynomialMultivariableFunction(0,c);
 		return res;
 	}
 

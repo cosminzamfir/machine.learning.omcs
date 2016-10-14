@@ -44,18 +44,13 @@ public class DataSetCsvParser {
 		for (String line : lines) {
 			String[] tokens = line.split(",");
 			if (!numeric) {
-				String[] values = new String[tokens.length - 1];
-				for (int i = 0; i < values.length; i++) {
-					values[i] = tokens[i];
-				}
-				String targetAttributeValue = tokens[tokens.length - 1];
-				instances.add(new Observation(targetAttributeValue, values));
+				throw new RuntimeException("Only numerical data sets supported");
 			} else {
-				Double[] values = new Double[tokens.length - 1];
+				double[] values = new double[tokens.length - 1];
 				for (int i = 0; i < values.length; i++) {
 					values[i] = Double.valueOf(tokens[i]);
 				}
-				Double targetAttributeValue = Double.valueOf(tokens[tokens.length - 1]);
+				double targetAttributeValue = Double.valueOf(tokens[tokens.length - 1]);
 				instances.add(new Observation(targetAttributeValue, values));
 			}
 		}

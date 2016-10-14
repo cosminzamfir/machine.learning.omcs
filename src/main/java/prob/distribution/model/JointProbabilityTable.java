@@ -14,9 +14,10 @@ import java.util.TreeMap;
 import util.MLUtils;
 
 /**
- * Store joint RV probabilities
- * Notation: rv - a single random variable
- * jrv or rvs - a joint random variable - list a sinble random variable
+ * Store joint RV probabilities (1+ random variables)
+ * <p>Notation: 
+ * <p>rv - a single random variable
+ * <p> jrv or rvs - a joint random variable - list a single random variable
  * @author Cosmin Zamfir
  *
  */
@@ -52,12 +53,18 @@ public class JointProbabilityTable {
 		this(asList(rvNames));
 	}
 
+	public JointProbabilityTable(JointProbabilityTable source) {
+		this.rvs = source.rvs;
+		this.rvValues = source.rvValues;
+	}
+	
 	public JointProbabilityTable(List<String> rvNames) {
 		this.rvs = rvNames;
 		for (String rvName : rvNames) {
 			rvValues.put(rvName, new HashSet<>());
 		}
 	}
+
 
 	public JointProbabilityTable add(double p, Object... values) {
 		return this.add(p, asList(values));
@@ -217,6 +224,14 @@ public class JointProbabilityTable {
 
 	private String getDescr() {
 		return descr;
+	}
+	
+	public List<String> getRvs() {
+		return rvs;
+	}
+	
+	public Map<String, Set<Object>> getRvValues() {
+		return rvValues;
 	}
 
 	private void addConditionedDescr(String rv, Object value) {

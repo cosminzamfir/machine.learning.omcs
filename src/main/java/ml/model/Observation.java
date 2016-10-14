@@ -1,5 +1,6 @@
 package ml.model;
 
+import util.MLUtils;
 import linalg.Vector;
 
 
@@ -10,52 +11,59 @@ import linalg.Vector;
  */
 public class Observation {
 
-	private Object[] values;
-	private Object targetAttributeValue;
+	private double[] values;
+	private double targetAttributeValue;
 
-	public Observation(Object targetAttributeValue, Object ... values) {
+	public Observation(double targetAttributeValue, double ... values) {
 		super();
 		this.values = values;
 		this.targetAttributeValue = targetAttributeValue;
 	}
 	
-	public Object getTargetAttributeValue() {
+	public double getTargetAttributeValue() {
 		return targetAttributeValue;
 	}
 	
-	public Object[] getValues() {
+	public void setTargetAttributeValue(double targetAttributeValue) {
+		this.targetAttributeValue = targetAttributeValue;
+	}
+	
+	public double[] getValues() {
 		return values;
 	}
 	
-	public Object getValue(Attribute attribute) {
+	public double getValue(Attribute attribute) {
 		return values[attribute.getIndex()];
 	}
 	
 	/**
 	 * The numeric values in this numeric observation 
 	 */
-	public Vector getVectorValues() {
+	public Vector getVectorValues(boolean addBiasTerm) {
 		double[] res = new double[getValues().length ];
 		for (int i = 0; i < getValues().length; i++) {
 			res[i] = (double) getValues()[i];
 		}
+		if(addBiasTerm) {
+			res = MLUtils.insert(1,res);
+		}
 		return new Vector(res);
 	}
-
+	
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
-		for (Object value : values) {
+		for (double value : values) {
 			if (!first) {
-				sb.append("-");
+				sb.append(":");
 			}
 			first = false;
-			sb.append(value);
+			sb.append(MLUtils.format(value));
 		}
-		sb.append("::");
-		sb.append(targetAttributeValue);
+		sb.append("#");
+		sb.append(MLUtils.format(targetAttributeValue));
 		return sb.toString();
 	}
 

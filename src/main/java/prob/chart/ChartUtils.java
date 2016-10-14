@@ -72,4 +72,11 @@ public class ChartUtils {
 		legend.setBackgroundPaint(Color.lightGray);
 	}
 
+	public static void setColor(JFreeChart chart, int index, Color color) {
+		XYPlot plot = chart.getXYPlot();
+		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+		renderer.setSeriesShapesVisible(index, true);
+		renderer.setSeriesFillPaint(index, color);
+	}
+
 }

@@ -36,7 +36,8 @@ public class MLUtils {
 	private static NumberFormat nf12 = NumberFormat.getInstance();
 	private static NumberFormat nf4 = NumberFormat.getInstance();
 	private static NumberFormat intf = NumberFormat.getIntegerInstance();
-	private static NumberFormat nfs = new DecimalFormat("0.###E0");
+	private static NumberFormat nfScientific = new DecimalFormat("0.###E0");
+	private static NumberFormat nf6_2 = NumberFormat.getInstance();
 
 	static {
 		nf.setMaximumFractionDigits(2);
@@ -52,6 +53,12 @@ public class MLUtils {
 		nf12.setMinimumFractionDigits(12);
 
 		intf.setGroupingUsed(true);
+		
+		nf6_2.setMinimumIntegerDigits(6);
+		nf6_2.setMaximumIntegerDigits(6);
+		nf6_2.setMaximumFractionDigits(2);
+		nf6_2.setMinimumFractionDigits(2);
+		
 	}
 
 	private static NumberFormat integerf = NumberFormat.getInstance();
@@ -184,7 +191,7 @@ public class MLUtils {
 			return intf.format(d);
 		}
 		if (d instanceof Double && (double) d > 1E5) {
-			return nfs.format(d);
+			return nfScientific.format(d);
 		}
 		if (d instanceof Number) {
 			return nf4.format(d);
@@ -198,6 +205,10 @@ public class MLUtils {
 
 	public static String format12(double d) {
 		return nf12.format(d);
+	}
+	
+	public static String format6_2(double d) {
+		return nf6_2.format(d);
 	}
 
 	public static String format(int n) {
@@ -637,4 +648,20 @@ public class MLUtils {
 		return res;
 	}
 
+	public static double[] insert(int i, double[] a) {
+		double[] res = new double[a.length + 1];
+		res[0] = 1;
+		for (int j = 1; j < res.length; j++) {
+			res[j] = a[j-1];
+		}
+		return res;
+	}
+
+	public static double[] randomArray(int n, double min, double max) {
+		double[] res = new double[n];
+		for (int i = 0; i < res.length; i++) {
+			res[i] = randomDouble(min, max);
+		}
+		return res;
+	}
 }

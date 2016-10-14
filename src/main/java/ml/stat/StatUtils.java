@@ -1,21 +1,19 @@
 package ml.stat;
 
+
 import static util.MLUtils.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Formatter;
 import java.util.List;
-
-import org.apache.log4j.Logger;
 
 import ml.model.function.Function;
 import ml.model.function.NormalFunction;
 import ml.model.function.PolynomialFunction;
 import ml.model.function.Solver;
-import prob.chart.ChartBuilder;
-import prob.chart.PlotType;
-import prob.chart.ScatterChart;
+
+import org.apache.log4j.Logger;
+
 import util.DoubleHolder;
 import util.MLUtils;
 

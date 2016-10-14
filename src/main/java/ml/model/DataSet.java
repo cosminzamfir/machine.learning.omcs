@@ -21,20 +21,40 @@ public class DataSet {
 
 	private static final Logger log = Logger.getLogger(Dataset.class);
 
-	private List<Observation> data;
-	private List<Attribute> attributes;
+	private List<Observation> data = new ArrayList<Observation>();;
+	private List<Attribute> attributes = new ArrayList<>();
 	private Attribute targetAttribute;
 	/** Map each {@link #targetAttribute} value to the list of Observations having this targetAttribute value */
-	private Map<Object, List<Observation>> categoriesMapping;
+	private Map<Double, List<Observation>> categoriesMapping;
+
+	
+	public DataSet(int width) {
+		super();
+		initAttributes(width);
+	}
 
 	public DataSet(List<Attribute> attributes, List<Observation> observations, Attribute targetAttribute) {
 		super();
 		this.data = observations;
 		this.attributes = attributes;
 		this.targetAttribute = targetAttribute;
-		buildTargetAttributes();
+		buildCategories();
 		setAttributesPossibleValues();
 		setTargetAttributePossibleValues();
+	}
+	
+
+	private void initAttributes(int width) {
+		for (int i = 1; i <= width; i++) {
+			attributes.add(new Attribute("x" + i, Double.class, 0));
+		}
+	}
+
+	
+	public DataSet add(double y, double ...x) {
+		Observation o = new Observation(y, x);
+		data.add(o);
+		return this;
 	}
 
 	private void setTargetAttributePossibleValues() {
@@ -51,10 +71,10 @@ public class DataSet {
 		}
 	}
 
-	private void buildTargetAttributes() {
-		categoriesMapping = new HashMap<Object, List<Observation>>();
+	private void buildCategories() {
+		categoriesMapping = new HashMap<Double, List<Observation>>();
 		for (Observation observatation : data) {
-			Object targetAttributeValue = observatation.getTargetAttributeValue();
+			double targetAttributeValue = observatation.getTargetAttributeValue();
 			List<Observation> l = categoriesMapping.get(targetAttributeValue);
 			if (l == null) {
 				l = new ArrayList<>();
@@ -81,10 +101,10 @@ public class DataSet {
 	}
 
 	/** @return the percentage of Observations having the given targetAttributeValue */
-	public double probability(Object targetAttributeValue) {
+	public double probability(double targetAttributeValue) {
 		int res = 0;
 		for (Observation observation : data) {
-			if (observation.getTargetAttributeValue().equals(targetAttributeValue)) {
+			if (observation.getTargetAttributeValue() == targetAttributeValue) {
 				res++;
 			}
 		}
@@ -92,22 +112,25 @@ public class DataSet {
 	}
 
 	/** @return the probabilty of having the specified targetAttributeValue, given that it has the specified value for the specified Attribute */
-	public double conditionalProbability(Attribute attribute, Object value, Object targetAttributeValue) {
+	public double conditionalProbability(Attribute attribute, double value, double targetAttributeValue) {
 		List<Observation> candidates = categoriesMapping.get(targetAttributeValue);
 		int res = 0;
 		for (Observation example : candidates) {
-			if (example.getValue(attribute).equals(value)) {
+			if (example.getValue(attribute)== value) {
 				res++;
 			}
 		}
 		return res / (double) candidates.size();
 	}
 
-	public Set<Object> getCategories() {
+	public Set<Double> getCategories() {
 		return categoriesMapping.keySet();
 	}
 
-	public Map<Object, List<Observation>> getCategoriesMapping() {
+	public Map<Double, List<Observation>> getCategoriesMapping() {
+		if(categoriesMapping == null) {
+			buildCategories();
+		}
 		return categoriesMapping;
 	}
 
@@ -124,7 +147,7 @@ public class DataSet {
 			dataSet.add(instance);
 		}
 		for (DataSet dataSet : res.values()) {
-			dataSet.buildTargetAttributes();
+			dataSet.buildCategories();
 		}
 		return res;
 	}

@@ -14,7 +14,7 @@ public class SigmoidMultivariableFunction extends DifferentiableMultivariableFun
 	/** The first coefficient refers to synthetic variable x0, always equal to 1 */
 	protected double[] coefficients;
 
-	public SigmoidMultivariableFunction(double[] coefficients) {
+	public SigmoidMultivariableFunction(double... coefficients) {
 		this.coefficients = coefficients;
 		this.n = coefficients.length;
 	}

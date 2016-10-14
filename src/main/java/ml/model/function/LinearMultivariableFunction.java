@@ -13,14 +13,17 @@ public class LinearMultivariableFunction extends DifferentiableMultivariableFunc
 	/** The first coefficient refers to synthetic variable x0, always equal to 1 */
 	protected double[] coefficients;
 
-	public LinearMultivariableFunction(double[] coefficients) {
+	public LinearMultivariableFunction(double... coefficients) {
 		this.coefficients = coefficients;
 		this.n = coefficients.length;
 	}
 
 	@Override
 	public double evaluate(double... x) {
-		double[] copy = MLUtils.concatenate(1, x);
+		double[] copy = x;
+		if (coefficients.length == x.length + 1) {
+			copy = MLUtils.concatenate(1, x);
+		}
 		return new Vector(copy).dotProduct(new Vector(coefficients));
 	}
 
@@ -50,12 +53,8 @@ public class LinearMultivariableFunction extends DifferentiableMultivariableFunc
 			if (coefficients[i] != 0) {
 				if (i == 0) {
 					sb.append(" + " + coefficients[i]);
-				}
-				if (i == 1) {
+				} else {
 					sb.append(" + " + coefficients[i] + "*x" + i);
-				}
-				if (i > 1) {
-					sb.append(" + " + coefficients[i] + "*x" + (i + 1) + "^" + i);
 				}
 
 			}

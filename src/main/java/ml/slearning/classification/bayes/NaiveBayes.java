@@ -48,10 +48,10 @@ public class NaiveBayes {
 	}
 
 	public Object predict(Observation example) {
-		Collection<Object> candidates = dataSet.getCategories();
+		Collection<Double> candidates = dataSet.getCategories();
 		double p = 0;
 		Object res = null;
-		for (Object candidate : candidates) {
+		for (double candidate : candidates) {
 			double cp = dataSet.probability(candidate);
 			for (int i=0; i<dataSet.getAttributes().size(); i++) {
 				Attribute feature = dataSet.getAttributes().get(i);

@@ -77,8 +77,7 @@ public class GradientDescent {
 	 */
 	private double runIteration(double learningRate) {
 		for (int obsIndex = 0; obsIndex < n; obsIndex++) {
-			Vector x = dataSet.getObservation(obsIndex).getVectorValues();
-			x = x.insert(0,1);
+			Vector x = dataSet.getObservation(obsIndex).getVectorValues(true);
 			double dotProduct = x.dotProduct(w);
 			double yprime = targetFunction.evaluate(dotProduct);
 			double y = (double) dataSet.getTargetAttributeValue(obsIndex);
@@ -100,7 +99,7 @@ public class GradientDescent {
 	private double computeMeanSquareError() {
 		double res = 0;
 		for (int i = 0; i < n; i++) {
-			res += computeMeanSquareError(targetFunction.evaluate(dataSet.getObservation(i).getVectorValues().dotProduct(w)),
+			res += computeMeanSquareError(targetFunction.evaluate(dataSet.getObservation(i).getVectorValues(true).dotProduct(w)),
 					(double) dataSet.getTargetAttributeValue(i));
 		}
 		return res / 2;

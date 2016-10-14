@@ -43,7 +43,7 @@ public class Id3 {
 	private Id3Node run(DataSet dataSet, List<Attribute> attributes) {
 		log.debug("Run for " + dataSet.sumary() + " and attributes: " + attributes);
 		Id3Node res = new Id3Node();
-		Set<Object> categories = dataSet.getCategories();
+		Set<Double> categories = dataSet.getCategories();
 		if (categories.size() == 1) {
 			res.setLabel(categories.iterator().next());
 			log.debug("Found one category: " + categories + ". Setting the label: " + res.getLabel());

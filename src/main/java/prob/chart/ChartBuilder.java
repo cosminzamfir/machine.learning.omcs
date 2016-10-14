@@ -1,9 +1,14 @@
 package prob.chart;
 
+import java.awt.Color;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import ml.model.DataSet;
+import ml.model.Observation;
 import ml.model.function.Function;
 import ml.stat.StatUtils;
 
@@ -22,13 +27,26 @@ import prob.distribution.RayleighDistribution;
 import util.IntHolder;
 import util.MLUtils;
 
+import static java.awt.Color.*;
+
 public class ChartBuilder {
 
+	List<Color> allColors = Arrays.asList(BLUE, MAGENTA, GREEN, BLACK, RED, YELLOW);
 	String title;
 	String xAxisTitle;
 	String yAxisTitle;
 	private List<XYSeries> dataSets = new ArrayList<XYSeries>();
 	private List<PlotType> plotTypes = new ArrayList<PlotType>();
+	private List<Color> colors = new ArrayList<>();
+
+	public ChartBuilder() {
+		this("Chart", "x", "y");
+	}
+	
+	public ChartBuilder(String title) {
+		this(title, "x", "y");
+	}
+
 
 	public ChartBuilder(String title, String xAxisTitle, String yAxisTitle) {
 		super();
@@ -68,6 +86,21 @@ public class ChartBuilder {
 	public ChartBuilder add(Function f, double from, double to, int samples, String seriesName, PlotType plotType) {
 		return add(MLUtils.sampleToMap(f, from, to, samples), seriesName, plotType);
 	}
+	
+	/** Create a point chart, using 2 features of the data set specified by xInd and yInd, colored based on the classification */
+	public ChartBuilder add(DataSet ds, int xInd, int yInd ) {
+		Map<Double, List<Observation>> mapping = ds.getCategoriesMapping();
+		int index = 0;
+		for (Double category : mapping.keySet()) {
+			final XYSeries series = new XYSeries(String.valueOf(category));
+			mapping.get(category).forEach((obs) -> series.add(obs.getValues()[xInd], obs.getValues()[yInd]));
+			dataSets.add(series);
+			plotTypes.add(PlotType.Scatter);
+			colors.add(allColors.get(index++));
+		}
+		return this;
+	}
+
 
 	public void build() {
 		final XYSeriesCollection data = new XYSeriesCollection();
@@ -83,6 +116,9 @@ public class ChartBuilder {
 			}
 			if (plotType == PlotType.Scatter) {
 				ChartUtils.configureAsScatter(chart, i);
+			}
+			if(!colors.isEmpty()) {
+				ChartUtils.setColor(chart, i, colors.get(i));
 			}
 		}
 
