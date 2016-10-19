@@ -42,6 +42,9 @@ public class DataSetCsvParser {
 			Collections.shuffle(lines);
 		}
 		for (String line : lines) {
+			if(line.contains("NA")) {
+				continue;
+			}
 			String[] tokens = line.split(",");
 			if (!numeric) {
 				throw new RuntimeException("Only numerical data sets supported");
@@ -57,4 +60,8 @@ public class DataSetCsvParser {
 		return new DataSet(attributes, instances, targetAttribute);
 	}
 
+
+	public static void main(String[] args) {
+		new DataSetCsvParser().parseNumericDataSet("bc.txt", false);
+	}
 }

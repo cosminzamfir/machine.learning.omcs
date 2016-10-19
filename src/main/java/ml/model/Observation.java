@@ -50,6 +50,10 @@ public class Observation {
 		return new Vector(res);
 	}
 	
+	public void removeValue(int index) {
+		this.values = MLUtils.removeIndex(values, index);
+	}
+	
 	
 	@Override
 	public String toString() {
@@ -66,5 +70,7 @@ public class Observation {
 		sb.append(MLUtils.format(targetAttributeValue));
 		return sb.toString();
 	}
+	
+	
 
 }

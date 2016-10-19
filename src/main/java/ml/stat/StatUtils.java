@@ -47,6 +47,7 @@ public class StatUtils {
 		return res;
 	}
 
+
 	private static double dotProduct(List<Double> l1, List<Double> l2) {
 		double res = 0;
 		for (int i = 0; i < l1.size(); i++) {

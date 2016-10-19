@@ -2,14 +2,17 @@ package prob.distribution.model;
 
 import static util.MLUtils.*;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+
+import org.apache.log4j.Logger;
 
 import util.MLUtils;
 
@@ -23,6 +26,7 @@ import util.MLUtils;
  */
 public class JointProbabilityTable {
 
+	private static final Logger log = Logger.getLogger(JointProbabilityTable.class);
 	/** The random variable names */
 	private List<String> rvs;
 
@@ -61,7 +65,7 @@ public class JointProbabilityTable {
 	public JointProbabilityTable(List<String> rvNames) {
 		this.rvs = rvNames;
 		for (String rvName : rvNames) {
-			rvValues.put(rvName, new HashSet<>());
+			rvValues.put(rvName, new LinkedHashSet());
 		}
 	}
 
@@ -82,7 +86,9 @@ public class JointProbabilityTable {
 	}
 
 	/**
-	 * @param values the array of values of the joint random variable. The array elements can be:
+	 * @param values the array of values of the joint random variable. 
+	 * There must be an element in the list for each rv 
+	 * The array elements can be:
 	 * <ul> 
 	 * <li> Single values - exact match
 	 * <li> Collection of values - rv value must belong to the collection
@@ -105,6 +111,30 @@ public class JointProbabilityTable {
 			}
 		}
 		return res;
+	}
+	
+	/**
+	 * @param pair of rvName - rvValue for the desired randomVariable 
+	 * </ul>
+	 * @return
+	 */
+	public double shortP(Object... o) {
+		List<String> argsRvs = new ArrayList<>();
+		List<Object> argsValues = new ArrayList<>();
+		for (int i = 0; i < o.length; i=i+2) {
+			argsRvs.add((String) o[i]);
+			argsValues.add(o[i+1]);
+		}
+		Object[] args = new Object[getRvs().size()];
+		int index = 0;
+		for (int i = 0; i < args.length; i++) {
+			if(argsRvs.contains(getRvs().get(i))) {
+				args[i] = argsValues.get(index++);
+			} else {
+				args[i] = null;
+			}
+		}
+		return p(args);
 	}
 
 	/**
@@ -147,7 +177,7 @@ public class JointProbabilityTable {
 		}
 		return res.normalize();
 	}
-
+	
 	public JointProbabilityTable normalize() {
 		probTable.keySet().forEach(rvValue -> probTable.put(rvValue, probTable.get(rvValue) / total));
 		total = 1;
@@ -240,5 +270,45 @@ public class JointProbabilityTable {
 		} else {
 			setDescr(descr + "; " + rv + " = " + value);
 		}
+	}
+	
+	/**
+	 * Check that P(rv1=x1)*P(rv2=x2) = P(rv1=x1 ^ rv2=x2) for all values x1 and x2 of rv1 and rv2 respectively
+	 * @param rv1
+	 * @param rv2
+	 * @return
+	 */
+	public boolean isIndependent(String rv1, String rv2) {
+		Set<Object> vals1 = getRvValues(rv1);
+		Set<Object> vals2 = getRvValues(rv2);
+		for (Object val1 : vals1) {
+			for(Object val2: vals2) {
+				double p1 = shortP(rv1,val1);
+				double p2 = shortP(rv2,val2);
+				double p = shortP(rv1,val1,rv2,val2); 
+				
+				if(MLUtils.effectiveEquals(p1*p2, p)) {
+					log.debug(MessageFormat.format("P({0}={1}) * P({2}={3}) = the joint probability: {4}. OK  ", rv1, val1, rv2, val2, p));
+				} else {
+					log.debug(MessageFormat.format("P({0}={1}) * P({2}={3}) != the joint probability: {4}. Not independent  ", rv1, val1, rv2, val2, p));
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean isIndependent(String rv1, String rv2, String... givenRv) {
+		List<JointProbabilityTable> l = slice(givenRv);
+		for (JointProbabilityTable t : l) {
+			if(!t.isIndependent(rv1, rv2)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public Set<Object> getRvValues(String rv) {
+		return getRvValues().get(rv);
 	}
 }

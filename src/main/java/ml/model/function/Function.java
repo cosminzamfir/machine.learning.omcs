@@ -7,6 +7,7 @@ import ml.utils.FunctionChart;
  * @author Cosmin Zamfir
  *
  */
+@FunctionalInterface
 public interface Function {
 
 	double evaluate(double x);

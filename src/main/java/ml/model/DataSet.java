@@ -1,11 +1,15 @@
 package ml.model;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import ml.stat.StatUtils;
 
 import org.apache.log4j.Logger;
 import org.jfree.data.general.Dataset;
@@ -38,9 +42,9 @@ public class DataSet {
 		this.data = observations;
 		this.attributes = attributes;
 		this.targetAttribute = targetAttribute;
-		buildCategories();
-		setAttributesPossibleValues();
-		setTargetAttributePossibleValues();
+		buildCategortMappings();
+		setAttributesRange();
+		setTargetAttributeRange();
 	}
 	
 
@@ -57,13 +61,13 @@ public class DataSet {
 		return this;
 	}
 
-	private void setTargetAttributePossibleValues() {
+	private void setTargetAttributeRange() {
 		for (Observation instance : data) {
 			targetAttribute.addPossibleValue(instance.getTargetAttributeValue());
 		}
 	}
 
-	private void setAttributesPossibleValues() {
+	private void setAttributesRange() {
 		for (Attribute attribute : attributes) {
 			for (Observation instance : data) {
 				attribute.addPossibleValue(instance.getValue(attribute));
@@ -71,7 +75,7 @@ public class DataSet {
 		}
 	}
 
-	private void buildCategories() {
+	private void buildCategortMappings() {
 		categoriesMapping = new HashMap<Double, List<Observation>>();
 		for (Observation observatation : data) {
 			double targetAttributeValue = observatation.getTargetAttributeValue();
@@ -129,7 +133,7 @@ public class DataSet {
 
 	public Map<Double, List<Observation>> getCategoriesMapping() {
 		if(categoriesMapping == null) {
-			buildCategories();
+			buildCategortMappings();
 		}
 		return categoriesMapping;
 	}
@@ -147,7 +151,7 @@ public class DataSet {
 			dataSet.add(instance);
 		}
 		for (DataSet dataSet : res.values()) {
-			dataSet.buildCategories();
+			dataSet.buildCategortMappings();
 		}
 		return res;
 	}
@@ -162,6 +166,7 @@ public class DataSet {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(MessageFormat.format("{0} observations and {1} features", data.size(), getWidth())).append("\n");
 		for (Observation example : data) {
 			sb.append(example).append("\n");
 		}
@@ -247,5 +252,51 @@ public class DataSet {
 	public int getHeight() {
 		return data.size();
 	}
+	
+	public void removeFeature(int index) {
+		attributes.remove(index);
+		data.forEach(obs -> obs.removeValue(index));
+	}
+	
+	/**
+	 * Transform each column into standard units, i.e. mean=0 and std=1: col(i) = [col(i) - mean(col)] / std(col)
+	 * 
+	 */
+	public void standardize() {
+		for (int i = 0; i < attributes.size(); i++) {
+			List<Double> l1	 = getColumn(i);
+			List<Double> l2 = StatUtils.asStandardUnits(l1);
+			setColumn(i,l2);
+		}
+	}
+	
+	private void setColumn(int index, List<Double> l) {
+		for (int i = 0; i < l.size(); i++) {
+			data.get(i).getValues()[index] = l.get(i);
+		}
+	}
 
+	private List<Double> getColumn(int i) {
+		List<Double> res = new ArrayList<>();
+		data.forEach(obs -> res.add(obs.getValues()[i]));
+		return res;
+	}
+	
+	public void shuffle() {
+		Collections.shuffle(data);
+	}
+	
+	public List<DataSet> partition(double trainingSetPercentage, boolean shuffle) {
+		if(shuffle) {
+			shuffle();
+		}
+		List<DataSet> res = new ArrayList<>();
+		int i = (int) (data.size() * trainingSetPercentage);
+		List<Observation> l1 = data.subList(0, i);
+		List<Observation> l2 = data.subList(i, data.size() - 1);
+		res.add(new DataSet(attributes, l1, targetAttribute));
+		res.add(new DataSet(attributes, l2, targetAttribute));
+		return res;
+	}
+	
 }

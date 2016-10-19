@@ -1,7 +1,5 @@
 package ml.prob.model;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.junit.Assert;
@@ -9,7 +7,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import prob.distribution.model.JointProbabilityTable;
-import util.MLUtils;
 
 public class JointProbabilityTableTest {
 
@@ -71,6 +68,31 @@ public class JointProbabilityTableTest {
 		System.out.println(pt.normalize());
 		System.out.println(pt.marginalize("y"));
 		System.out.println(pt.marginalize("x"));
+	}
+
+	@Test
+	public void testShortP() throws Exception {
+		JointProbabilityTable pt = new JointProbabilityTable("x", "y");
+		pt.add(0.25, 0, 0).add(0.25, 0, 1).add(0.25, 1, 0).add(0.25, 1, 1);
+		Assert.assertEquals(0.5, pt.shortP("x", 0), 0.01);
+		Assert.assertEquals(0.5, pt.shortP("x", 1), 0.01);
+		Assert.assertEquals(0.5, pt.shortP("y", 0), 0.01);
+		Assert.assertEquals(0.5, pt.shortP("y", 1), 0.01);
+		Assert.assertEquals(0.25, pt.shortP("x", 1, "y", 0), 0.01);
+	}
+
+	@Test
+	public void testInindependent1() throws Exception {
+		JointProbabilityTable pt = new JointProbabilityTable("x", "y");
+		pt.add(0.25, 0, 0).add(0.25, 0, 1).add(0.25, 1, 0).add(0.25, 1, 1);
+		Assert.assertTrue(pt.isIndependent("x", "y"));
+	}
+
+	@Test
+	public void testInindependent2() throws Exception {
+		JointProbabilityTable pt = new JointProbabilityTable("x", "y");
+		pt.add(0.20, 0, 0).add(0.30, 0, 1).add(0.25, 1, 0).add(0.25, 1, 1);
+		Assert.assertFalse(pt.isIndependent("x", "y"));
 	}
 
 }

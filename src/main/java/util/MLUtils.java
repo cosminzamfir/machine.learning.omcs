@@ -393,7 +393,7 @@ public class MLUtils {
 	public static double[] randomArray(int size) {
 		double[] res = new double[size];
 		for (int i = 0; i < size; i++) {
-			res[i] = Math.random();
+			res[i] = MLUtils.randomDouble(-1, +1);
 		}
 		return res;
 	}
@@ -640,6 +640,17 @@ public class MLUtils {
 		return res;
 	}
 	
+	public static double[] removeIndex(double[] o, int marginalizedIdx) {
+		double[] res = new double[o.length -1];
+		for (int i = 0; i < marginalizedIdx; i++) {
+			res[i] = o[i];
+		}
+		for (int i = marginalizedIdx + 1; i < o.length; i++) {
+			res[i-1] = o[i];
+		}
+		return res;
+	}
+
 	public static <T> List<T> asList(T[] array) {
 		List<T> res = new ArrayList<>();
 		for (int i = 0; i < array.length; i++) {
@@ -650,7 +661,7 @@ public class MLUtils {
 
 	public static double[] insert(int i, double[] a) {
 		double[] res = new double[a.length + 1];
-		res[0] = 1;
+		res[0] = i;
 		for (int j = 1; j < res.length; j++) {
 			res[j] = a[j-1];
 		}

@@ -53,6 +53,10 @@ public class LogisticRegression {
 	public void setKernel(Kernel kernel) {
 		this.kernel = kernel;
 	}
+	
+	public void setLearningRate(double learningRate) {
+		this.learningRate = learningRate;
+	}
 
 	public void setMaxEpochs(int maxEpochs) {
 		this.maxEpochs = maxEpochs;
@@ -63,19 +67,19 @@ public class LogisticRegression {
 	 * dp = <theta * x_n>
 	 * <p>Classification probability: sigmoid(y_n * dp)
 	 * <p>Error term: log(1/sigmoid(y_n*dp))
-	 * <p>Partial derivative of error term vs theta_i: -y)n*x_i_n*sigmoid(-y_n*dp)
+	 * <p>Partial derivative of error term vs theta_i: -yn*x_i_n*sigmoid(-y_n*dp)
 	 */
 	public void train() {
-		int dim = getDim();
-		theta = new Vector(randomArray(dim));
+		theta = new Vector(randomArray(getDim()));
 		double e1 = runEpoch();
 		double e2;
 		int ind = 1;
+		double rate = learningRate;
 		do {
 			if (maxEpochs > 0 && ind++ >= maxEpochs) {
 				break;
 			}
-			learningRate *= decayRate;
+			rate *= decayRate;
 			e2 = abs(runEpoch());
 			if (abs(e2 - e1) < e) {
 				break;
@@ -85,7 +89,7 @@ public class LogisticRegression {
 	}
 
 	private int getDim() {
-		return kernel == null ? d : kernel.transform(dataSet.getObservation(0).getValues()).length;
+		return kernel == null ? d + 1 : kernel.transform(dataSet.getObservation(0).getValues()).length;
 	}
 
 	private double runEpoch() {

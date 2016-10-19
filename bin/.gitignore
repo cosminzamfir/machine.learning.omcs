@@ -1,3 +1,4 @@
+/bc.txt
 /car_data.txt
 /events
 /forest_fires.csv
@@ -9,7 +10,11 @@
 /linalg
 /linear_like.arff
 /linear_like.txt
+/log4j.properties
 /ml
+/multivariate_house_prices.txt
+/mymdp.json
+/perceptron_test_gradient_descend_six_variables.txt
 /prob
 /test.json
 /util
