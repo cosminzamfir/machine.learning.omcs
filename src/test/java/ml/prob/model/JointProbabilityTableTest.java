@@ -1,5 +1,8 @@
 package ml.prob.model;
 
+
+import static org.junit.Assert.*;
+
 import java.util.List;
 
 import org.junit.Assert;
@@ -7,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import prob.distribution.model.JointProbabilityTable;
+import static java.lang.Math.*;
 
 public class JointProbabilityTableTest {
 
@@ -86,6 +90,45 @@ public class JointProbabilityTableTest {
 		JointProbabilityTable pt = new JointProbabilityTable("x", "y");
 		pt.add(0.25, 0, 0).add(0.25, 0, 1).add(0.25, 1, 0).add(0.25, 1, 1);
 		Assert.assertTrue(pt.isIndependent("x", "y"));
+	}
+	
+	@Test
+	public void testIndependent2() throws Exception {
+		int[] a = {1,-1};
+		double alfa12 = 3.45;
+		double alfa13 = 0;
+		double alfa23 = 5.65;
+		JointProbabilityTable pt = new JointProbabilityTable("x1", "x2", "x3");
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a.length; j++) {
+				for (int k = 0; k < a.length; k++) {
+					pt.add(exp(alfa12*a[i]*a[j]) * exp(alfa13*a[i]*a[k]) * exp(alfa23*a[j]*a[k]), a[i],a[j],a[k]);
+				}
+			}
+		}
+		pt.normalize();
+		System.out.println(pt);
+		System.out.println("x1 is independent on x3, given x2? " + pt.isIndependent("x1", "x3", "x2"));
+		
+	}
+
+	@Test
+	public void testIndependent3() throws Exception {
+		int[] a = {1,-1};
+		double alfa12 = 3.45;
+		double alfa13 = 3;
+		double alfa23 = 5.65;
+		JointProbabilityTable pt = new JointProbabilityTable("x1", "x2", "x3");
+		for (int i1 = 0; i1 < a.length; i1++) {
+			for (int i2 = 0; i2 < a.length; i2++) {
+				for (int i3 = 0; i3 < a.length; i3++) {
+					pt.add(exp(alfa12*a[i1]*a[i2]) * exp(alfa13*a[i1]*a[i3]) * exp(alfa23*a[i2]*a[i3]), a[i1],a[i2],a[i3]);
+				}
+			}
+		}
+		pt.normalize();
+		System.out.println(pt);
+		System.out.println("x1 is independent on x3, given x2? " + pt.isIndependent("x1", "x3", "x2"));
 	}
 
 	@Test

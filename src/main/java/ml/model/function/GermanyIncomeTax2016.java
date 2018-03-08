@@ -81,8 +81,7 @@ public class GermanyIncomeTax2016 implements Function {
 	}
 
 	public static void main(String[] args) {
-		// System.out.println(new
-		new GermanyIncomeTax2016().asPercentage(true).plot(0, 500000);
+		new GermanyIncomeTax2016().asPercentage(true).plot(0, 300000, 50);
 	}
 
 	@Override

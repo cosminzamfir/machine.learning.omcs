@@ -41,6 +41,9 @@ public class DataSet {
 		super();
 		this.data = observations;
 		this.attributes = attributes;
+		for (Attribute attribute : attributes) {
+			attribute.setDataSet(this);
+		}
 		this.targetAttribute = targetAttribute;
 		buildCategortMappings();
 		setAttributesRange();
@@ -50,7 +53,7 @@ public class DataSet {
 
 	private void initAttributes(int width) {
 		for (int i = 1; i <= width; i++) {
-			attributes.add(new Attribute("x" + i, Double.class, 0));
+			attributes.add(new Attribute(this, "x" + i, Double.class));
 		}
 	}
 
@@ -219,19 +222,19 @@ public class DataSet {
 	/**
 	 * Get the j'th value of the i'th Observation
 	 */
-	public Object getValue(int i, int j) {
+	public double getValue(int i, int j) {
 		return data.get(i).getValues()[j];
 	}
 	
 	/**
 	 * Get the targetAttribute value of the i'th Observation
 	 */
-	public Object getTargetAttributeValue(int i) {
+	public double getTargetAttributeValue(int i) {
 		return data.get(i).getTargetAttributeValue();
 	}
 	
-	public Object[][] data() {
-		Object[][] res = new Object[size()][attributes.size() + 1];
+	public double[][] data() {
+		double[][] res = new double[size()][attributes.size() + 1];
 		for (int i = 0; i < data.size(); i++) {
 			for (int j = 0; j < attributes.size(); j++) {
 				res[i][j] = getValue(i, j);
@@ -240,7 +243,7 @@ public class DataSet {
 		}
 		return res;
 	}
-
+	
 	public Observation getObservation(int i) {
 		return this.getObservations().get(i);
 	}
@@ -256,6 +259,7 @@ public class DataSet {
 	public void removeFeature(int index) {
 		attributes.remove(index);
 		data.forEach(obs -> obs.removeValue(index));
+		
 	}
 	
 	/**
@@ -276,11 +280,18 @@ public class DataSet {
 		}
 	}
 
-	private List<Double> getColumn(int i) {
+	public List<Double> getColumn(int i) {
 		List<Double> res = new ArrayList<>();
 		data.forEach(obs -> res.add(obs.getValues()[i]));
 		return res;
 	}
+	
+	public List<Double> getTarget() {
+		List<Double> res = new ArrayList<>();
+		data.forEach(obs -> res.add(obs.getTargetAttributeValue()));
+		return res;
+	}
+	
 	
 	public void shuffle() {
 		Collections.shuffle(data);
@@ -297,6 +308,10 @@ public class DataSet {
 		res.add(new DataSet(attributes, l1, targetAttribute));
 		res.add(new DataSet(attributes, l2, targetAttribute));
 		return res;
+	}
+
+	public int getIndex(Attribute attribute) {
+		return attributes.indexOf(attribute);
 	}
 	
 }

@@ -8,31 +8,15 @@ import prob.chart.DataChart;
  * @author eh2zamf
  *
  */
-public class ExponentialDistribution implements ContinousDistribution {
+public class ExponentialDistribution extends AbstractContinuousDistribution implements ContinousDistribution {
 
 	private double lambda;
-	private ContinuousDistributionResult result = new ContinuousDistributionResult();
 
 	public ExponentialDistribution(double lambda) {
 		super();
 		this.lambda = lambda;
 	}
 
-	/**
-	 * To get P(Y=y)=1-e^(-lambda*x), choose y = 1/lambda * ln(1/random() =>
-	 * P(Y<y) = P(1/lambda*ln(1/X) < y) 
-	 * = P(ln(1/X) < y*lambda) 
-	 * = P(1/X < e^y*lambda)
-	 * = P(X > e^(-y*lambda))
-	 * = 1 - e^(-y*lambda)
-	 * @param n
-	 */
-	public void simulate(int n) {
-		for (int i = 0; i < n; i++) {
-			result.add(simulateNext());
-		}
-	}
-	
 	/**
 	 * Simulates the next single random experiment
 	 * <p>To get P(Y=y)=1-e^(-lambda*x), choose y = 1/lambda * ln(1/random()) =>
@@ -56,10 +40,6 @@ public class ExponentialDistribution implements ContinousDistribution {
 	 */
 	public double compute(double x) {
 		return lambda * Math.pow(Math.E, -lambda * x);
-	}
-	
-	public ContinuousDistributionResult getResult() {
-		return result;
 	}
 	
 	public double getLambda() {

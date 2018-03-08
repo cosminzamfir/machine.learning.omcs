@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class Test {
 	
 	
 	public static void main1(String[] args) {
-		new Function() {public double evaluate(double x) {return 2*x*x + 1;}}.plot(-2, 2);
+		new Function() {public double evaluate(double x) {return 2*x*x + 1;}}.plot(-2, 2, 1000);
 	}
 	
 	public static void main3(String[] args) {

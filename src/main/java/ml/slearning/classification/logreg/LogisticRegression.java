@@ -53,7 +53,7 @@ public class LogisticRegression {
 	public void setKernel(Kernel kernel) {
 		this.kernel = kernel;
 	}
-	
+
 	public void setLearningRate(double learningRate) {
 		this.learningRate = learningRate;
 	}
@@ -74,12 +74,11 @@ public class LogisticRegression {
 		double e1 = runEpoch();
 		double e2;
 		int ind = 1;
-		double rate = learningRate;
 		do {
 			if (maxEpochs > 0 && ind++ >= maxEpochs) {
 				break;
 			}
-			rate *= decayRate;
+			learningRate *= decayRate;
 			e2 = abs(runEpoch());
 			if (abs(e2 - e1) < e) {
 				break;
@@ -89,7 +88,7 @@ public class LogisticRegression {
 	}
 
 	private int getDim() {
-		return kernel == null ? d + 1 : kernel.transform(dataSet.getObservation(0).getValues()).length;
+		return kernel == null ? d : kernel.transform(dataSet.getObservation(0).getValues()).length;
 	}
 
 	private double runEpoch() {
@@ -145,13 +144,45 @@ public class LogisticRegression {
 		return (double) correct / dataSet.getObservations().size();
 	}
 
+	public void accuracyOnClass(DataSet dataSet) {
+		int posCount = 0;
+		int negCount = 0;
+		int posCorrect = 0;
+		int negCorrect = 0;
+
+		for (Observation obs : dataSet.getObservations()) {
+			double computed = classify(obs).getValue();
+			double observed = obs.getTargetAttributeValue();
+			if (MLUtils.effectiveEquals(-1, observed)) {
+				negCount++;
+			} else {
+				posCount++;
+			}
+
+			if (MLUtils.effectiveEquals(computed, observed)) {
+				if (MLUtils.effectiveEquals(-1, observed)) {
+					negCorrect++;
+				} else {
+					posCorrect++;
+				}
+			}
+		}
+		System.out.println(MessageFormat.format("Negative samples: {0}, out of which {1} correctly classfified => accuracy {2}", negCount, negCorrect,
+				(double) negCorrect / negCount));
+		System.out.println(MessageFormat.format("Positive samples: {0}, out of which {1} correctly classfified => accuracy {2}", posCount, posCorrect,
+				(double) posCorrect / posCount));
+	}
+
+	public Vector getTheta() {
+		return theta;
+	}
+
 	public static void main(String[] args) {
-		MultivariableFunction f = new PolynomialMultivariableFunction(0, new double[][] { { 0, 1}, { 0, 1} });
+		MultivariableFunction f = new PolynomialMultivariableFunction(0, new double[][] { { 0, 1 }, { 0, 1 } });
 		DataSet training = new DataSetBuilder().width(2).heigth(1000).separationFunction(f, 0.5).build();
 		DataSet test = new DataSetBuilder().width(2).heigth(1000).separationFunction(f, 0.5).build();
 
 		LogisticRegression lr = new LogisticRegression(training);
-		lr.setMaxEpochs(100);
 		lr.train();
 		//training/test sets with non linear boundary. Poor accuracy expected
 		System.out.println(MessageFormat.format("No kernel - Accuracy on training set {0}", lr.accuracy(training)));
@@ -162,7 +193,7 @@ public class LogisticRegression {
 		lr.train();
 		System.out.println(MessageFormat.format("Polynomial kernel - Accuracy on training set {0}", lr.accuracy(training)));
 		System.out.println(MessageFormat.format("Polynomial kernel - Accuracy on test set {0}", lr.accuracy(test)));
-		
+
 		new ChartBuilder("Kernel logistic regression").add(training, 0, 1).build();
 	}
 

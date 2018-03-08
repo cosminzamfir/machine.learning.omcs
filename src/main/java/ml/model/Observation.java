@@ -32,6 +32,10 @@ public class Observation {
 		return values;
 	}
 	
+	public void setValues(double[] values) {
+		this.values = values;
+	}
+	
 	public double getValue(Attribute attribute) {
 		return values[attribute.getIndex()];
 	}
@@ -70,6 +74,7 @@ public class Observation {
 		sb.append(MLUtils.format(targetAttributeValue));
 		return sb.toString();
 	}
+
 	
 	
 

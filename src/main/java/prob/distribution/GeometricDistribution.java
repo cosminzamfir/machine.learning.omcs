@@ -74,7 +74,7 @@ public class GeometricDistribution {
 			public double evaluate(double x) {
 				return dist.compute((int) x);
 			}
-		}.plot(0, 100);
+		}.plot(0, 100, 1000);
 	}
 
 }

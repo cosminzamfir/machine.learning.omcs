@@ -1,5 +1,7 @@
 package ml.model.function;
 
+import prob.chart.ChartBuilder;
+import prob.chart.PlotType;
 import ml.utils.FunctionChart;
 
 /**
@@ -12,8 +14,12 @@ public interface Function {
 
 	double evaluate(double x);
 
-	default void plot(double from, double to) {
-		new FunctionChart(toString(), this, from, to);
+	default void plot(double from, double to, int samples) {
+		new ChartBuilder().add(this, from, to, samples, "function", PlotType.Scatter).build();;
+	}
+	
+	default void plot(double from, double to, int samples, String name) {
+		new ChartBuilder().add(this, from, to, samples, name, PlotType.Scatter).build();
 	}
 
 	default double definiteIntegral(double from, double to, double maxError) {

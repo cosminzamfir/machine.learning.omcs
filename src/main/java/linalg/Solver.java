@@ -147,6 +147,7 @@ public class Solver {
 	 * @return the reduced row echelon form matrix
 	 */
 	public Matrix rref(Matrix m) {
+		m = m.clone();
 		int lastPivotColumn = 0;
 		for (int i = 0; i < m.m; i++) {
 			if (lastPivotColumn > m.n - 1) {

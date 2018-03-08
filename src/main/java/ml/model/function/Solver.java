@@ -17,8 +17,9 @@ public class Solver {
 
 		do {
 			double f0 = f.evaluate(x0);
+			System.out.println("x=" + x0 + "; f=" + f0);
 			double deltaf = target - f0;
-			double derivative = new Derivative().compute(f, x0, 0.000001);
+			double derivative = new Derivative().compute(f, x0, 0.001);
 			double deltax = deltaf / derivative;
 			x0 = x0 + deltax;
 			err = target - f.evaluate(x0);
@@ -28,7 +29,7 @@ public class Solver {
 	
 	
 	public static void main(String[] args) {
-		double x0 = new Solver().solve((x) -> x*x, 100, 0.001);
+		double x0 = new Solver().solve((x) -> Math.pow(Math.E,x), 1000, 0.001);
 		System.out.println(x0);
 	}
 }

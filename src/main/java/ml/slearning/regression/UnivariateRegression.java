@@ -1,5 +1,7 @@
 package ml.slearning.regression;
 
+import prob.chart.ChartBuilder;
+import prob.chart.PlotType;
 import linalg.Matrix;
 import linalg.Vector;
 import ml.model.DataSet;
@@ -55,12 +57,23 @@ public class UnivariateRegression {
 		return new Vector(data);
 	}
 	
-	public static void main(String[] args) {
-		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("house_prices.txt", false);
-		PolynomialFunction f = new UnivariateRegression().compute(dataSet, 4);
+	public static void main1(String[] args) {
+		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("hooke.law.txt", false);
+		PolynomialFunction f = new UnivariateRegression().compute(dataSet, 1);
 		System.out.println(f);
 		System.out.println(f.evaluate(200000)/3600000/24);
 		
-		new FunctionChart("Regression", f,dataSet.data());
+		new ChartBuilder().add(f, 0, 10, 1000, "Displacement", PlotType.Line).build();
 	}
+	
+	public static void main(String[] args) {
+		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("house_prices.txt", false);
+		PolynomialFunction f = new UnivariateRegression().compute(dataSet, 7);
+		System.out.println(f);
+		new FunctionChart("Regression", f,dataSet.data());
+//		new ChartBuilder().add(f, 0, 3000, 1000000, "Displacement", PlotType.Line).
+//			add(dataSet.getColumn(0), dataSet.getTarget(), "Data", PlotType.Scatter).build();
+			
+	}
+	
 }

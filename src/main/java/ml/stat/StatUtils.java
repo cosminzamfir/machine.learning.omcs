@@ -1,6 +1,7 @@
 package ml.stat;
 
 
+
 import static util.MLUtils.*;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import ml.model.function.Solver;
 
 import org.apache.log4j.Logger;
 
+import prob.distribution.NormalDistribution;
 import util.DoubleHolder;
 import util.MLUtils;
 
@@ -150,6 +152,16 @@ public class StatUtils {
 		};
 		return new Solver().solve(f, 0, 0.0000001, miu + 0.5 * sigma);
 	}
+	
+	public static double zScoreToPercentile(double miu, double sigma, double zScore) {
+		double value = miu + sigma*zScore;
+		return normalValueToPercentile(miu, sigma, value);
+	}
+	
+	public static double percentileToZScore(double miu, double sigma, double percentile) {
+		double value = normalPercentileToValue(miu, sigma, percentile);
+		return (value - miu)/sigma;
+	}
 
 	public static double regressionEstimate(BivariateStat bivariateStat, double x) {
 		double xStandardUnits = (x - bivariateStat.getMeanX()) / bivariateStat.getStdY();
@@ -157,18 +169,6 @@ public class StatUtils {
 		return bivariateStat.getMeanY() + yStandardUnits * bivariateStat.getStdY();
 	}
 	
-
-	public static void main(String[] args) {
-		final Function nf = new NormalFunction(0, 1);
-		Function f = new Function() {
-			@Override
-			public double evaluate(double x) {
-				return nf.evaluate(x) * x * x;
-			}
-		};
-		double std = f.definiteIntegral(-10, 10, 0.000001);
-		System.out.println(std);
-	}
 
 	/**
 	 * 
@@ -184,5 +184,57 @@ public class StatUtils {
 			res.add(copy.get((int) (copy.size() * (double)i / quantilesNum)));
 		}
 		return res;
+	}
+	
+	/**
+	 * Compute the confidence interval for the given sampleMean, standardError and confidence level
+	 * @param sampleMean
+	 * @param standardError
+	 * @param confidence
+	 * @return the interval that, with the given confidence, the sample mean will fall into
+	 */
+	public static double[] sampleMeanConfidenceInterval(double sampleMean, double standardError, double confidence) {
+		double d1 = normalPercentileToValue(sampleMean, standardError, (1 - confidence)/2);
+		double d2 = normalPercentileToValue(sampleMean, standardError, confidence + (1 - confidence)/2);
+		return new double[]{d1,d2};
+	}
+	
+	/**
+	 * Compute the confidence interval for the given sampleMean of a sample with the given sampleMean, 'samples' data points
+	 * @param sampleMean the mean of the sample
+	 * @param samples numnber of samples in the sample 
+	 * @param sd the standard deviation of the population
+	 * @return the interval that, with the given confidence, the sample mean will fall into
+	 */
+	public static double[] sampleMeanConfidenceInterval(double sampleMean, int samples, double sd, double confidence) {
+		double standardErrro = sd/Math.sqrt(samples);
+		return sampleMeanConfidenceInterval(sampleMean, standardErrro, confidence);
+	}
+	
+	/** 
+	 * Compute the p-value corresponding to the given value
+	 * @param mean the sample mean
+	 * @param se the standard error
+	 * @param value the value we are intersted to compute the p-value
+	 * @param oneSided 
+	 * @return the p-value
+	 */
+	public static double computePValue(double mean, double se, double value, boolean twoSided) {
+		double res;
+		if(value > mean) {
+			res = 1- new NormalDistribution(mean, se).cummulativeP(value);
+		} else {
+			res = new NormalDistribution(mean, se).cummulativeP(mean);
+		}
+		if(twoSided) {
+			res = res * 2;
+		}
+		return res;
+	}
+	
+	public static void main(String[] args) {
+		double d = normalPercentileToValue(0, 1, 0.005);
+		System.out.println(d);
+	
 	}
 }

@@ -132,10 +132,10 @@ public class ChartBuilder {
 	}
 
 	public static void main(String[] args) {
-		List<Double> set1 = MLUtils.sample(new NormalDistribution(0, 1), 1000);
-		List<Double> set2 = MLUtils.sample(new NormalDistribution(0, 1), 1000);
-		List<Double> set3 = MLUtils.sample(new RayleighDistribution(new NormalDistribution(0, 1), new NormalDistribution(0, 1)), 1000);
-		List<Double> set4 = MLUtils.sample(new ExponentialDistribution(1), 1000);
+		List<Double> set1 = MLUtils.sample(new NormalDistribution(0, 1), 10000);
+		List<Double> set2 = MLUtils.sample(new NormalDistribution(0, 1), 10000);
+		List<Double> set3 = MLUtils.sample(new RayleighDistribution(new NormalDistribution(0, 1), new NormalDistribution(0, 1)), 10000);
+		List<Double> set4 = MLUtils.sample(new ExponentialDistribution(1), 10000);
 
 		new ChartBuilder("Q-Q", "set1", "set2").addQuantileQuantilePlot(set1, set2, 100, "Normal-Normal").
 			addQuantileQuantilePlot(set1, set3, 1000, "Normal-Rayliegh").

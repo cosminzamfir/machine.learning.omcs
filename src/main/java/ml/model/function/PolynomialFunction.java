@@ -52,7 +52,7 @@ public class PolynomialFunction implements Function {
 
 	public static void main(String[] args) throws IOException {
 		PolynomialFunction qf = new PolynomialFunction(1, 1, 1);
-		qf.plot(0, 10);
+		qf.plot(0, 10, 1000);
 		System.in.read();
 		double d = qf.definiteIntegral(0, 20, 0.01);
 	}

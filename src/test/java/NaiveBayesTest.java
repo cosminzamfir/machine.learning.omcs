@@ -18,8 +18,8 @@ public class NaiveBayesTest {
 	@Test
 	public void test1() throws Exception {
 		List<Attribute> features = new ArrayList<>();
-		features.add(new Attribute("A", String.class,0));
-		features.add(new Attribute("B", String.class,1));
+		features.add(new Attribute("A", String.class));
+		features.add(new Attribute("B", String.class));
 		double t = 1;
 		double f = 0;
 		List<Observation> obs = new ArrayList<>();
@@ -31,7 +31,7 @@ public class NaiveBayesTest {
 		obs.add(new Observation(f, 3, 2));
 		obs.add(new Observation(f, 1, 1));
 
-		DataSet ds = new DataSet(features, obs, new Attribute("true/false", Boolean.class, 0));
+		DataSet ds = new DataSet(features, obs, new Attribute("true/false", Boolean.class));
 		NaiveBayes nb = new NaiveBayes(ds);
 		Object resp = nb.predict(new Observation(0, 1, 2));
 		System.out.println(resp);

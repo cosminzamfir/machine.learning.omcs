@@ -19,9 +19,8 @@ import prob.chart.DataChart;
  * @author eh2zamf
  *
  */
-public class NormalDistribution implements ContinousDistribution {
+public class NormalDistribution extends AbstractContinuousDistribution implements ContinousDistribution {
 
-	private ContinuousDistributionResult result;
 	private NormalFunction underlyingFunction;
 	private double miu;
 	private double sigma;
@@ -31,19 +30,6 @@ public class NormalDistribution implements ContinousDistribution {
 		this.miu = miu;
 		this.sigma = sigma;
 		this.underlyingFunction = new NormalFunction(this.miu, this.sigma);
-		this.result = new ContinuousDistributionResult();
-	}
-
-	/**
-	* The inverse of the normal function cannot be writen in  closed form => the normal algo to use f-1(x) to simulate the distribution cannot be used.
-	* <p>
-	* It can be however simulated by the following fact: if U and V are random variables with uniform densities on [0..1], the the random variables:
-	* X = sqrt(-2*logU)* cos(2*PI*V) and X = sqrt(-2*logU)* sing (2*PI*V) are independent and have the normal distribution.
-	 */
-	public void simulate(int n) {
-		for (int i = 0; i < n; i++) {
-			result.add(simulateNext());
-		}
 	}
 
 	/**
@@ -62,9 +48,9 @@ public class NormalDistribution implements ContinousDistribution {
 	public double compute(double x) {
 		return underlyingFunction.evaluate(x);
 	}
-
-	public ContinuousDistributionResult getResult() {
-		return result;
+	
+	public double cummulativeP(double x) {
+		return underlyingFunction.definiteIntegral(miu - 30*sigma, x, 0.00001);
 	}
 
 	public static void main(String[] args) {

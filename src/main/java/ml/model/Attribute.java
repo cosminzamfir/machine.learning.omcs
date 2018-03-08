@@ -10,17 +10,21 @@ import java.util.Set;
  */
 public class Attribute {
 
+	private DataSet dataSet;
 	private String name;
 	/** the index of the attribute in the dataSet*/
-	private int index;
 	private Class<?> dataType;
 	private Set<Object> possibleValues = new LinkedHashSet<Object>();
 
-	public Attribute(String name, Class<?> dataType, int index) {
+	public Attribute(String name, Class<?> dataType) {
 		super();
 		this.name = name;
 		this.dataType = dataType;
-		this.index = index;
+	}
+
+	public Attribute(DataSet dataSet, String name, Class<Double> dataType) {
+		this(name, dataType);
+		this.dataSet = dataSet;
 	}
 
 	public String getName() {
@@ -40,7 +44,7 @@ public class Attribute {
 	}
 	
 	public int getIndex() {
-		return index;
+		return dataSet.getIndex(this);
 	}
 	
 	public Set<Object> getPossibleValues() {
@@ -55,5 +59,9 @@ public class Attribute {
 	@Override
 	public String toString() {
 		return name + possibleValues;
+	}
+
+	public void setDataSet(DataSet dataSet) {
+		this.dataSet = dataSet;
 	}
 }

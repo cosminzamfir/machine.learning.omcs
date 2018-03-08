@@ -2,17 +2,18 @@ package util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtils {
 
-	public static List<String> readLines(String resourceName) {
+	public static List<String> readLines(InputStream is) {
 		BufferedReader reader = null;
 		try {
 			List<String> res = new ArrayList<String>();
-			reader = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName)));
+			reader = new BufferedReader(new InputStreamReader(is));
 			String line = null;
 			while ((line = reader.readLine()) != null) {
 				res.add(line);
@@ -28,6 +29,10 @@ public class FileUtils {
 			} catch (IOException ignore) {
 			}
 		}
+	}
+	
+	public static List<String> readLines(String resourceName) {
+			return readLines(Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName));
 	}
 
 	public static String readFromConsole(String message) {

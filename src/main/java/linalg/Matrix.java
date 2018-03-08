@@ -2,7 +2,11 @@ package linalg;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
+import javafx.util.converter.IntegerStringConverter;
 import util.MLUtils;
 
 /**
@@ -81,6 +85,17 @@ public class Matrix {
 			}
 		}
 		return new Matrix(data);
+	}
+	
+	/**
+	 * Create a matrix whose columns are positive numbers summing to one
+	 * @param m
+	 * @param n
+	 * @param zeroProbability the probability that the value of any given element is equal to 0, i.e. largeer zeroProbability => sparser the matrix
+	 * @return
+	 */
+	public static Matrix randomMarkov(int m, int n, double zeroProbability) {
+		return fromColumnVectors(IntStream.range(0, n).mapToObj(x -> Vector.randomMarkov(m, zeroProbability)).collect(Collectors.toList()));
 	}
 
 	public Matrix(double[][] array) {
@@ -166,6 +181,10 @@ public class Matrix {
 		return data[i];
 	}
 
+	public Vector rowVector(int i) {
+		return new Vector(data[i]);
+	}
+
 	/**Returns the jth column as an array*/
 	public double[] column(int j) {
 		double[] res = new double[m];
@@ -173,6 +192,15 @@ public class Matrix {
 			res[i] = data[i][j];
 		}
 		return res;
+	}
+
+	/**Returns the jth column as a vector*/
+	public Vector columnVector(int j) {
+		double[] res = new double[m];
+		for (int i = 0; i < res.length; i++) {
+			res[i] = data[i][j];
+		}
+		return new Vector(res);
 	}
 
 	public List<Vector> toColumnVectors() {
@@ -241,11 +269,9 @@ public class Matrix {
 		}
 		double[][] res = new double[this.m][other.n];
 		//product A*B as a linear combination of the rows of B by the columns of A
-		for (int row = 0; row < m; row++) {
-			double[] thisRow = row(row);
-			for (int column = 0; column < this.n; column++) {
-				res[row] = other.linearRowCombination(thisRow);
-
+		for (int thisRow = 0; thisRow < m; thisRow++) {
+			for (int otherColumn = 0; otherColumn < other.n; otherColumn++) {
+				res[thisRow][otherColumn] = this.rowVector(thisRow).dotProduct(other.columnVector(otherColumn));
 			}
 		}
 		return new Matrix(res);
@@ -290,6 +316,7 @@ public class Matrix {
 		StringBuilder sb = new StringBuilder();
 		for (double[] row : data) {
 			for (double d : row) {
+				//sb.append(MLUtils.printIntNumber(d, maxLength));
 				sb.append(MLUtils.printNumber(d, maxLength));
 			}
 			sb.append("\n");

@@ -45,4 +45,14 @@ public class Id3Test {
 		Assert.assertTrue(mismatches/(double) matches < 0.15);
 		
 	}
+	
+	@Test
+	public void test3() throws Exception {
+		DataSet dataSet = DataSetCsvParser.parseNumericDataSet("bc.txt", false);
+		dataSet.removeFeature(0);
+		Id3 id3 = new Id3();
+		Id3Node decisionTree = id3.createDecistionTree(dataSet);
+		System.out.println(decisionTree);
+		Assert.assertTrue(decisionTree.getBranches().size() > 1);
+	}
 }

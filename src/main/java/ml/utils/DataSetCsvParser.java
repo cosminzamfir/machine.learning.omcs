@@ -1,5 +1,6 @@
 package ml.utils;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,18 +35,23 @@ public class DataSetCsvParser {
 		List<Attribute> attributes = new ArrayList<>();
 		List<Observation> instances = new ArrayList<>();
 		for (int i = 0; i < header.length - 1; i++) {
-			attributes.add(new Attribute(header[i], String.class, i));
+			attributes.add(new Attribute(header[i], String.class));
 		}
-		Attribute targetAttribute = new Attribute(header[header.length - 1], String.class, 0);
+		Attribute targetAttribute = new Attribute(header[header.length - 1], String.class);
 		lines.remove(0);
 		if (shufle) {
 			Collections.shuffle(lines);
 		}
+		int index = 1;
 		for (String line : lines) {
-			if(line.contains("NA")) {
+			if (line.contains("NA")) {
 				continue;
 			}
 			String[] tokens = line.split(",");
+			if (tokens.length != header.length) {
+				throw new RuntimeException(MessageFormat.format("Unexpected number of attributes at line {0} in the data: header has {1}. Data row has {2}",
+						index, header.length, tokens.length));
+			}
 			if (!numeric) {
 				throw new RuntimeException("Only numerical data sets supported");
 			} else {
@@ -56,10 +62,10 @@ public class DataSetCsvParser {
 				double targetAttributeValue = Double.valueOf(tokens[tokens.length - 1]);
 				instances.add(new Observation(targetAttributeValue, values));
 			}
+			index++;
 		}
 		return new DataSet(attributes, instances, targetAttribute);
 	}
-
 
 	public static void main(String[] args) {
 		new DataSetCsvParser().parseNumericDataSet("bc.txt", false);

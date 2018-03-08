@@ -53,7 +53,7 @@ public class ChartUtils {
 		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
 		renderer.setSeriesShapesVisible(index, true);
 		renderer.setSeriesLinesVisible(index, false);
-		renderer.setSeriesShape(index, ShapeUtilities.createDiamond(2));
+		renderer.setSeriesShape(index, ShapeUtilities.createDiamond(1));
 		renderer.setSeriesVisibleInLegend(index, true);
 	}
 	

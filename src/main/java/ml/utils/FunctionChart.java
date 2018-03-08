@@ -28,7 +28,7 @@ import prob.chart.ChartUtils;
 public class FunctionChart extends ApplicationFrame {
 
 	private static final long serialVersionUID = 1L;
-	private int samples = 1000;
+	private int samples = 10000;
 	private Function function;
 
 	private double f(double x) {
@@ -67,7 +67,7 @@ public class FunctionChart extends ApplicationFrame {
 	 * <p>
 	 * min(domain) and max(domain) are determined by the obsrvations
 	 */
-	public FunctionChart(String title, Function function, Object[][] observations) {
+	public FunctionChart(String title, Function function, double[][] observations) {
 		super(title);
 		this.function = function;
 		double min = getMin(observations);
@@ -117,9 +117,9 @@ public class FunctionChart extends ApplicationFrame {
 		setVisible(true);
 	}
 
-	private double getMax(Object[][] observations) {
+	private double getMax(double[][] observations) {
 		double max = Double.NEGATIVE_INFINITY;
-		for (Object[] ds : observations) {
+		for (double[] ds : observations) {
 			if(max < (Double)ds[0]) {
 				max = (Double) ds[0];
 			}
@@ -127,9 +127,9 @@ public class FunctionChart extends ApplicationFrame {
 		return max;
 	}
 
-	private double getMin(Object[][] observations) {
+	private double getMin(double[][] observations) {
 		double min = Double.POSITIVE_INFINITY;
-		for (Object[] ds : observations) {
+		for (double[] ds : observations) {
 			if(min > (Double) ds[0]) {
 				min = (Double) ds[0];
 			}

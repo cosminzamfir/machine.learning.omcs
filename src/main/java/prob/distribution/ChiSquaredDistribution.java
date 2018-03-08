@@ -15,16 +15,16 @@ import util.MLUtils;
  * @author eh2zamf
  *
  */
-public class ChiSquaredDistribution implements ContinousDistribution {
+public class ChiSquaredDistribution extends AbstractContinuousDistribution implements ContinousDistribution {
 
 	private int N;
 	private int[] criterion1Splits = new int[2];
 	private int[] criterion2Splits;
-	private ContinuousDistributionResult result = new ContinuousDistributionResult();
 	/**The expected number of items from Criterion1Category1 and 2 in the data sets split by Criterion2*/
 	private int[][] expectedValues;
 
 	public ChiSquaredDistribution(int N, int criterion1Category1Size, int criterion1Category2Size, int... criterion2Splits) {
+		super();
 		this.N = N;
 		criterion1Splits[0] = criterion1Category1Size;
 		criterion1Splits[1] = criterion1Category2Size;
@@ -44,17 +44,11 @@ public class ChiSquaredDistribution implements ContinousDistribution {
 		}
 	}
 
-	public void simulate(int samples) {
-		for (int i = 0; i < samples; i++) {
-			double  d = simulate();
-			result.add(d);
-		}
-	}
-
 	/**
 	 * @return sum[Criterion2.categories] (Observed - Expected)^2 / Expected for one simulation
 	 */
-	private double simulate() {
+	@Override
+	protected double simulateNext() {
 		double res = 0;
 		for (int i = 0; i < criterion2Splits.length; i++) {
 			int n = criterion2Splits[i];
@@ -85,10 +79,6 @@ public class ChiSquaredDistribution implements ContinousDistribution {
 			sb.append("\n");
 		}
 		return sb.toString();
-	}
-	
-	public ContinuousDistributionResult getResult() {
-		return result;
 	}
 	
 	@Override

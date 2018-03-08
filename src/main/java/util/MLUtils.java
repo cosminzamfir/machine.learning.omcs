@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import linalg.Matrix;
+import linalg.Vector;
 import ml.model.function.Function;
 import ml.ulearning.kmeans.model.EuclideanPoint2D;
 import ml.ulearning.kmeans.model.Points2DSet;
@@ -435,6 +437,10 @@ public class MLUtils {
 		return StringUtils.leftPad(nf.format(n), length);
 	}
 
+	public static String printIntNumber(Number n, int length) {
+		return StringUtils.leftPad(intf.format(n), length);
+	}
+
 	public static enum AlignType {
 		LEFT, RIGHT, CENTER
 	}
@@ -675,4 +681,21 @@ public class MLUtils {
 		}
 		return res;
 	}
+	
+	//	public static Matrix randomOrtoghonalMatrix(int size, double minValue, double maxValue) {
+	//		double[][] res = new double[size][size];
+	//		double[] d0 = randomArray(size, minValue, maxValue);
+	//		res[0] = d0;
+	//		for (int i = 1; i < size; i++) {
+	//			double[] d =  randomArray(size, minValue, maxValue);
+	//			double sum = 0;
+	//			for (int j = 0; j < d.length-1; j++) {
+	//				sum += d0[j] * d[j];
+	//			}
+	//			d[size-1] = -sum / d0[size-1];
+	//			res[i] = d;
+	//		}
+	//		return new Matrix(res);
+	//	}
+
 }
