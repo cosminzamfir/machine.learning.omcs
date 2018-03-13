@@ -41,7 +41,7 @@ public class Vector {
 	 * A vector whose elements sum to one, with the given probability that any element = 0
 	 */
 	public static Vector randomMarkov(int size, double zeroProbability) {
-		Vector res = randomInstance(size, 10, 20);
+		Vector res = randomInstance(size, 10, 200);
 		for (int i = 0; i < size; i++) {
 			if(Math.random() < zeroProbability) {
 				res.set(i, 0);
@@ -151,10 +151,17 @@ public class Vector {
 		data[i] = value;
 	}
 
-	public void normalize() {
+	public void asUnitVector() {
 		double length = length();
 		for (int i = 0; i < data.length; i++) {
 			data[i] = data[i] / length;
+		}
+	}
+	
+	public void normalize() {
+		double sum = sum();
+		for (int i = 0; i < data.length; i++) {
+			data[i] = data[i] / sum;
 		}
 	}
 

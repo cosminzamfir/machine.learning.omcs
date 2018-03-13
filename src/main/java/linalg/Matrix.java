@@ -1,6 +1,7 @@
 package linalg;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -122,6 +123,12 @@ public class Matrix {
 				}
 			}
 		}
+	}
+	
+	public Matrix normalizeByColumn() {
+		List<Vector> colums = toColumnVectors();
+		colums.stream().forEach(x -> x.normalize());
+		return Matrix.fromColumnVectors(colums);
 	}
 
 	public Matrix() {
@@ -472,6 +479,50 @@ public class Matrix {
 		}
 		Matrix variationMatrix = Matrix.fromColumnVectors(diffs);
 		return variationMatrix.transpose().multiplyBy(variationMatrix).divide(variationMatrix.m);
+	}
+
+	public Matrix copy() {
+		return new Matrix(data.clone());
+	}
+
+	public double sum() {
+		double res = 0;
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[i].length; j++) {
+				res += data[i][j];
+			}
+		}
+		return res;
+	}
+
+	public double norm() {
+		double res = 0;
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[i].length; j++) {
+				res += data[i][j] * data[i][j];
+			}
+		}
+		return res;
+	}
+
+	public Matrix substract(Matrix other) {
+		double[][] res = new double[m][n];
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[i].length; j++) {
+				res[i][j] = data[i][j] - other.data[i][j]; 
+			}
+		}
+		return new Matrix(res);
+	}
+
+	public Matrix add(Matrix other) {
+		double[][] res = new double[m][n];
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[i].length; j++) {
+				res[i][j] = data[i][j] + other.data[i][j]; 
+			}
+		}
+		return new Matrix(res);
 	}
 
 }
